@@ -912,8 +912,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 420880360}
-  - component: {fileID: 420880361}
   - component: {fileID: 420880359}
+  - component: {fileID: 420880363}
+  - component: {fileID: 420880362}
   m_Layer: 0
   m_Name: TaskManager
   m_TagString: Untagged
@@ -928,7 +929,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 420880358}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3f4fd83dfe1c1f4089722dd2cf20c93, type: 3}
   m_Name: 
@@ -939,11 +940,15 @@ MonoBehaviour:
   filePreview: {fileID: 1604431294}
   pointerText: {fileID: 1985025965}
   buttons: {fileID: 162659784}
-  treeText: "> SYSTEM_ROOT\r\n\u2502\r\n\u251C\u2500\u2500 RECORDS/\r\n\u2502   \u251C\u2500\u2500
-    elevator_log_0314.mp4\r\n\u2502   \u2514\u2500\u2500 manifest.json\r\n\u2502\r\n\u251C\u2500\u2500
-    ARCHIVE/\r\n\u2502   \u251C\u2500\u2500 backup_0313/\r\n\u2502   \u251C\u2500\u2500
-    backup_0312/\r\n\u2502\r\n\u251C\u2500\u2500 CORRUPTED/\r\n\u2502   \u251C\u2500\u2500
-    CCTV_oldfeed.tmp\r\n\u2502     \n      \u2514\u2500\u2500 "
+  treeText: "> \r<color=#FF2D71>SYSTEM_ROOT</color>\n\u2502\r\n\u251C\u2500\u2500
+    <color=#FF2D71>RECORDS</color>/\r\n\u2502   \u251C\u2500\u2500 elevator_log_0314.m??   
+    [<color=#FF2D71>CRC_ERROR</color>]\r\n\u2502   \u2514\u2500\u2500 mani\u0192est.j<color=#FF2D71>$on</color>   
+    [!<color=#FF2D71>MISSING_FIELDS</color>]\r\n\u2502\r\n\u251C\u2500\u2500 <color=#FF2D71>ARCHIVE</color>/\r\n\u2502  
+    \u251C\u2500\u2500 b<color=#FF2D71>@ckup_03</color>!<color=#FF2D71>3</color>/\r\n\u2502  
+    \u251C\u2500\u2500 bac\u256Bkup_0312/    [<color=#FF2D71>INCOMPLETE</color>]\r\n\u2502\r\n\u251C\u2500\u2500
+    <color=#FF2D71>CORRUPTED</color>/\r\n\u2502   \u251C\u2500\u2500 CCTV_oldfeed.t\u2261p\r\n\u2502  
+    \u2514\u2500\u2500 \n\u2502\u2502\r\n\u2514\u2500\u2500  \u2588\u2588 <color=#FF2D71>SYSTEM_FLAG</color>:
+    [<color=#FF2D71>INTEGRITY FAIL</color>]"
   previewText: "<color=#FF2D71>[ CCTV.exe ]</color>\n\n----------------------\n\n>
     <color=#FF2D71>Status:</color> Recovered\n\r\n> Source: <color=#FF2D71>/C0R*UPT3D</color>\n\r\n>
     Integrity: Compromised\n\r\n> Last Access: <color=#FF2D71>??/??/25</color>\n\n\r\n>
@@ -963,7 +968,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &420880361
+--- !u!114 &420880362
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -972,7 +977,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 420880358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 961c14c336ff64a4a9b3ec0b1c55d28f, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d456286d17015a4e84228e4eba6f885, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typeDelay: 0.03
+  typeSound: {fileID: 2052641273}
+  fileTree: {fileID: 503524297}
+  filePreview: {fileID: 1604431294}
+  pointerText: {fileID: 1985025965}
+  buttons: {fileID: 162659784}
+  treeText: "> \r<color=#FF2D71>SYSTEM_ROOT</color>\n\u2502\r\n\u251C\u2500\u2500
+    <color=#FF2D71>RECORDS</color>/\r\n\u2502   \u251C\u2500\u2500 elevator_log_0314.m??   
+    [<color=#FF2D71>CRC_ERROR</color>]\r\n\u2502   \u2514\u2500\u2500 mani\u0192est.j<color=#FF2D71>$on</color>   
+    [!<color=#FF2D71>MISSING_FIELDS</color>]\r\n\u2502\r\n\u251C\u2500\u2500 <color=#FF2D71>ARCHIVE</color>/\r\n\u2502  
+    \u251C\u2500\u2500 b<color=#FF2D71>@ckup_03</color>!<color=#FF2D71>3</color>/\r\n\u2502  
+    \u251C\u2500\u2500 bac\u256Bkup_0312/    [<color=#FF2D71>INCOMPLETE</color>]\r\n\u2502\r\n\u251C\u2500\u2500
+    <color=#FF2D71>CORRUPTED</color>/\r\n\u2502   \u251C\u2500\u2500 CCTV_oldfeed.t\u2261p\r\n\u2502  
+    \u2514\u2500\u2500 \n\u2502\u2502\r\n\u2514\u2500\u2500  \u2588\u2588 <color=#FF2D71>SYSTEM_FLAG</color>:
+    [<color=#FF2D71>INTEGRITY FAIL</color>]"
+  previewText: "<color=#FF2D71>[ CCTV.exe ]</color>\n\n----------------------\n\n>
+    <color=#FF2D71>Status:</color> Recovered\n\r\n> Source: <color=#FF2D71>/C0R*UPT3D</color>\n\r\n>
+    Integrity: Compromised\n\r\n> Last Access: <color=#FF2D71>??/??/25</color>\n\n\r\n>
+    Note: <color=#FF2D71>Incident review pending...\r</color>\r</color>\r\r"
+--- !u!114 &420880363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420880358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5a389cea27e3c4438db665c10a3dcd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   buttons:
@@ -1004,7 +1040,6 @@ GameObject:
   - component: {fileID: 503524296}
   - component: {fileID: 503524298}
   - component: {fileID: 503524297}
-  - component: {fileID: 503524300}
   - component: {fileID: 503524299}
   m_Layer: 5
   m_Name: FileTree
@@ -1053,11 +1088,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "> SYSTEM_ROOT\r\n\u2502\r\n\u251C\u2500\u2500 RECORDS/\r\n\u2502   \u251C\u2500\u2500
-    elevator_log_0314.mp4\r\n\u2502   \u2514\u2500\u2500 manifest.json\r\n\u2502\r\n\u251C\u2500\u2500
-    ARCHIVE/\r\n\u2502   \u251C\u2500\u2500 backup_0313/\r\n\u2502   \u251C\u2500\u2500
-    backup_0312/\r\n\u2502\r\n\u251C\u2500\u2500 CORRUPTED/\r\n\u2502   \u251C\u2500\u2500
-    CCTV_oldfeed.tmp\r\n\u2502     \n      \u2514\u2500\u2500 "
+  m_text: "> \r<color=#FF2D71>SYSTEM_ROOT</color>\n\u2502\r\n\u251C\u2500\u2500 <color=#FF2D71>RECORDS</color>/\r\n\u2502  
+    \u251C\u2500\u2500 elevator_log_0314.m??    [<color=#FF2D71>CRC_ERROR</color>]\r\n\u2502  
+    \u2514\u2500\u2500 mani\u0192est.j<color=#FF2D71>$on</color>    [!<color=#FF2D71>MISSING_FIELDS</color>]\r\n\u2502\r\n\u251C\u2500\u2500
+    <color=#FF2D71>ARCHIVE</color>/\r\n\u2502   \u251C\u2500\u2500 b<color=#FF2D71>@ckup_03</color>!<color=#FF2D71>3</color>/\r\n\u2502  
+    \u251C\u2500\u2500 bac\u256Bkup_0312/    [<color=#FF2D71>INCOMPLETE</color>]\r\n\u2502\r\n\u251C\u2500\u2500
+    <color=#FF2D71>CORRUPTED</color>/\r\n\u2502   \u251C\u2500\u2500 CCTV_oldfeed.t\u2261p\r\n\u2502  
+    \u2514\u2500\u2500 \n\u2502\u2502\r\n\u2514\u2500\u2500  \u2588\u2588 <color=#FF2D71>SYSTEM_FLAG</color>:
+    [<color=#FF2D71>INTEGRITY FAIL</color>]"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -1120,7 +1158,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -159.92279, z: -322.39145, w: -409.8654}
+  m_margin: {x: 0, y: -159.92279, z: -473.5548, w: -409.8654}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1141,7 +1179,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 503524295}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7cfa58e417a46ea8889989684c2522e, type: 3}
   m_Name: 
@@ -1150,21 +1188,7 @@ MonoBehaviour:
   SpeedMultiplier: 1
   ScaleMultiplier: 1
   RotationMultiplier: 1
---- !u!114 &503524300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 503524295}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ed57967c52645d390a89dcf8f61ba73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AngleMultiplier: 1
-  SpeedMultiplier: 1
-  CurveScale: 1
+  m_TextComponent: {fileID: 0}
 --- !u!1 &591122677
 GameObject:
   m_ObjectHideFlags: 0
@@ -2604,7 +2628,6 @@ GameObject:
   - component: {fileID: 1604431293}
   - component: {fileID: 1604431295}
   - component: {fileID: 1604431294}
-  - component: {fileID: 1604431297}
   - component: {fileID: 1604431296}
   m_Layer: 5
   m_Name: FilePreview
@@ -2652,10 +2675,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<color=#FF2D71>[ CCTV.exe ]</color>\n\n----------------------\n\n> <color=#FF2D71>Status:</color>
-    Recovered\n\r\n> Source: <color=#FF2D71>/C0R*UPT3D</color>\n\r\n> Integrity:
-    Compromised\n\r\n> Last Access: <color=#FF2D71>??/??/25</color>\n\n\r\n> Note:
-    <color=#FF2D71>Incident review pending...\r</color>"
+  m_text: "<color=#FF2D71>[ \u2613\u2613\u2613\u2613\u2613\u2613\u2613\u2613\u2613.???  
+    ]</color>\n\n----------------------\r\n\r\n> <color=#FF2D71>Status:</color> <b>RECOVERED</b>\r\n>
+    Source: <color=#FF2D71>/C0R*UPT3D</color>\r\n> Integrity: <b><color=#FF2D71>COMPROMISED</color></b>\r\n>
+    Last Access: <color=#FF2D71>??/??/25</color>\r\n\r\n> Note: <color=#FF2D71>INCIDENT
+    REVIEW PENDING...</color>\r\n        <color=#FF2D71>\u2588 TRACE FRAGMENTS DETECTED
+    \u2588</color>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -2718,7 +2743,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -188.21704, y: -117.40262, z: -514.87317, w: -151.17853}
+  m_margin: {x: -109.50432, y: -281.43634, z: -629.7513, w: -141.8328}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2739,22 +2764,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1604431292}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ed57967c52645d390a89dcf8f61ba73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AngleMultiplier: 1
-  SpeedMultiplier: 1
-  CurveScale: 1
---- !u!114 &1604431297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1604431292}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7cfa58e417a46ea8889989684c2522e, type: 3}
   m_Name: 
@@ -2763,6 +2773,7 @@ MonoBehaviour:
   SpeedMultiplier: 1
   ScaleMultiplier: 1
   RotationMultiplier: 1
+  m_TextComponent: {fileID: 0}
 --- !u!1 &1628793662
 GameObject:
   m_ObjectHideFlags: 0
@@ -3406,7 +3417,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -107, y: 161}
+  m_AnchoredPosition: {x: -152, y: 178}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1985025965
@@ -3429,9 +3440,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'CCTV.EXE <
-
-'
+  m_text: "\u2613\u2613\u2613\u2613\u2613\u2613\u2613\u2613\u2613.???  "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -3494,7 +3503,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 288.05002, y: 493.81995, z: -348.77887, w: -489.52032}
+  m_margin: {x: 288.05002, y: 493.81995, z: -351.51462, w: -489.52032}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

@@ -1,23 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using TMPro;
 using Ink.Runtime;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
     [Header("UI References")]
     public TMP_Text dialogueText;
     public TMP_Text speakerText;
-    //public Image portraitImage;
     public GameObject choicesContainer;
     public GameObject choicePrefab;
 
-    [Header("Portrait Zones")]
-    public Image femalePortraitImage; // inside dialogue box
-    public Image malePortraitImage;   // outside dialogue box
+    [Header("Portraits")]
+    public Image femalePortraitImage;
+    public Image malePortraitImage;
 
     [Header("Choice Colors")]
     public Color selectedChoiceColor = Color.yellow;
@@ -26,9 +25,9 @@ public class DialogueManager : MonoBehaviour
     [Header("Audio")]
     public AudioSource typingAudio;
     public AudioSource sfxAudio;
-    public TextAsset inkJSON;
 
-    [Header("Typing Settings")]
+    [Header("Ink Settings")]
+    public TextAsset inkJSON;
     public float defaultSpeed = 0.03f;
 
     private Story story;
@@ -40,16 +39,14 @@ public class DialogueManager : MonoBehaviour
     private List<TMP_Text> currentChoices = new();
     private int selectedChoiceIndex = 0;
 
-    //define text color based on the speaker
-    private Dictionary<string, string> speakerColors = new Dictionary<string, string>()
-{
-    { "Male", "#89CFF0" },     // light blue
-    { "Female", "#FFB6C1" },   // light pink
-    { "Narrator", "#FFFFFF" }  // white (default)
-};
+    private Dictionary<string, string> speakerColors = new()
+    {
+        { "Male", "#89CFF0" },
+        { "Female", "#FFB6C1" },
+        { "Narrator", "#FFFFFF" }
+    };
 
-
-    // ───────────────────────────── Init ─────────────────────────────
+    // ───── Init ─────
     void Start()
     {
         story = new Story(inkJSON.text);
@@ -59,17 +56,14 @@ public class DialogueManager : MonoBehaviour
 
     void LoadTypingSounds()
     {
-        string[] speakerTypes = { "Male", "Female", "Narrator" };
-
-        foreach (string type in speakerTypes)
+        foreach (string type in new[] { "Male", "Female", "Narrator" })
         {
             var clip = Resources.Load<AudioClip>($"Audio/Typing/{type}");
-            if (clip != null)
-                speakerTypingSounds[type.ToLower()] = clip;
+            if (clip) speakerTypingSounds[type.ToLower()] = clip;
         }
     }
 
-    // ───────────────────────────── Update ─────────────────────────────
+    // ───── Update ─────
     void Update()
     {
         if (isTyping)
@@ -91,39 +85,37 @@ public class DialogueManager : MonoBehaviour
             ContinueStory();
     }
 
-    // ───────────────────────────── Story Flow ─────────────────────────────
+    // ───── Story ─────
     void ContinueStory()
     {
         ClearChoices();
 
         if (story.canContinue)
         {
-            string text = story.Continue().Trim();
             HandleTags(story.currentTags);
-            StartCoroutine(TypeText(text));
+            StartCoroutine(TypeText(story.Continue().Trim()));
         }
         else
         {
-            Debug.Log("Round_1_Completed");
-
-            //stores somesort of data, check if this could be used to same game progress later...
             PlayerPrefs.SetInt("Round_1_Completed", 1);
             PlayerPrefs.Save();
             SceneManager.LoadScene("Interface1");
         }
     }
 
-
     float GetFloatFromInk(string varName, float defaultValue)
     {
         var val = story.variablesState[varName];
-        if (val is int i) return i;
-        if (val is float f) return f;
-        if (val is double d) return (float)d;
-        return defaultValue;
+        return val switch
+        {
+            int i => i,
+            float f => f,
+            double d => (float)d,
+            _ => defaultValue
+        };
     }
 
-    // ───────────────────────────── Typing ─────────────────────────────
+    // ───── Typing ─────
     IEnumerator TypeText(string text)
     {
         isTyping = true;
@@ -134,14 +126,10 @@ public class DialogueManager : MonoBehaviour
         float delay = GetFloatFromInk("delay", 0f);
         yield return new WaitForSeconds(delay);
 
-        // Wrap text in color tag
         string colorHex = speakerColors.ContainsKey(currentSpeaker) ? speakerColors[currentSpeaker] : "#FFFFFF";
-        string colorStart = $"<color={colorHex}>";
-        string colorEnd = "</color>";
+        string fullText = $"<color={colorHex}>{text}</color>";
 
-        string fullText = colorStart + text + colorEnd;
         int i = 0;
-
         while (i < fullText.Length)
         {
             if (skipTyping)
@@ -150,23 +138,19 @@ public class DialogueManager : MonoBehaviour
                 break;
             }
 
-            // Handle TMP tags immediately (like <color=#xxxxxx>)
             if (fullText[i] == '<')
             {
-                int closingIndex = fullText.IndexOf('>', i);
-                if (closingIndex != -1)
+                int closing = fullText.IndexOf('>', i);
+                if (closing != -1)
                 {
-                    string tag = fullText.Substring(i, closingIndex - i + 1);
-                    dialogueText.text += tag;
-                    i = closingIndex + 1;
+                    dialogueText.text += fullText.Substring(i, closing - i + 1);
+                    i = closing + 1;
                     continue;
                 }
             }
 
-            dialogueText.text += fullText[i];
-            i++;
-
-            if (typingAudio != null && speakerTypingSounds.TryGetValue(currentSpeaker.ToLower(), out AudioClip clip))
+            dialogueText.text += fullText[i++];
+            if (typingAudio && speakerTypingSounds.TryGetValue(currentSpeaker.ToLower(), out var clip))
             {
                 typingAudio.clip = clip;
                 typingAudio.Play();
@@ -176,38 +160,25 @@ public class DialogueManager : MonoBehaviour
         }
 
         isTyping = false;
-
-        if (story.currentChoices.Count > 0)
-            DisplayChoices();
+        if (story.currentChoices.Count > 0) DisplayChoices();
     }
 
-
-
-    // ───────────────────────────── SFX ─────────────────────────────
-
+    // ───── SFX ─────
     void PlaySFX(string clipName)
     {
-        AudioClip clip = Resources.Load<AudioClip>($"Audio/SFX/{clipName}");
-        if (clip != null)
-        {
-            sfxAudio.PlayOneShot(clip);
-        }
-        else
-        {
-            Debug.LogWarning($"SFX not found: Audio/SFX/{clipName}");
-        }
+        var clip = Resources.Load<AudioClip>($"Audio/SFX/{clipName}");
+        if (clip) sfxAudio.PlayOneShot(clip);
+        else Debug.LogWarning($"SFX not found: {clipName}");
     }
 
-
-    // ───────────────────────────── Choices ─────────────────────────────
+    // ───── Choices ─────
     void DisplayChoices()
     {
         currentChoices.Clear();
-
         foreach (Choice choice in story.currentChoices)
         {
-            GameObject choiceGO = Instantiate(choicePrefab, choicesContainer.transform);
-            TMP_Text choiceText = choiceGO.GetComponent<TMP_Text>();
+            var go = Instantiate(choicePrefab, choicesContainer.transform);
+            var choiceText = go.GetComponent<TMP_Text>();
             choiceText.text = choice.text;
             currentChoices.Add(choiceText);
         }
@@ -219,9 +190,7 @@ public class DialogueManager : MonoBehaviour
     void HighlightChoice()
     {
         for (int i = 0; i < currentChoices.Count; i++)
-        {
-            currentChoices[i].color = (i == selectedChoiceIndex) ? selectedChoiceColor : unselectedChoiceColor;
-        }
+            currentChoices[i].color = i == selectedChoiceIndex ? selectedChoiceColor : unselectedChoiceColor;
     }
 
     void SelectNextChoice()
@@ -250,31 +219,31 @@ public class DialogueManager : MonoBehaviour
         currentChoices.Clear();
     }
 
-    // ───────────────────────────── Tags ─────────────────────────────
+    // ───── Tags ─────
     void HandleTags(List<string> tags)
     {
-        foreach (string tag in tags)
+        foreach (var tag in tags)
         {
-            string[] splitTag = tag.Split(':');
-            if (splitTag.Length != 2) continue;
+            var parts = tag.Split(':');
+            if (parts.Length != 2) continue;
 
-            string key = splitTag[0].Trim().ToLower();
-            string val = splitTag[1].Trim();
+            string key = parts[0].Trim().ToLower();
+            string val = parts[1].Trim();
 
             switch (key)
             {
-                case "speaker": //speaker of the dialogue
+                case "speaker":
                     speakerText.text = val;
                     currentSpeaker = val;
                     break;
-                case "expression"://character expression in dialogue
+                case "expression":
                     ChangeCharacterExpression(currentSpeaker, val);
                     break;
-                case "effect": //text effect in dialogue
+                case "effect":
                     ApplyTextEffect(val);
                     break;
-                case "sfx": //sound effect in dialogue
-                    PlaySFX(val); 
+                case "sfx":
+                    PlaySFX(val);
                     break;
             }
         }
@@ -282,30 +251,29 @@ public class DialogueManager : MonoBehaviour
 
     void ChangeCharacterExpression(string speaker, string expression)
     {
-        string spritePath = $"Portraits/{speaker}_{expression}";
-        Sprite newPortrait = Resources.Load<Sprite>(spritePath);
-
-        if (newPortrait == null)
+        string path = $"Portraits/{speaker}_{expression}";
+        Sprite portrait = Resources.Load<Sprite>(path);
+        if (!portrait)
         {
-            Debug.LogWarning($"Portrait not found: {spritePath}");
+            Debug.LogWarning($"Portrait not found: {path}");
             return;
         }
 
         if (speaker == "Female")
         {
-            femalePortraitImage.sprite = newPortrait;
+            femalePortraitImage.sprite = portrait;
             femalePortraitImage.gameObject.SetActive(true);
         }
         else if (speaker == "Male")
         {
-            malePortraitImage.sprite = newPortrait;
+            malePortraitImage.sprite = portrait;
             malePortraitImage.gameObject.SetActive(true);
         }
     }
 
     void ApplyTextEffect(string effect)
     {
-        // Placeholder for visual text effects (e.g. wave, shake)
+        // Future effect handling (e.g. shake/wave)
         Debug.Log($"Apply Effect: {effect}");
     }
 }
