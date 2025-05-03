@@ -266,6 +266,13 @@ public class TerminalButtonController : MonoBehaviour
                     ShowErrorPopup();
                 }
                 break;
+            case 3: // Exit launch popup
+                if (launchPopupPanel != null)
+                {
+                    Debug.Log("Exit log");
+                    HideLaunchPopup();
+                }
+                break;
         }
     }
 
