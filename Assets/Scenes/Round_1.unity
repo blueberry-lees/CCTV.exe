@@ -259,9 +259,9 @@ MonoBehaviour:
   speakerText: {fileID: 703291666}
   portraitImage: {fileID: 589221535}
   choicesContainer: {fileID: 44693403}
-  choicePrefab: {fileID: 2137407249939408469, guid: 97adfab30e4a6ba40878af3c84d4722b, type: 3}
+  choicePrefab: {fileID: 61087793334485406, guid: c81a74941964f074db85190fa64fca49, type: 3}
   selectedChoiceColor: {r: 0.8773585, g: 0.25244746, b: 0.51740247, a: 1}
-  unselectedChoiceColor: {r: 1, g: 1, b: 1, a: 1}
+  unselectedChoiceColor: {r: 0.8584906, g: 0.8584906, b: 0.8584906, a: 1}
   typingAudio: {fileID: 305486186}
   sfxAudio: {fileID: 1611546671}
   inkJSON: {fileID: 4900000, guid: 4a4c793c44ec3be42941e4fe20066bfd, type: 3}
