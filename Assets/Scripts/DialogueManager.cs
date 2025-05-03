@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -14,8 +14,13 @@ public class DialogueManager : MonoBehaviour
     public GameObject choicesContainer;
     public GameObject choicePrefab;
 
+    [Header("Choice Colors")]
+    public Color selectedChoiceColor = Color.yellow;
+    public Color unselectedChoiceColor = Color.white;
+
     [Header("Audio")]
     public AudioSource typingAudio;
+    public AudioSource sfxAudio;
     public TextAsset inkJSON;
 
     [Header("Typing Settings")]
@@ -30,7 +35,16 @@ public class DialogueManager : MonoBehaviour
     private List<TMP_Text> currentChoices = new();
     private int selectedChoiceIndex = 0;
 
-    // ????????????????????????????? Init ?????????????????????????????
+    //define text color based on the speaker
+    private Dictionary<string, string> speakerColors = new Dictionary<string, string>()
+{
+    { "Male", "#89CFF0" },     // light blue
+    { "Female", "#FFB6C1" },   // light pink
+    { "Narrator", "#FFFFFF" }  // white (default)
+};
+
+
+    // ───────────────────────────── Init ─────────────────────────────
     void Start()
     {
         story = new Story(inkJSON.text);
@@ -50,7 +64,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    // ????????????????????????????? Update ?????????????????????????????
+    // ───────────────────────────── Update ─────────────────────────────
     void Update()
     {
         if (isTyping)
@@ -72,7 +86,7 @@ public class DialogueManager : MonoBehaviour
             ContinueStory();
     }
 
-    // ????????????????????????????? Story Flow ?????????????????????????????
+    // ───────────────────────────── Story Flow ─────────────────────────────
     void ContinueStory()
     {
         ClearChoices();
@@ -98,7 +112,7 @@ public class DialogueManager : MonoBehaviour
         return defaultValue;
     }
 
-    // ????????????????????????????? Typing ?????????????????????????????
+    // ───────────────────────────── Typing ─────────────────────────────
     IEnumerator TypeText(string text)
     {
         isTyping = true;
@@ -109,15 +123,37 @@ public class DialogueManager : MonoBehaviour
         float delay = GetFloatFromInk("delay", 0f);
         yield return new WaitForSeconds(delay);
 
-        foreach (char c in text)
+        // Wrap text in color tag
+        string colorHex = speakerColors.ContainsKey(currentSpeaker) ? speakerColors[currentSpeaker] : "#FFFFFF";
+        string colorStart = $"<color={colorHex}>";
+        string colorEnd = "</color>";
+
+        string fullText = colorStart + text + colorEnd;
+        int i = 0;
+
+        while (i < fullText.Length)
         {
             if (skipTyping)
             {
-                dialogueText.text = text;
+                dialogueText.text = fullText;
                 break;
             }
 
-            dialogueText.text += c;
+            // Handle TMP tags immediately (like <color=#xxxxxx>)
+            if (fullText[i] == '<')
+            {
+                int closingIndex = fullText.IndexOf('>', i);
+                if (closingIndex != -1)
+                {
+                    string tag = fullText.Substring(i, closingIndex - i + 1);
+                    dialogueText.text += tag;
+                    i = closingIndex + 1;
+                    continue;
+                }
+            }
+
+            dialogueText.text += fullText[i];
+            i++;
 
             if (typingAudio != null && speakerTypingSounds.TryGetValue(currentSpeaker.ToLower(), out AudioClip clip))
             {
@@ -134,7 +170,25 @@ public class DialogueManager : MonoBehaviour
             DisplayChoices();
     }
 
-    // ????????????????????????????? Choices ?????????????????????????????
+
+
+    // ───────────────────────────── SFX ─────────────────────────────
+
+    void PlaySFX(string clipName)
+    {
+        AudioClip clip = Resources.Load<AudioClip>($"Audio/SFX/{clipName}");
+        if (clip != null)
+        {
+            sfxAudio.PlayOneShot(clip);
+        }
+        else
+        {
+            Debug.LogWarning($"SFX not found: Audio/SFX/{clipName}");
+        }
+    }
+
+
+    // ───────────────────────────── Choices ─────────────────────────────
     void DisplayChoices()
     {
         currentChoices.Clear();
@@ -154,7 +208,9 @@ public class DialogueManager : MonoBehaviour
     void HighlightChoice()
     {
         for (int i = 0; i < currentChoices.Count; i++)
-            currentChoices[i].color = (i == selectedChoiceIndex) ? Color.yellow : Color.white;
+        {
+            currentChoices[i].color = (i == selectedChoiceIndex) ? selectedChoiceColor : unselectedChoiceColor;
+        }
     }
 
     void SelectNextChoice()
@@ -183,7 +239,7 @@ public class DialogueManager : MonoBehaviour
         currentChoices.Clear();
     }
 
-    // ????????????????????????????? Tags ?????????????????????????????
+    // ───────────────────────────── Tags ─────────────────────────────
     void HandleTags(List<string> tags)
     {
         foreach (string tag in tags)
@@ -196,15 +252,18 @@ public class DialogueManager : MonoBehaviour
 
             switch (key)
             {
-                case "speaker":
+                case "speaker": //speaker of the dialogue
                     speakerText.text = val;
                     currentSpeaker = val;
                     break;
-                case "expression":
+                case "expression"://character expression in dialogue
                     ChangeCharacterExpression(currentSpeaker, val);
                     break;
-                case "effect":
+                case "effect": //text effect in dialogue
                     ApplyTextEffect(val);
+                    break;
+                case "sfx": //sound effect in dialogue
+                    PlaySFX(val); 
                     break;
             }
         }
