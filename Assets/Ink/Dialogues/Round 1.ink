@@ -107,7 +107,6 @@ VAR speaker = ""
 
 #speaker:Narrator
  #expression:Default
- #effect: shake
 (No. No, no, no...)
 
 #speaker:Female  
@@ -426,7 +425,6 @@ VAR speaker = ""
 [FILE ALREADY ACCESSED. REPLAY?]
 
 *   [Yes.] -> replay_round_2
-*   [No.]  -> return_to_preview_1
 
 
 

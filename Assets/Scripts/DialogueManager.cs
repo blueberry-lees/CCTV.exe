@@ -35,12 +35,6 @@ public class DialogueManager : MonoBehaviour
     private List<TMP_Text> currentChoices = new();
     private int selectedChoiceIndex = 0;
 
-
-    private bool useShakeEffect = false;
-    private bool useWaveEffect = false;
-    private bool useJitterEffect = false;
-
-
     //define text color based on the speaker
     private Dictionary<string, string> speakerColors = new Dictionary<string, string>()
 {
@@ -96,7 +90,6 @@ public class DialogueManager : MonoBehaviour
     void ContinueStory()
     {
         ClearChoices();
-        ResetTextEffects();
 
         if (story.canContinue)
         {
@@ -130,20 +123,41 @@ public class DialogueManager : MonoBehaviour
         float delay = GetFloatFromInk("delay", 0f);
         yield return new WaitForSeconds(delay);
 
-        foreach (char c in text)
+        // Wrap text in color tag
+        string colorHex = speakerColors.ContainsKey(currentSpeaker) ? speakerColors[currentSpeaker] : "#FFFFFF";
+        string colorStart = $"<color={colorHex}>";
+        string colorEnd = "</color>";
+
+        string fullText = colorStart + text + colorEnd;
+        int i = 0;
+
+        while (i < fullText.Length)
         {
             if (skipTyping)
             {
-                dialogueText.text = text;
+                dialogueText.text = fullText;
                 break;
             }
 
-            dialogueText.text += c;
+            // Handle TMP tags immediately (like <color=#xxxxxx>)
+            if (fullText[i] == '<')
+            {
+                int closingIndex = fullText.IndexOf('>', i);
+                if (closingIndex != -1)
+                {
+                    string tag = fullText.Substring(i, closingIndex - i + 1);
+                    dialogueText.text += tag;
+                    i = closingIndex + 1;
+                    continue;
+                }
+            }
+
+            dialogueText.text += fullText[i];
+            i++;
 
             if (typingAudio != null && speakerTypingSounds.TryGetValue(currentSpeaker.ToLower(), out AudioClip clip))
             {
                 typingAudio.clip = clip;
-                typingAudio.pitch = Random.Range(0.95f, 1.05f); // Slight pitch variation
                 typingAudio.Play();
             }
 
@@ -152,14 +166,9 @@ public class DialogueManager : MonoBehaviour
 
         isTyping = false;
 
-        if (useWaveEffect) StartCoroutine(WaveText());
-        if (useJitterEffect) StartCoroutine(JitterText());
-        if (useShakeEffect) StartCoroutine(ShakeText());  // Trigger ShakeEffect if it's active
-
         if (story.currentChoices.Count > 0)
             DisplayChoices();
     }
-
 
 
 
@@ -218,7 +227,6 @@ public class DialogueManager : MonoBehaviour
 
     void ChooseSelectedChoice()
     {
-        PlaySFX("ChoiceSelect"); // Replace "ChoiceSelect" with your actual SFX name
         story.ChooseChoiceIndex(selectedChoiceIndex);
         ClearChoices();
         ContinueStory();
@@ -255,7 +263,7 @@ public class DialogueManager : MonoBehaviour
                     ApplyTextEffect(val);
                     break;
                 case "sfx": //sound effect in dialogue
-                    PlaySFX(val);
+                    PlaySFX(val); 
                     break;
             }
         }
@@ -272,137 +280,9 @@ public class DialogueManager : MonoBehaviour
             Debug.LogWarning($"Portrait not found: {spritePath}");
     }
 
-
-    // ───────────────────────────── Text effects ─────────────────────────────
     void ApplyTextEffect(string effect)
     {
-        useWaveEffect = false;
-        useJitterEffect = false;
-        useShakeEffect = false;  // Add a flag for shake effect
-
-        switch (effect.ToLower())
-        {
-            case "wave":
-                useWaveEffect = true;
-                break;
-            case "jitter":
-                useJitterEffect = true;
-                break;
-            case "shake":
-                useShakeEffect = true; // Set shake effect to true
-                break;
-            default:
-                Debug.LogWarning($"Unknown effect: {effect}");
-                break;
-        }
-    }
-
-    void ResetTextEffects()
-    {
-        StopAllCoroutines();                 // Stop any active coroutines (like wave/jitter)
-        dialogueText.text = "";             // Clear the text
-        dialogueText.ForceMeshUpdate();     // Force TMP to rebuild the mesh
-    }
-
-    IEnumerator ShakeText()
-    {
-        TMP_TextInfo textInfo = dialogueText.textInfo;
-        float shakeAmount = 3f;
-        float shakeSpeed = 10f;
-
-        while (true)
-        {
-            dialogueText.ForceMeshUpdate();
-            textInfo = dialogueText.textInfo;
-
-            for (int i = 0; i < textInfo.characterCount; i++)
-            {
-                if (!textInfo.characterInfo[i].isVisible) continue;
-
-                int vertexIndex = textInfo.characterInfo[i].vertexIndex;
-                int materialIndex = textInfo.characterInfo[i].materialReferenceIndex;
-                Vector3[] vertices = textInfo.meshInfo[materialIndex].vertices;
-
-                Vector2 shake = new Vector2(Mathf.Sin(Time.time * shakeSpeed + i * 0.3f) * shakeAmount, Mathf.Cos(Time.time * shakeSpeed + i * 0.3f) * shakeAmount);
-                for (int j = 0; j < 4; j++)
-                    vertices[vertexIndex + j] += (Vector3)shake;
-            }
-
-            for (int i = 0; i < textInfo.meshInfo.Length; i++)
-            {
-                textInfo.meshInfo[i].mesh.vertices = textInfo.meshInfo[i].vertices;
-                dialogueText.UpdateGeometry(textInfo.meshInfo[i].mesh, i);
-            }
-
-            yield return null;
-        }
-    }
-
-    IEnumerator WaveText()
-    {
-        TMP_TextInfo textInfo = dialogueText.textInfo;
-        float waveSpeed = 2f;
-        float waveHeight = 5f;
-
-        while (true)
-        {
-            dialogueText.ForceMeshUpdate();
-            textInfo = dialogueText.textInfo;
-
-            for (int i = 0; i < textInfo.characterCount; i++)
-            {
-                if (!textInfo.characterInfo[i].isVisible) continue;
-
-                int vertexIndex = textInfo.characterInfo[i].vertexIndex;
-                int materialIndex = textInfo.characterInfo[i].materialReferenceIndex;
-                Vector3[] vertices = textInfo.meshInfo[materialIndex].vertices;
-
-                float offsetY = Mathf.Sin(Time.time * waveSpeed + i * 0.3f) * waveHeight;
-                for (int j = 0; j < 4; j++)
-                    vertices[vertexIndex + j].y += offsetY;
-            }
-
-            for (int i = 0; i < textInfo.meshInfo.Length; i++)
-            {
-                textInfo.meshInfo[i].mesh.vertices = textInfo.meshInfo[i].vertices;
-                dialogueText.UpdateGeometry(textInfo.meshInfo[i].mesh, i);
-            }
-
-            yield return null;
-        }
-    }
-
-    IEnumerator JitterText()
-    {
-        TMP_TextInfo textInfo = dialogueText.textInfo;
-        float jitterAmount = 1f;
-
-        while (true)
-        {
-            dialogueText.ForceMeshUpdate();
-            textInfo = dialogueText.textInfo;
-
-            for (int i = 0; i < textInfo.characterCount; i++)
-            {
-                if (!textInfo.characterInfo[i].isVisible) continue;
-
-                int vertexIndex = textInfo.characterInfo[i].vertexIndex;
-                int materialIndex = textInfo.characterInfo[i].materialReferenceIndex;
-                Vector3[] vertices = textInfo.meshInfo[materialIndex].vertices;
-
-                Vector2 jitter = new Vector2(Random.Range(-jitterAmount, jitterAmount), Random.Range(-jitterAmount, jitterAmount));
-                for (int j = 0; j < 4; j++)
-                    vertices[vertexIndex + j] += (Vector3)jitter;
-            }
-
-            for (int i = 0; i < textInfo.meshInfo.Length; i++)
-            {
-                textInfo.meshInfo[i].mesh.vertices = textInfo.meshInfo[i].vertices;
-                dialogueText.UpdateGeometry(textInfo.meshInfo[i].mesh, i);
-            }
-
-            yield return null;
-        }
+        // Placeholder for visual text effects (e.g. wave, shake)
+        Debug.Log($"Apply Effect: {effect}");
     }
 }
-
