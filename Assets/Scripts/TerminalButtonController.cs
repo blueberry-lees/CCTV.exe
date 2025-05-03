@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TerminalButtonController : MonoBehaviour
 {
@@ -108,7 +109,7 @@ public class TerminalButtonController : MonoBehaviour
         {
             case 0: // Launch review
                 Debug.Log("Launching review...");
-                // SceneManager.LoadScene("ElevatorScene");
+                SceneManager.LoadScene("Round_1");
                 break;
             case 1: // Delete (error popup)
                 Debug.Log("Attempting deletion...");

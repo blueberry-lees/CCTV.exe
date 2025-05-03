@@ -14,9 +14,13 @@ public class TerminalIntro : MonoBehaviour
     public TMP_Text pressKeyPrompt;
 
     private bool finishedTyping = false;
+    private bool skipTyping = false;
 
     void Start()
     {
+        skipTyping = false;
+        finishedTyping = false;
+
         terminalText.text = "";
         pressKeyPrompt.gameObject.SetActive(false);
         StartCoroutine(TypeTextWithRichSupport());
@@ -27,6 +31,12 @@ public class TerminalIntro : MonoBehaviour
         int i = 0;
         while (i < fullText.Length)
         {
+            if (skipTyping)
+            {
+                terminalText.text = fullText;
+                break;
+            }
+
             if (fullText[i] == '<')
             {
                 int tagEnd = fullText.IndexOf('>', i);
@@ -66,7 +76,11 @@ public class TerminalIntro : MonoBehaviour
 
     void Update()
     {
-        if (finishedTyping && Input.anyKeyDown)
+        if (!finishedTyping && Input.GetKeyDown(KeyCode.Space))
+        {
+            skipTyping = true;
+        }
+        else if (finishedTyping && Input.GetKeyDown(KeyCode.Space))
         {
             SceneManager.LoadScene("Interface1");
         }

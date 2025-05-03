@@ -20,6 +20,8 @@ public class UserInterface : MonoBehaviour
     public TMP_Text pointerText;
     public Image buttons;
 
+    private bool skipTyping = false;
+
     void Start()
     {
         fileTree.text = "";
@@ -33,10 +35,13 @@ public class UserInterface : MonoBehaviour
     IEnumerator TypeSequence()
     {
         yield return StartCoroutine(TypeRichText(treeText, fileTree));
+        skipTyping = false;//this
         pointerText.gameObject.SetActive(true);
         StartCoroutine(BlinkPrompt());
+        skipTyping = false; //this
 
         yield return StartCoroutine(TypeRichText(previewText, filePreview));
+        skipTyping = false;//this
 
         yield return new WaitForSeconds(1f);
         typeSound.Play();
@@ -48,9 +53,14 @@ public class UserInterface : MonoBehaviour
         int i = 0;
         while (i < source.Length)
         {
+            if (skipTyping)
+            {
+                target.text = source;
+                yield break;
+            }
+
             if (source[i] == '<')
             {
-                // Detect full tag and append immediately
                 int tagEnd = source.IndexOf('>', i);
                 if (tagEnd != -1)
                 {
@@ -84,6 +94,10 @@ public class UserInterface : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            skipTyping = true;
+        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene("Intro");

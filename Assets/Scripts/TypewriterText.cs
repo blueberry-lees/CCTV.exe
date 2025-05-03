@@ -11,10 +11,22 @@ public class TypewriterText : MonoBehaviour
     public float typeSpeed = 0.05f;
     public AudioSource typeSound;
 
+    private bool skipTyping = false;
+
+
     private void OnEnable()
     {
+        skipTyping = false;
         textComponent.text = "";
         StartCoroutine(TypeText());
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            skipTyping = true;
+        }
     }
 
     IEnumerator TypeText()
@@ -22,7 +34,12 @@ public class TypewriterText : MonoBehaviour
         int i = 0;
         while (i < fullText.Length)
         {
-            // If we hit a rich text tag, skip to the end of the tag
+            if (skipTyping)
+            {
+                textComponent.text = fullText;
+                yield break;
+            }
+
             if (fullText[i] == '<')
             {
                 int tagEnd = fullText.IndexOf('>', i);
