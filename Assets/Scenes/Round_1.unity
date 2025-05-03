@@ -258,7 +258,7 @@ MonoBehaviour:
   speakerText: {fileID: 703291666}
   portraitImage: {fileID: 589221535}
   choicesContainer: {fileID: 44693403}
-  choicePrefab: {fileID: 2137407249939408469, guid: 97adfab30e4a6ba40878af3c84d4722b, type: 3}
+  choicePrefab: {fileID: 61087793334485406, guid: c81a74941964f074db85190fa64fca49, type: 3}
   selectedChoiceColor: {r: 0.8773585, g: 0.25244746, b: 0.51740247, a: 1}
   unselectedChoiceColor: {r: 1, g: 1, b: 1, a: 1}
   typingAudio: {fileID: 305486186}
@@ -1140,7 +1140,7 @@ Transform:
   m_GameObject: {fileID: 1611546670}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.1029657, y: 0.06866804, z: 1408.4125}
+  m_LocalPosition: {x: 0, y: 4.02, z: 1408.4125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

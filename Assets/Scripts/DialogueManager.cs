@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using Ink.Runtime;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -99,9 +100,15 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("End of story.");
+            Debug.Log("Round_1_Completed");
+
+            //stores somesort of data, check if this could be used to same game progress later...
+            PlayerPrefs.SetInt("Round_1_Completed", 1);
+            PlayerPrefs.Save();
+            SceneManager.LoadScene("Interface1");
         }
     }
+
 
     float GetFloatFromInk(string varName, float defaultValue)
     {
