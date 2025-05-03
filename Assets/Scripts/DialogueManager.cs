@@ -11,9 +11,13 @@ public class DialogueManager : MonoBehaviour
     [Header("UI References")]
     public TMP_Text dialogueText;
     public TMP_Text speakerText;
-    public Image portraitImage;
+    //public Image portraitImage;
     public GameObject choicesContainer;
     public GameObject choicePrefab;
+
+    [Header("Portrait Zones")]
+    public Image femalePortraitImage; // inside dialogue box
+    public Image malePortraitImage;   // outside dialogue box
 
     [Header("Choice Colors")]
     public Color selectedChoiceColor = Color.yellow;
@@ -281,10 +285,22 @@ public class DialogueManager : MonoBehaviour
         string spritePath = $"Portraits/{speaker}_{expression}";
         Sprite newPortrait = Resources.Load<Sprite>(spritePath);
 
-        if (newPortrait != null)
-            portraitImage.sprite = newPortrait;
-        else
+        if (newPortrait == null)
+        {
             Debug.LogWarning($"Portrait not found: {spritePath}");
+            return;
+        }
+
+        if (speaker == "Female")
+        {
+            femalePortraitImage.sprite = newPortrait;
+            femalePortraitImage.gameObject.SetActive(true);
+        }
+        else if (speaker == "Male")
+        {
+            malePortraitImage.sprite = newPortrait;
+            malePortraitImage.gameObject.SetActive(true);
+        }
     }
 
     void ApplyTextEffect(string effect)

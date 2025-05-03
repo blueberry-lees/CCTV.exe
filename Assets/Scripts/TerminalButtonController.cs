@@ -38,6 +38,7 @@ public class TerminalButtonController : MonoBehaviour
 
     public bool isOtherPanelActive = false; //to check if any other panel except the main 3 are open
     public bool isExitPanelActive = false;
+    private bool isErrorPopupActive = false;
 
     void Start()
     {
@@ -173,14 +174,34 @@ public class TerminalButtonController : MonoBehaviour
     void ShowErrorPopup()
     {
         typeSound.Play();
-
         errorPopupText.gameObject.SetActive(true);
-        Invoke("HideErrorPopup", 4f);  // Hide after 4 seconds
+
+        // Instead of auto-hiding after 4 seconds, wait for input
+        if (!isErrorPopupActive)
+        {
+            StartCoroutine(WaitForAnyKeyToHideError());
+        }
     }
 
     void HideErrorPopup()
     {
         errorPopupText.gameObject.SetActive(false);  // Hide the error message
+        isErrorPopupActive = false;
+    }
+
+    IEnumerator WaitForAnyKeyToHideError()
+    {
+        isErrorPopupActive = true;
+
+        // Wait one frame to avoid immediately hiding due to the same key press
+        yield return null;
+
+        while (!Input.anyKeyDown)
+        {
+            yield return null;
+        }
+
+        HideErrorPopup();
     }
 
     void ShowExitPopup()
