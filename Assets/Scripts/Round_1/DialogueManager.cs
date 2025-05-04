@@ -18,6 +18,9 @@ public class DialogueManager : MonoBehaviour
     public Image femalePortraitImage;
     public Image malePortraitImage;
 
+    [Header("Background")]
+    public Image backgroundImage;
+
     [Header("Choice Colors")]
     public Color selectedChoiceColor = Color.yellow;
     public Color unselectedChoiceColor = Color.white;
@@ -46,13 +49,17 @@ public class DialogueManager : MonoBehaviour
         { "Narrator", "#FFFFFF" }
     };
 
-    // ───── Init ─────
     void Start()
     {
+        femalePortraitImage.gameObject.SetActive(false);
+        malePortraitImage.gameObject.SetActive(false);
+
         story = new Story(inkJSON.text);
         LoadTypingSounds();
         ContinueStory();
     }
+
+
 
     void LoadTypingSounds()
     {
@@ -63,7 +70,6 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    // ───── Update ─────
     void Update()
     {
         if (isTyping)
@@ -85,22 +91,23 @@ public class DialogueManager : MonoBehaviour
             ContinueStory();
     }
 
-    // ───── Story ─────
     void ContinueStory()
     {
         ClearChoices();
 
-        if (story.canContinue)
-        {
-            HandleTags(story.currentTags);
-            StartCoroutine(TypeText(story.Continue().Trim()));
-        }
-        else
+        if (!story.canContinue)
         {
             PlayerPrefs.SetInt("Round_1_Completed", 1);
             PlayerPrefs.Save();
             SceneManager.LoadScene("Interface2");
+            return;
         }
+
+        string line = story.Continue().Trim();        // Get the next line
+        List<string> tags = story.currentTags;        // Then grab the tags from this line
+
+        HandleTags(tags);                             // Now handle tags for THIS line
+        StartCoroutine(TypeText(line));               // Then show the line
     }
 
     float GetFloatFromInk(string varName, float defaultValue)
@@ -115,7 +122,6 @@ public class DialogueManager : MonoBehaviour
         };
     }
 
-    // ───── Typing ─────
     IEnumerator TypeText(string text)
     {
         isTyping = true;
@@ -163,7 +169,6 @@ public class DialogueManager : MonoBehaviour
         if (story.currentChoices.Count > 0) DisplayChoices();
     }
 
-    // ───── SFX ─────
     void PlaySFX(string clipName)
     {
         var clip = Resources.Load<AudioClip>($"Audio/SFX/{clipName}");
@@ -171,7 +176,6 @@ public class DialogueManager : MonoBehaviour
         else Debug.LogWarning($"SFX not found: {clipName}");
     }
 
-    // ───── Choices ─────
     void DisplayChoices()
     {
         currentChoices.Clear();
@@ -219,16 +223,15 @@ public class DialogueManager : MonoBehaviour
         currentChoices.Clear();
     }
 
-    // ───── Tags ─────
-    void HandleTags(List<string> tags)
+    private void HandleTags(List<string> tags)
     {
-        foreach (var tag in tags)
+        foreach (string tag in tags)
         {
-            var parts = tag.Split(':');
-            if (parts.Length != 2) continue;
+            var splitTag = tag.Trim().Split(':');
+            if (splitTag.Length != 2) continue;
 
-            string key = parts[0].Trim().ToLower();
-            string val = parts[1].Trim();
+            var key = splitTag[0].Trim().ToLower();
+            var val = splitTag[1].Trim();
 
             switch (key)
             {
@@ -236,22 +239,29 @@ public class DialogueManager : MonoBehaviour
                     speakerText.text = val;
                     currentSpeaker = val;
                     break;
+
+                case "sfx":
+                    PlaySFX(val);
+                    break;
+
                 case "expression":
                     ChangeCharacterExpression(currentSpeaker, val);
                     break;
+
                 case "effect":
                     ApplyTextEffect(val);
                     break;
-                case "sfx":
-                    PlaySFX(val);
+
+                case "background":
+                    ChangeEnvironmentBackground(val);
                     break;
             }
         }
     }
 
-    void ChangeCharacterExpression(string speaker, string expression)
+    private void ChangeCharacterExpression(string speaker, string expression)
     {
-        string path = $"Portraits/{speaker}_{expression}";
+        string path = $"Portraits/{speaker}/{expression}";
         Sprite portrait = Resources.Load<Sprite>(path);
         if (!portrait)
         {
@@ -259,15 +269,27 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        if (speaker == "Female")
+        // Hide both portraits before switching
+        femalePortraitImage.gameObject.SetActive(false);
+        malePortraitImage.gameObject.SetActive(false);
+
+        switch (speaker)
         {
-            femalePortraitImage.sprite = portrait;
-            femalePortraitImage.gameObject.SetActive(true);
-        }
-        else if (speaker == "Male")
-        {
-            malePortraitImage.sprite = portrait;
-            malePortraitImage.gameObject.SetActive(true);
+            case "Female":
+                femalePortraitImage.sprite = portrait;
+                femalePortraitImage.gameObject.SetActive(true);
+                break;
+
+            case "Male":
+                malePortraitImage.sprite = portrait;
+                malePortraitImage.gameObject.SetActive(true);
+                break;
+
+            default:
+                Debug.Log($"Unknown speaker: {speaker}");
+                break;
+
+                //can add more speaker/character
         }
     }
 
@@ -275,5 +297,19 @@ public class DialogueManager : MonoBehaviour
     {
         // Future effect handling (e.g. shake/wave)
         Debug.Log($"Apply Effect: {effect}");
+    }
+
+    void ChangeEnvironmentBackground(string backgroundName)
+    {
+        Sprite bgSprite = Resources.Load<Sprite>($"Backgrounds/{backgroundName}");
+        if (bgSprite != null)
+        {
+            backgroundImage.sprite = bgSprite;
+            backgroundImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning($"Background not found: {backgroundName}");
+        }
     }
 }

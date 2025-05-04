@@ -260,6 +260,7 @@ MonoBehaviour:
   choicePrefab: {fileID: 3678080162618335057, guid: 22665e33339b4dc4fa99ad8c2ca47413, type: 3}
   femalePortraitImage: {fileID: 589221535}
   malePortraitImage: {fileID: 935957437}
+  backgroundImage: {fileID: 620589519}
   selectedChoiceColor: {r: 0.8773585, g: 0.25244746, b: 0.51740247, a: 1}
   unselectedChoiceColor: {r: 1, g: 1, b: 1, a: 1}
   typingAudio: {fileID: 305486186}
@@ -976,7 +977,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 22, y: 3}
+  m_AnchoredPosition: {x: -81, y: 21}
   m_SizeDelta: {x: 424.75, y: 441.16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &935957437
