@@ -425,6 +425,8 @@ MonoBehaviour:
   fullText: '[LOG_02]'
   typeSpeed: 0.03
   typeSound: {fileID: 2052641273}
+  shakeIntensity: 0.5
+  shakeSpeed: 0.02
 --- !u!114 &186917886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -752,6 +754,8 @@ MonoBehaviour:
   fullText: '[EXIT]'
   typeSpeed: 0.05
   typeSound: {fileID: 0}
+  shakeIntensity: 0.5
+  shakeSpeed: 0.02
 --- !u!1 &381236723
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,6 +810,8 @@ MonoBehaviour:
   fullText: '[No]'
   typeSpeed: 0.05
   typeSound: {fileID: 2052641273}
+  shakeIntensity: 0.5
+  shakeSpeed: 0.02
 --- !u!114 &381236726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -912,7 +918,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 420880360}
-  - component: {fileID: 420880359}
   - component: {fileID: 420880363}
   - component: {fileID: 420880362}
   m_Layer: 0
@@ -922,37 +927,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &420880359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420880358}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3f4fd83dfe1c1f4089722dd2cf20c93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  typeDelay: 0.03
-  typeSound: {fileID: 2052641273}
-  fileTree: {fileID: 503524297}
-  filePreview: {fileID: 1604431294}
-  pointerText: {fileID: 1985025965}
-  buttons: {fileID: 162659784}
-  treeText: "> \r<color=#FF2D71>SYSTEM_ROOT</color>\n\u2502\r\n\u251C\u2500\u2500
-    <color=#FF2D71>RECORDS</color>/\r\n\u2502   \u251C\u2500\u2500 elevator_log_0314.m??   
-    [<color=#FF2D71>CRC_ERROR</color>]\r\n\u2502   \u2514\u2500\u2500 mani\u0192est.j<color=#FF2D71>$on</color>   
-    [!<color=#FF2D71>MISSING_FIELDS</color>]\r\n\u2502\r\n\u251C\u2500\u2500 <color=#FF2D71>ARCHIVE</color>/\r\n\u2502  
-    \u251C\u2500\u2500 b<color=#FF2D71>@ckup_03</color>!<color=#FF2D71>3</color>/\r\n\u2502  
-    \u251C\u2500\u2500 bac\u256Bkup_0312/    [<color=#FF2D71>INCOMPLETE</color>]\r\n\u2502\r\n\u251C\u2500\u2500
-    <color=#FF2D71>CORRUPTED</color>/\r\n\u2502   \u251C\u2500\u2500 CCTV_oldfeed.t\u2261p\r\n\u2502  
-    \u2514\u2500\u2500 \n\u2502\u2502\r\n\u2514\u2500\u2500  \u2588\u2588 <color=#FF2D71>SYSTEM_FLAG</color>:
-    [<color=#FF2D71>INTEGRITY FAIL</color>]"
-  previewText: "<color=#FF2D71>[ CCTV.exe ]</color>\n\n----------------------\n\n>
-    <color=#FF2D71>Status:</color> Recovered\n\r\n> Source: <color=#FF2D71>/C0R*UPT3D</color>\n\r\n>
-    Integrity: Compromised\n\r\n> Last Access: <color=#FF2D71>??/??/25</color>\n\n\r\n>
-    Note: <color=#FF2D71>Incident review pending...\r</color>\r</color>\r\r"
 --- !u!4 &420880360
 Transform:
   m_ObjectHideFlags: 0
@@ -982,6 +956,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeDelay: 0.03
   typeSound: {fileID: 2052641273}
+  shakeIntensity: 0.5
   fileTree: {fileID: 503524297}
   filePreview: {fileID: 1604431294}
   pointerText: {fileID: 1985025965}
@@ -1289,6 +1264,8 @@ MonoBehaviour:
   fullText: '[Yes]'
   typeSpeed: 0.05
   typeSound: {fileID: 2052641273}
+  shakeIntensity: 0.5
+  shakeSpeed: 0.02
 --- !u!114 &723337740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1441,6 +1418,8 @@ MonoBehaviour:
     Requirement: system_override\r\n      Status: encrypted\r\n      Trace: SHADOW/01_404"
   typeSpeed: 0.05
   typeSound: {fileID: 2052641273}
+  shakeIntensity: 0.5
+  shakeSpeed: 0.02
 --- !u!114 &753630124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1593,6 +1572,8 @@ MonoBehaviour:
   fullText: '> SYSTEM_LOG_ARCHIVE\<color=#FF2D71>REVIEW_INDEX  </color>'
   typeSpeed: 0.05
   typeSound: {fileID: 2052641273}
+  shakeIntensity: 0.5
+  shakeSpeed: 0.02
 --- !u!114 &894687589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1796,6 +1777,8 @@ MonoBehaviour:
   fullText: '> <color=#FF2D71>Abort review? </color>Unsaved insight may be l0st.'
   typeSpeed: 0.05
   typeSound: {fileID: 2052641273}
+  shakeIntensity: 0.5
+  shakeSpeed: 0.02
 --- !u!114 &1029872359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2085,6 +2068,8 @@ MonoBehaviour:
   fullText: '[LOG_01]'
   typeSpeed: 0.03
   typeSound: {fileID: 2052641273}
+  shakeIntensity: 0.5
+  shakeSpeed: 0.02
 --- !u!114 &1283354505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2240,6 +2225,8 @@ MonoBehaviour:
     Status: FLAGGED - autoboot_enabled\r\n      Note: data_fragmented / content_<color=#FF2D71>unstable\r\r</color>"
   typeSpeed: 0.05
   typeSound: {fileID: 2052641273}
+  shakeIntensity: 0.5
+  shakeSpeed: 0.02
 --- !u!114 &1287448278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2491,6 +2478,8 @@ MonoBehaviour:
     DENIED</color>"
   typeSpeed: 0.05
   typeSound: {fileID: 2052641273}
+  shakeIntensity: 0.5
+  shakeSpeed: 0.02
 --- !u!1 &1541561608
 GameObject:
   m_ObjectHideFlags: 0
@@ -3040,6 +3029,8 @@ MonoBehaviour:
   fullText: '[LAUNCH REVIEW]'
   typeSpeed: 0.05
   typeSound: {fileID: 0}
+  shakeIntensity: 0.5
+  shakeSpeed: 0.02
 --- !u!1 &1701568725
 GameObject:
   m_ObjectHideFlags: 0
@@ -3096,6 +3087,8 @@ MonoBehaviour:
 '
   typeSpeed: 0.05
   typeSound: {fileID: 2052641273}
+  shakeIntensity: 0.5
+  shakeSpeed: 0.02
 --- !u!114 &1701568728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3346,6 +3339,8 @@ MonoBehaviour:
   fullText: '[DELETE]'
   typeSpeed: 0.05
   typeSound: {fileID: 0}
+  shakeIntensity: 0.5
+  shakeSpeed: 0.02
 --- !u!1 &1985025963
 GameObject:
   m_ObjectHideFlags: 0
@@ -3603,6 +3598,8 @@ MonoBehaviour:
     Requirement: complete LOG_01 full_review\r\n      Hint: \"you_only_see_what_you_expect\""
   typeSpeed: 0.05
   typeSound: {fileID: 2052641273}
+  shakeIntensity: 0.5
+  shakeSpeed: 0.02
 --- !u!114 &2038862904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3884,6 +3881,8 @@ MonoBehaviour:
   fullText: '[LOG_03]'
   typeSpeed: 0.03
   typeSound: {fileID: 2052641273}
+  shakeIntensity: 0.5
+  shakeSpeed: 0.02
 --- !u!114 &2053855230
 MonoBehaviour:
   m_ObjectHideFlags: 0

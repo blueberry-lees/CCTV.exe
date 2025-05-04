@@ -99,7 +99,7 @@ public class DialogueManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("Round_1_Completed", 1);
             PlayerPrefs.Save();
-            SceneManager.LoadScene("Interface1");
+            SceneManager.LoadScene("Interface2");
         }
     }
 
