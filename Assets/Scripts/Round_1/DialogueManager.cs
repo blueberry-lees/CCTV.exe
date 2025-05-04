@@ -10,18 +10,13 @@ public class DialogueManager : MonoBehaviour
 {
 
     private VisualManager visualManager;
+    private DialogueChoice choiceUI;
 
 
     [Header("UI References")]
     public TMP_Text speakerText;
     public TMP_Text dialogueText;
-    public GameObject choicesContainer;
-    public GameObject choicePrefab;
     
-
-    [Header("Choice Colors")]
-    public Color selectedChoiceColor = Color.yellow;
-    public Color unselectedChoiceColor = Color.white;
 
     [Header("Audio")]
     public AudioSource typingAudio;
@@ -37,8 +32,7 @@ public class DialogueManager : MonoBehaviour
 
     private string currentSpeaker = "Narrator"; //the current speaker set to narrator by default
     private Dictionary<string, AudioClip> speakerTypingSounds = new();
-    private List<TMP_Text> currentChoices = new();
-    private int selectedChoiceIndex = 0;
+
 
     private Dictionary<string, string> speakerColors = new()
     {
@@ -50,7 +44,11 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         visualManager = GetComponent<VisualManager>();
+
         story = new Story(inkJSON.text);
+        choiceUI = GetComponent<DialogueChoice>();
+        choiceUI.Init(story, this);
+
         LoadTypingSounds();
         ContinueStory();
     }
@@ -64,11 +62,11 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        if (currentChoices.Count > 0)
+        if (choiceUI.HasChoices())
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow)) SelectNextChoice();
-            else if (Input.GetKeyDown(KeyCode.DownArrow)) SelectPreviousChoice();
-            else if (Input.GetKeyDown(KeyCode.Return)) ChooseSelectedChoice();
+            if (Input.GetKeyDown(KeyCode.UpArrow)) choiceUI.NavigateChoice(-1);
+            else if (Input.GetKeyDown(KeyCode.DownArrow)) choiceUI.NavigateChoice(1);
+            else if (Input.GetKeyDown(KeyCode.Return)) choiceUI.ChooseSelectedChoice();
             return;
         }
 
@@ -76,9 +74,8 @@ public class DialogueManager : MonoBehaviour
             ContinueStory();
     }
 
-    void ContinueStory()
+    public void ContinueStory()
     {
-        ClearChoices();
 
         if (!story.canContinue)
         {
@@ -151,7 +148,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         isTyping = false;
-        if (story.currentChoices.Count > 0) DisplayChoices();
+        if (story.currentChoices.Count > 0) choiceUI.DisplayChoices();
     }
 
 
@@ -212,50 +209,5 @@ public class DialogueManager : MonoBehaviour
         visualManager.ChangeEnvironmentBackground(backgroundName);
     }
 
-    void DisplayChoices()
-    {
-        currentChoices.Clear();
-        foreach (Choice choice in story.currentChoices)
-        {
-            var go = Instantiate(choicePrefab, choicesContainer.transform);
-            var choiceText = go.GetComponent<TMP_Text>();
-            choiceText.text = choice.text;
-            currentChoices.Add(choiceText);
-        }
 
-        selectedChoiceIndex = 0;
-        HighlightChoice();
-    }
-
-    void HighlightChoice()
-    {
-        for (int i = 0; i < currentChoices.Count; i++)
-            currentChoices[i].color = i == selectedChoiceIndex ? selectedChoiceColor : unselectedChoiceColor;
-    }
-
-    void SelectNextChoice()
-    {
-        selectedChoiceIndex = (selectedChoiceIndex + 1) % currentChoices.Count;
-        HighlightChoice();
-    }
-
-    void SelectPreviousChoice()
-    {
-        selectedChoiceIndex = (selectedChoiceIndex - 1 + currentChoices.Count) % currentChoices.Count;
-        HighlightChoice();
-    }
-
-    void ChooseSelectedChoice()
-    {
-        story.ChooseChoiceIndex(selectedChoiceIndex);
-        ClearChoices();
-        ContinueStory();
-    }
-
-    void ClearChoices()
-    {
-        foreach (Transform child in choicesContainer.transform)
-            Destroy(child.gameObject);
-        currentChoices.Clear();
-    }
 }
