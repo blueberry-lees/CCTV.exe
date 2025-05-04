@@ -234,9 +234,10 @@ GameObject:
   m_Component:
   - component: {fileID: 305486187}
   - component: {fileID: 305486185}
+  - component: {fileID: 305486188}
   - component: {fileID: 305486186}
   m_Layer: 0
-  m_Name: Dialogue_Manager
+  m_Name: Task_Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -254,13 +255,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec9bb238fb423084295fa371dae27063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueText: {fileID: 1681324135}
   speakerText: {fileID: 703291666}
+  dialogueText: {fileID: 1681324135}
   choicesContainer: {fileID: 44693403}
   choicePrefab: {fileID: 3678080162618335057, guid: 22665e33339b4dc4fa99ad8c2ca47413, type: 3}
-  femalePortraitImage: {fileID: 589221535}
-  malePortraitImage: {fileID: 935957437}
-  backgroundImage: {fileID: 620589519}
   selectedChoiceColor: {r: 0.8773585, g: 0.25244746, b: 0.51740247, a: 1}
   unselectedChoiceColor: {r: 1, g: 1, b: 1, a: 1}
   typingAudio: {fileID: 305486186}
@@ -378,6 +376,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &305486188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305486184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23d589a4e09e0e2409e495ca2c924817, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  femalePortraitImage: {fileID: 589221535}
+  malePortraitImage: {fileID: 935957437}
+  backgroundImage: {fileID: 620589519}
 --- !u!1 &419912948
 GameObject:
   m_ObjectHideFlags: 0

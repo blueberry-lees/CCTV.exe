@@ -8,18 +8,16 @@ using Ink.Runtime;
 
 public class DialogueManager : MonoBehaviour
 {
+
+    private VisualManager visualManager;
+
+
     [Header("UI References")]
-    public TMP_Text dialogueText;
     public TMP_Text speakerText;
+    public TMP_Text dialogueText;
     public GameObject choicesContainer;
     public GameObject choicePrefab;
-
-    [Header("Portraits")]
-    public Image femalePortraitImage;
-    public Image malePortraitImage;
-
-    [Header("Background")]
-    public Image backgroundImage;
+    
 
     [Header("Choice Colors")]
     public Color selectedChoiceColor = Color.yellow;
@@ -37,7 +35,7 @@ public class DialogueManager : MonoBehaviour
     private bool isTyping = false;
     private bool skipTyping = false;
 
-    private string currentSpeaker = "Narrator";
+    private string currentSpeaker = "Narrator"; //the current speaker set to narrator by default
     private Dictionary<string, AudioClip> speakerTypingSounds = new();
     private List<TMP_Text> currentChoices = new();
     private int selectedChoiceIndex = 0;
@@ -51,23 +49,10 @@ public class DialogueManager : MonoBehaviour
 
     void Start()
     {
-        femalePortraitImage.gameObject.SetActive(false);
-        malePortraitImage.gameObject.SetActive(false);
-
+        visualManager = GetComponent<VisualManager>();
         story = new Story(inkJSON.text);
         LoadTypingSounds();
         ContinueStory();
-    }
-
-
-
-    void LoadTypingSounds()
-    {
-        foreach (string type in new[] { "Male", "Female", "Narrator" })
-        {
-            var clip = Resources.Load<AudioClip>($"Audio/Typing/{type}");
-            if (clip) speakerTypingSounds[type.ToLower()] = clip;
-        }
     }
 
     void Update()
@@ -169,11 +154,62 @@ public class DialogueManager : MonoBehaviour
         if (story.currentChoices.Count > 0) DisplayChoices();
     }
 
+
+    void LoadTypingSounds()
+    {
+        foreach (string type in new[] { "Male", "Female", "Narrator" })
+        {
+            var clip = Resources.Load<AudioClip>($"Audio/Typing/{type}");
+            if (clip) speakerTypingSounds[type.ToLower()] = clip;
+        }
+    }
+
+    private void HandleTags(List<string> tags)
+    {
+        foreach (string tag in tags)
+        {
+            var splitTag = tag.Trim().Split(':');
+            if (splitTag.Length != 2) continue;
+
+            var key = splitTag[0].Trim().ToLower();
+            var val = splitTag[1].Trim();
+
+            switch (key)
+            {
+                case "speaker":
+                    speakerText.text = val;
+                    currentSpeaker = val;
+                    break;
+
+                case "sfx":
+                    PlaySFX(val);
+                    break;
+
+                case "expression":
+                    ChangeCharacterExpression(currentSpeaker, val);
+                    break;
+
+                case "background":
+                    ChangeEnvironmentBackground(val);
+                    break;
+            }
+        }
+    }
+
     void PlaySFX(string clipName)
     {
         var clip = Resources.Load<AudioClip>($"Audio/SFX/{clipName}");
         if (clip) sfxAudio.PlayOneShot(clip);
         else Debug.LogWarning($"SFX not found: {clipName}");
+    }
+    private void ChangeCharacterExpression(string speaker, string expression)
+    {
+        visualManager.ChangeCharacterExpression(speaker, expression);
+    }
+
+    private void ChangeEnvironmentBackground(string backgroundName)
+    {
+        visualManager.ChangeEnvironmentBackground(backgroundName);
     }
 
     void DisplayChoices()
@@ -221,95 +257,5 @@ public class DialogueManager : MonoBehaviour
         foreach (Transform child in choicesContainer.transform)
             Destroy(child.gameObject);
         currentChoices.Clear();
-    }
-
-    private void HandleTags(List<string> tags)
-    {
-        foreach (string tag in tags)
-        {
-            var splitTag = tag.Trim().Split(':');
-            if (splitTag.Length != 2) continue;
-
-            var key = splitTag[0].Trim().ToLower();
-            var val = splitTag[1].Trim();
-
-            switch (key)
-            {
-                case "speaker":
-                    speakerText.text = val;
-                    currentSpeaker = val;
-                    break;
-
-                case "sfx":
-                    PlaySFX(val);
-                    break;
-
-                case "expression":
-                    ChangeCharacterExpression(currentSpeaker, val);
-                    break;
-
-                case "effect":
-                    ApplyTextEffect(val);
-                    break;
-
-                case "background":
-                    ChangeEnvironmentBackground(val);
-                    break;
-            }
-        }
-    }
-
-    private void ChangeCharacterExpression(string speaker, string expression)
-    {
-        string path = $"Portraits/{speaker}/{expression}";
-        Sprite portrait = Resources.Load<Sprite>(path);
-        if (!portrait)
-        {
-            Debug.LogWarning($"Portrait not found: {path}");
-            return;
-        }
-
-        // Hide both portraits before switching
-        femalePortraitImage.gameObject.SetActive(false);
-        malePortraitImage.gameObject.SetActive(false);
-
-        switch (speaker)
-        {
-            case "Female":
-                femalePortraitImage.sprite = portrait;
-                femalePortraitImage.gameObject.SetActive(true);
-                break;
-
-            case "Male":
-                malePortraitImage.sprite = portrait;
-                malePortraitImage.gameObject.SetActive(true);
-                break;
-
-            default:
-                Debug.Log($"Unknown speaker: {speaker}");
-                break;
-
-                //can add more speaker/character
-        }
-    }
-
-    void ApplyTextEffect(string effect)
-    {
-        // Future effect handling (e.g. shake/wave)
-        Debug.Log($"Apply Effect: {effect}");
-    }
-
-    void ChangeEnvironmentBackground(string backgroundName)
-    {
-        Sprite bgSprite = Resources.Load<Sprite>($"Backgrounds/{backgroundName}");
-        if (bgSprite != null)
-        {
-            backgroundImage.sprite = bgSprite;
-            backgroundImage.gameObject.SetActive(true);
-        }
-        else
-        {
-            Debug.LogWarning($"Background not found: {backgroundName}");
-        }
     }
 }
