@@ -995,7 +995,7 @@ MonoBehaviour:
     <color=#FF2D71>CORRUPTED</color>/\r\n\u2502   \u251C\u2500\u2500 CCTV_oldfeed.t\u2261p\r\n\u2502  
     \u2514\u2500\u2500 \n\u2502\u2502\r\n\u2514\u2500\u2500  \u2588\u2588 <color=#FF2D71>SYSTEM_FLAG</color>:
     [<color=#FF2D71>INTEGRITY FAIL</color>]"
-  previewText: "<color=#FF2D71>[ CCTV.exe ]</color>\n\n----------------------\n\n>
+  previewText: "<color=#FF2D71>[ XXXXXXXXXXX.???   ]</color>\n\n----------------------\n\n>
     <color=#FF2D71>Status:</color> Recovered\n\r\n> Source: <color=#FF2D71>/C0R*UPT3D</color>\n\r\n>
     Integrity: Compromised\n\r\n> Last Access: <color=#FF2D71>??/??/25</color>\n\n\r\n>
     Note: <color=#FF2D71>Incident review pending...\r</color>\r</color>\r\r"
@@ -1040,7 +1040,6 @@ GameObject:
   - component: {fileID: 503524296}
   - component: {fileID: 503524298}
   - component: {fileID: 503524297}
-  - component: {fileID: 503524299}
   m_Layer: 5
   m_Name: FileTree
   m_TagString: Untagged
@@ -1104,8 +1103,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4293717228
-  m_fontColor: {r: 0.9245283, g: 0.9245283, b: 0.9245283, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1172,23 +1171,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 503524295}
   m_CullTransparentMesh: 1
---- !u!114 &503524299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 503524295}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7cfa58e417a46ea8889989684c2522e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AngleMultiplier: 1
-  SpeedMultiplier: 1
-  ScaleMultiplier: 1
-  RotationMultiplier: 1
-  m_TextComponent: {fileID: 0}
 --- !u!1 &591122677
 GameObject:
   m_ObjectHideFlags: 0
@@ -2021,7 +2003,7 @@ MonoBehaviour:
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
   m_Cameras: []
-  m_RendererIndex: -1
+  m_RendererIndex: 0
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -2628,7 +2610,6 @@ GameObject:
   - component: {fileID: 1604431293}
   - component: {fileID: 1604431295}
   - component: {fileID: 1604431294}
-  - component: {fileID: 1604431296}
   m_Layer: 5
   m_Name: FilePreview
   m_TagString: Untagged
@@ -2675,12 +2656,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<color=#FF2D71>[ \u2613\u2613\u2613\u2613\u2613\u2613\u2613\u2613\u2613.???  
-    ]</color>\n\n----------------------\r\n\r\n> <color=#FF2D71>Status:</color> <b>RECOVERED</b>\r\n>
-    Source: <color=#FF2D71>/C0R*UPT3D</color>\r\n> Integrity: <b><color=#FF2D71>COMPROMISED</color></b>\r\n>
-    Last Access: <color=#FF2D71>??/??/25</color>\r\n\r\n> Note: <color=#FF2D71>INCIDENT
-    REVIEW PENDING...</color>\r\n        <color=#FF2D71>\u2588 TRACE FRAGMENTS DETECTED
-    \u2588</color>"
+  m_text: "<color=#FF2D71>[ XXXXXXXXXXX.???    ]</color>\n\n----------------------\r\n\r\n>
+    <color=#FF2D71>Status:</color> <b>RECOVERED</b>\r\n> Source: <color=#FF2D71>/C0R*UPT3D</color>\r\n>
+    Integrity: <b><color=#FF2D71>COMPROMISED</color></b>\r\n> Last Access: <color=#FF2D71>??/??/25</color>\r\n\r\n>
+    Note: <color=#FF2D71>INCIDENT REVIEW PENDING...</color>\r\n        <color=#FF2D71>\u2588
+    TRACE FRAGMENTS DETECTED \u2588</color>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -2757,23 +2737,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1604431292}
   m_CullTransparentMesh: 1
---- !u!114 &1604431296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1604431292}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7cfa58e417a46ea8889989684c2522e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AngleMultiplier: 1
-  SpeedMultiplier: 1
-  ScaleMultiplier: 1
-  RotationMultiplier: 1
-  m_TextComponent: {fileID: 0}
 --- !u!1 &1628793662
 GameObject:
   m_ObjectHideFlags: 0
@@ -3440,7 +3403,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u2613\u2613\u2613\u2613\u2613\u2613\u2613\u2613\u2613.???  "
+  m_text: 'XXXXXXXXXXX.???  '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}

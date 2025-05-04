@@ -218,6 +218,7 @@ RectTransform:
   m_Children:
   - {fileID: 1283599251}
   - {fileID: 526158418}
+  - {fileID: 2136904710}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -373,7 +374,6 @@ GameObject:
   - component: {fileID: 526158418}
   - component: {fileID: 526158420}
   - component: {fileID: 526158419}
-  - component: {fileID: 526158421}
   m_Layer: 5
   m_Name: PromptText
   m_TagString: Untagged
@@ -397,7 +397,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -61.99997, y: -480}
+  m_AnchoredPosition: {x: -62, y: -480}
   m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &526158419
@@ -497,21 +497,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 526158417}
   m_CullTransparentMesh: 1
---- !u!114 &526158421
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 526158417}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ed57967c52645d390a89dcf8f61ba73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AngleMultiplier: 1
-  SpeedMultiplier: 1
-  CurveScale: 1
 --- !u!1 &1127646424
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,12 +575,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55cb70edeb5872b4e894d8a957a2d92c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fullText: "><color=#FF2D71> CCTV.exe</color> : : <color=#FF2D71>Input Protocols</color>\n\n    
-    <<< INPUT GUIDE ---- Forensic Playback <color=#FF2D71>Interface</color> [v1.<color=#FF2D71>3</color>]
-    >>>\n\n     > <color=#FF2D71>UP / Down / Left / Right </color> \u2192  Navigate
-    \n\r\r\n     > <color=#FF2D71>ENTER </color>                    \u2192  Interact
-    (<color=#FF2D71>IF</color> permitted)\n\n     > <color=#FF2D71>SPACE </color>                   
-    \u2192  Skip (<color=#FF2D71>IF</color> permitted)\n\r\n     > <color=#FF2D71>ESC</color>                      
+  fullText: "     <<<<color=#FF2D71> CCTV.exe</color> : : <color=#FF2D71>Input Protocols</color>
+    ----  <color=#FF2D71>Interface</color> [v1.<color=#FF2D71>3</color>] >>>\n\n    
+    > <color=#FF2D71>UP / Down / Left / Right </color> \u2192  Navigate \n\r\r\n    
+    > <color=#FF2D71>ENTER </color>                    \u2192  Interact (<color=#FF2D71>IF</color>
+    permitted)\n\n     > <color=#FF2D71>SPACE </color>                    \u2192 
+    Skip (<color=#FF2D71>IF</color> permitted)\n\r\n     > <color=#FF2D71>ESC</color>                      
     \u2192  Terminate session <color=#FF2D71>or</color> access settings\r\n\r\n    
     -------------------------------------------------------------\n\n\r      <color=#FF2D71>NOTE:
     </color>\n\n     - Subject POV: Restricted <color=#FF2D71>to</color> available
@@ -632,7 +617,6 @@ GameObject:
   - component: {fileID: 1283599251}
   - component: {fileID: 1283599253}
   - component: {fileID: 1283599252}
-  - component: {fileID: 1283599254}
   m_Layer: 5
   m_Name: TerminalText
   m_TagString: Untagged
@@ -679,12 +663,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "><color=#FF2D71> CCTV.exe</color> : : <color=#FF2D71>Input Protocols</color>\n\n    
-    <<< INPUT GUIDE ---- Forensic Playback <color=#FF2D71>Interface</color> [v1.<color=#FF2D71>3</color>]
-    >>>\n\n     > <color=#FF2D71>UP / Down / Left / Right </color> \u2192  Navigate
-    \n\r\r\n     > <color=#FF2D71>ENTER </color>                    \u2192  Interact
-    (<color=#FF2D71>IF</color> permitted)\n\n     > <color=#FF2D71>SPACE </color>                   
-    \u2192  Skip (<color=#FF2D71>IF</color> permitted)\n\r\n     > <color=#FF2D71>ESC</color>                      
+  m_text: "     <<<<color=#FF2D71> CCTV.exe</color> : : <color=#FF2D71>Input Protocols</color>
+    ----  <color=#FF2D71>Interface</color> [v1.<color=#FF2D71>3</color>] >>>\n\n    
+    > <color=#FF2D71>UP / Down / Left / Right </color> \u2192  Navigate \n\r\r\n    
+    > <color=#FF2D71>ENTER </color>                    \u2192  Interact (<color=#FF2D71>IF</color>
+    permitted)\n\n     > <color=#FF2D71>SPACE </color>                    \u2192 
+    Skip (<color=#FF2D71>IF</color> permitted)\n\r\n     > <color=#FF2D71>ESC</color>                      
     \u2192  Terminate session <color=#FF2D71>or</color> access settings\r\n\r\n    
     -------------------------------------------------------------\n\n\r      <color=#FF2D71>NOTE:
     </color>\n\n     - Subject POV: Restricted <color=#FF2D71>to</color> available
@@ -753,7 +737,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -669.6685, y: 68.09291, z: -767.12897, w: -837.2821}
+  m_margin: {x: -669.6685, y: 107.36565, z: -767.12897, w: -837.2821}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -767,21 +751,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1283599250}
   m_CullTransparentMesh: 1
---- !u!114 &1283599254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1283599250}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ed57967c52645d390a89dcf8f61ba73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AngleMultiplier: 1
-  SpeedMultiplier: 1
-  CurveScale: 1
 --- !u!1 &1369132633
 GameObject:
   m_ObjectHideFlags: 0
@@ -850,92 +819,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1530112736
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1530112738}
-  - component: {fileID: 1530112737}
-  m_Layer: 5
-  m_Name: Light 2D
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1530112737
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1530112736}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ComponentVersion: 1
-  m_LightType: 3
-  m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.547
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 9.38
-  m_LightVolumeIntensity: 1
-  m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000
-  m_LightCookieSprite: {fileID: 0}
-  m_DeprecatedPointLightCookieSprite: {fileID: 0}
-  m_LightOrder: 0
-  m_AlphaBlendOnOverlap: 0
-  m_OverlapOperation: 0
-  m_NormalMapDistance: 3
-  m_NormalMapQuality: 2
-  m_UseNormalMap: 0
-  m_ShadowIntensityEnabled: 0
-  m_ShadowIntensity: 0.75
-  m_ShadowVolumeIntensityEnabled: 0
-  m_ShadowVolumeIntensity: 0.75
-  m_LocalBounds:
-    m_Center: {x: 0, y: -0.00000011920929, z: 0}
-    m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 360
-  m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 1
-  m_ShapeLightParametricSides: 5
-  m_ShapeLightParametricAngleOffset: 0
-  m_ShapeLightParametricRadius: 1
-  m_ShapeLightFalloffSize: 0.5
-  m_ShapeLightFalloffOffset: {x: 0, y: 0}
-  m_ShapePath:
-  - {x: -0.5, y: -0.5, z: 0}
-  - {x: 0.5, y: -0.5, z: 0}
-  - {x: 0.5, y: 0.5, z: 0}
-  - {x: -0.5, y: 0.5, z: 0}
---- !u!224 &1530112738
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1530112736}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 90}
-  m_LocalScale: {x: 0.009259259, y: 0.009259259, z: 0.009259259}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2067076871
 GameObject:
   m_ObjectHideFlags: 0
@@ -1064,13 +947,118 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2136904709
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8108955}
+    m_Modifications:
+    - target: {fileID: 205207547175126311, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 205207547175126311, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 205207547175126311, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 205207547175126311, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 205207547175126311, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 205207547175126311, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 205207547175126311, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 205207547175126311, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 205207547175126311, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 205207547175126311, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 205207547175126311, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 205207547175126311, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 205207547175126311, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 205207547175126311, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 205207547175126311, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 205207547175126311, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 205207547175126311, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 205207547175126311, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 205207547175126311, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 205207547175126311, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408023051713071811, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_Name
+      value: Grainy
+      objectReference: {fileID: 0}
+    - target: {fileID: 408023051713071811, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+--- !u!224 &2136904710 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 205207547175126311, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+  m_PrefabInstance: {fileID: 2136904709}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 1197493727}
-  - {fileID: 1530112738}
   - {fileID: 8108955}
   - {fileID: 1369132636}
   - {fileID: 2067076873}
