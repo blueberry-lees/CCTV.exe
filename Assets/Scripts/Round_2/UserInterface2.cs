@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class UserInterface2 : MonoBehaviour
 {
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // Public Fields (Inspector)
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
     [Header("Typing Settings")]
     public float typeDelay = 0.03f;
     public AudioSource typeSound;
+
+    [Header("Shake Settings")]
+    public float shakeIntensity = 0.5f;
 
     [Header("UI References")]
     public TMP_Text fileTree;
@@ -26,64 +26,42 @@ public class UserInterface2 : MonoBehaviour
     [TextArea(5, 20)]
     public string previewText;
 
-    
-
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // Private Fields
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-
     private bool skipTyping = false;
-
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // Unity Methods
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
     void Start()
     {
-        // Initial Setup
         fileTree.text = "";
         filePreview.text = "";
         pointerText.gameObject.SetActive(false);
         buttons.gameObject.SetActive(false);
 
-        // Start the typing sequence
         StartCoroutine(TypeSequence());
     }
 
     void Update()
     {
-        // Handle skipping typing with spacebar
         if (Input.GetKeyDown(KeyCode.Space))
         {
             skipTyping = true;
         }
 
-        // Handle scene transition with Escape key
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene("Intro");
         }
     }
 
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // Typing Coroutine Methods
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-
     IEnumerator TypeSequence()
     {
-        // Type out treeText with typing effect
         yield return StartCoroutine(TypeRichText(treeText, fileTree));
-        skipTyping = false; // Allow next typing sequence
+        skipTyping = false;
 
-        // Show pointer text and start blinking prompt
         pointerText.gameObject.SetActive(true);
         StartCoroutine(BlinkPrompt());
 
-        // Type out previewText with typing effect
         yield return StartCoroutine(TypeRichText(previewText, filePreview));
-        skipTyping = false; // Allow next typing sequence
+        skipTyping = false;
 
-        // Wait for 1 second, play type sound, and show buttons
         yield return new WaitForSeconds(1f);
         typeSound.Play();
         buttons.gameObject.SetActive(true);
@@ -91,16 +69,18 @@ public class UserInterface2 : MonoBehaviour
 
     IEnumerator TypeRichText(string source, TMP_Text target)
     {
+        // Start infinite shake loop (only once per text target)
+        StartCoroutine(ShakeText(target));
+
         int i = 0;
         while (i < source.Length)
         {
             if (skipTyping)
             {
                 target.text = source;
-                yield break;
+                break;
             }
 
-            // Handle rich text tags
             if (source[i] == '<')
             {
                 int tagEnd = source.IndexOf('>', i);
@@ -115,7 +95,6 @@ public class UserInterface2 : MonoBehaviour
                 }
             }
 
-            // Add character to text and play typing sound if not whitespace
             target.text += source[i];
             if (!char.IsWhiteSpace(source[i]) && typeSound)
                 typeSound.Play();
@@ -125,6 +104,8 @@ public class UserInterface2 : MonoBehaviour
         }
     }
 
+
+
     IEnumerator BlinkPrompt()
     {
         while (true)
@@ -133,4 +114,22 @@ public class UserInterface2 : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
     }
+
+    IEnumerator ShakeText(TMP_Text textComponent)
+    {
+        Vector3 originalPos = textComponent.transform.localPosition;
+
+        while (true)
+        {
+            float offsetX = Random.Range(-shakeIntensity, shakeIntensity);
+            float offsetY = Random.Range(-shakeIntensity, shakeIntensity);
+            textComponent.transform.localPosition = originalPos + new Vector3(offsetX, offsetY, 0);
+
+            yield return new WaitForSeconds(0.02f); // controls shake speed
+        }
+    }
+
+
+
 }
+

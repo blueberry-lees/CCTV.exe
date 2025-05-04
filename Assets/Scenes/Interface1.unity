@@ -4033,6 +4033,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grainy
       objectReference: {fileID: 0}
+    - target: {fileID: 408023051713071811, guid: 0e0823c7e2c333a49af066f516a6540b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

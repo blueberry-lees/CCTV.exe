@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -8,11 +7,15 @@ public class TypewriterText : MonoBehaviour
     public TMP_Text textComponent;
     [TextArea] public string fullText;
 
+    [Header("Typing Settings")]
     public float typeSpeed = 0.05f;
     public AudioSource typeSound;
 
-    private bool skipTyping = false;
+    [Header("Shake Settings")]
+    public float shakeIntensity = 0f;
+    public float shakeSpeed = 0.02f;
 
+    private bool skipTyping = false;
 
     private void OnEnable()
     {
@@ -37,7 +40,7 @@ public class TypewriterText : MonoBehaviour
             if (skipTyping)
             {
                 textComponent.text = fullText;
-                yield break;
+                break; // still allow shake to start after skipping
             }
 
             if (fullText[i] == '<')
@@ -61,6 +64,23 @@ public class TypewriterText : MonoBehaviour
 
             i++;
             yield return new WaitForSeconds(typeSpeed);
+        }
+
+        // Start infinite shake after typing completes or is skipped
+        StartCoroutine(ShakeText(textComponent));
+    }
+
+    IEnumerator ShakeText(TMP_Text textComponent)
+    {
+        Vector3 originalPos = textComponent.transform.localPosition;
+
+        while (true)
+        {
+            float offsetX = Random.Range(-shakeIntensity, shakeIntensity);
+            float offsetY = Random.Range(-shakeIntensity, shakeIntensity);
+            textComponent.transform.localPosition = originalPos + new Vector3(offsetX, offsetY, 0);
+
+            yield return new WaitForSeconds(shakeSpeed);
         }
     }
 }
