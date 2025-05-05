@@ -90,15 +90,15 @@ public class TerminalButtonController2 : MonoBehaviour
         }
 
         // Handle input for launch panel
-        if (isOtherPanelActive && !isExitPanelActive)
-        {
-            if (Time.time - launchPanelOpenedTime >= launchInputDelay)
-            {
-                if (Input.GetKeyDown(KeyCode.UpArrow)) NavigateLog(-1);
-                if (Input.GetKeyDown(KeyCode.DownArrow)) NavigateLog(1);
-                if (Input.GetKeyDown(KeyCode.Return)) ActivateLog(logIndex);
-            }
-        }
+        //if (isOtherPanelActive && !isExitPanelActive)
+        //{
+        //    if (Time.time - launchPanelOpenedTime >= launchInputDelay)
+        //    {
+        //        if (Input.GetKeyDown(KeyCode.UpArrow)) NavigateLog(-1);
+        //        if (Input.GetKeyDown(KeyCode.DownArrow)) NavigateLog(1);
+        //        if (Input.GetKeyDown(KeyCode.Return)) ActivateLog(logIndex);
+        //    }
+        //}
     }
 
     // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -152,7 +152,7 @@ public class TerminalButtonController2 : MonoBehaviour
         }
     }
 
-    void ShowErrorPopup()
+    public void ShowErrorPopup()
     {
         // Show error popup and wait for key press to hide
         typeSound.Play();
@@ -160,7 +160,7 @@ public class TerminalButtonController2 : MonoBehaviour
         if (!isErrorPopupActive) StartCoroutine(WaitForAnyKeyToHideError());
     }
 
-    void HideErrorPopup()
+    public void HideErrorPopup()
     {
         // Hide the error popup
         errorPopupText.gameObject.SetActive(false);
@@ -178,7 +178,7 @@ public class TerminalButtonController2 : MonoBehaviour
         HideErrorPopup();
     }
 
-    void ShowExitPopup()
+    public void ShowExitPopup()
     {
         // Show exit confirmation popup
         typeSound.Play();
@@ -193,13 +193,13 @@ public class TerminalButtonController2 : MonoBehaviour
         exitPanelOpenedTime = Time.time;  // Mark time when exit panel opened
     }
 
-    void HideExitPopup()
+    public void HideExitPopup()
     {
         // Hide exit popup
         exitPopupPanel.gameObject.SetActive(false);
     }
 
-    void ShowLaunchPopup()
+    public void ShowLaunchPopup()
     {
         // Show launch popup
         typeSound.Play();
@@ -214,34 +214,41 @@ public class TerminalButtonController2 : MonoBehaviour
         launchPanelOpenedTime = Time.time;  // Mark time when launch panel opened
     }
 
-    void HideLaunchPopup()
+    public void HideLaunchPopup()
     {
         // Hide launch popup
         launchPopupPanel.SetActive(false);
         isOtherPanelActive = false;
     }
 
-    void NavigateLog(int dir)
+    public void LoadScene(string sceneName)
     {
-        // Navigate through logs in launch popup
-        typeSound.Play();
-        logs[logIndex].color = normalColor;
-        logIndex = (logIndex + dir + logs.Length) % logs.Length;
-        logs[logIndex].color = highlightColor;
+        SceneManager.LoadScene(sceneName);
     }
 
-    void ActivateLog(int index)
-    {
-        // Activate the selected log and load the corresponding scene
-        typeSound.Play();
-        switch (index)
-        {
-            case 0: SceneManager.LoadScene("Round_1"); break;
-            case 1: ShowErrorPopup(); break;
-            case 2: ShowErrorPopup(); break;
-            case 3: HideLaunchPopup(); break;
-        }
-    }
+    //void NavigateLog(int dir)
+    //{
+    //    // Navigate through logs in launch popup
+    //    typeSound.Play();
+    //    logs[logIndex].color = normalColor;
+    //    logIndex = (logIndex + dir + logs.Length) % logs.Length;
+    //    logs[logIndex].color = highlightColor;
+    //}
+
+    //void ActivateLog(int index)
+    //{
+    //    //Activate the selected log and load the corresponding scene
+    //    typeSound.Play();
+    //    switch (index)
+    //    {
+    //        case 0: ShowErrorPopup(); break;
+    //        case 1: ShowErrorPopup(); break;
+    //        case 2: ShowErrorPopup(); break;
+    //        case 3: ShowErrorPopup(); break;
+    //        case 4: SceneManager.LoadScene("Round_1"); break;
+    //        case 5: HideLaunchPopup(); break;
+    //    }
+    //}
 
 
 }
