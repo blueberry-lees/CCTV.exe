@@ -173,9 +173,12 @@ public class DialogueManager : MonoBehaviour
 
             switch (key)
             {
-                case "speaker":
+                case "speaker":    
                     speakerText.text = val;
                     currentSpeaker = val;
+
+                    if (val == "Narrator") //if the speaker is narrator close all portrait
+                        visualManager.ChangeCharacterExpression("Narrator", ""); // Force hiding portraits
                     break;
 
                 case "sfx":
