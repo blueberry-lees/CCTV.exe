@@ -28,7 +28,6 @@ public class MenuNavigatorWithHighlighter: MonoBehaviour
     void Start()
     {
         StartCoroutine(InitHighlightPosition());
-        MoveHighlightTo(currentIndex, true);
     }
 
     IEnumerator InitHighlightPosition()
@@ -67,6 +66,14 @@ public class MenuNavigatorWithHighlighter: MonoBehaviour
     {
         StopAllCoroutines();
 
+        // Unhighlight all first
+        for (int i = 0; i < options.Length; i++)
+        {
+            if (i == index) continue;
+            options[i].Unhighlight(normalColor);
+        }
+
+        // Move the highlight box
         if (instant)
         {
             highlightBox.position = options[index].transform.position;
@@ -77,8 +84,10 @@ public class MenuNavigatorWithHighlighter: MonoBehaviour
             StartCoroutine(ScaleHighlight());
         }
 
+        // Highlight new option
         options[index].Highlight(highlightColor);
     }
+
 
     IEnumerator SmoothMove(RectTransform target)
     {

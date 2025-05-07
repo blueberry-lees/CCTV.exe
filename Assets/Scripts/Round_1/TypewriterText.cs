@@ -1,17 +1,18 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using TMPro;
 
 public class TypewriterText : MonoBehaviour
 {
     public TMP_Text textComponent;
-    string fullText;
+    private string fullText;
 
     [Header("Typing Settings")]
     public float typeSpeed = 0.05f;
     public AudioSource typeSound;
 
     [Header("Shake Settings")]
+    public bool enableShake = false;               // ✅ NEW: Toggle shaking in the Inspector
     public float shakeIntensity = 0f;
     public float shakeSpeed = 0.02f;
 
@@ -19,8 +20,8 @@ public class TypewriterText : MonoBehaviour
 
     private void Awake()
     {
-        fullText = textComponent.text;
         textComponent = GetComponent<TextMeshProUGUI>();
+        fullText = textComponent.text;
     }
 
     private void OnEnable()
@@ -46,7 +47,7 @@ public class TypewriterText : MonoBehaviour
             if (skipTyping)
             {
                 textComponent.text = fullText;
-                break; // still allow shake to start after skipping
+                break;
             }
 
             if (fullText[i] == '<')
@@ -72,8 +73,8 @@ public class TypewriterText : MonoBehaviour
             yield return new WaitForSeconds(typeSpeed);
         }
 
-        // Start infinite shake after typing completes or is skipped
-        StartCoroutine(ShakeText(textComponent));
+        if (enableShake) // ✅ Only start shaking if enabled
+            StartCoroutine(ShakeText(textComponent));
     }
 
     IEnumerator ShakeText(TMP_Text textComponent)
@@ -90,4 +91,3 @@ public class TypewriterText : MonoBehaviour
         }
     }
 }
-

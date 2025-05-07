@@ -29,12 +29,23 @@ public class MenuNavigator : MonoBehaviour
 
     private int currentIndex = 0;
 
-  
+
     void Start()
     {
-        HighlightCurrentOption();
+        StartCoroutine(DelayedHighlight());
     }
 
+    IEnumerator DelayedHighlight()
+    {
+        yield return null; // Wait one frame so layout has finished
+
+        foreach (var group in GetComponentsInChildren<LayoutGroup>())
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(group.GetComponent<RectTransform>());
+        }
+
+        HighlightCurrentOption();
+    }
     void Update()
     {
         if (navigationMode == NavigationMode.Vertical)
@@ -69,6 +80,7 @@ public class MenuNavigator : MonoBehaviour
 
     void HighlightCurrentOption()
     {
+        // Highlight the selected option and apply the shake effect if necessary
         options[currentIndex].Highlight(highlightColor);
     }
 

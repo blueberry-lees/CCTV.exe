@@ -50,9 +50,9 @@ public class TerminalButtonController2 : MonoBehaviour
 
     
     private bool isOtherPanelActive = false;  // To track if other panels are active
-    private bool isExitPanelActive = false;  // To track if exit panel is active
+    //private bool isExitPanelActive = false;  // To track if exit panel is active
     private bool isErrorPopupActive = false;  // To track if error popup is active
-    private bool isLaunchComfirmationActive = false;
+    //private bool isLaunchComfirmationActive = false;
 
     // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
     // Unity Methods
@@ -70,11 +70,9 @@ public class TerminalButtonController2 : MonoBehaviour
 
     void Update()
     {
-        // Handle input for main panel navigation (not other panels)
-        
+    
 
-
-        // Handle input for exit panel
+        // Handle main panel and other panel availability
         if (isOtherPanelActive )
         {
             mainPanel.gameObject.SetActive(false);
@@ -84,38 +82,11 @@ public class TerminalButtonController2 : MonoBehaviour
             mainPanel.gameObject.SetActive(true);
         }
 
-
-        if (isOtherPanelActive && isLaunchComfirmationActive)
-        {
-            HideLaunchPopup();
-        }
-
     }
 
     // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // Navigation and Activation Methods
+    // Methods
     // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-
-    //void Choice(int dir)
-    //{
-    //    // Navigate through Yes/No choices
-    //    typeSound.Play();
-    //    yesOrNo[exitChoiceIndex].color = normalColor;
-    //    exitChoiceIndex = (exitChoiceIndex + dir + yesOrNo.Length) % yesOrNo.Length;
-    //    yesOrNo[exitChoiceIndex].color = highlightColor;
-    //}
-
-
-    //void ActivateExitChoice(int index)
-    //{
-    //    // Handle exit choice (Yes/No)
-    //    typeSound.Play();
-    //    switch (exitChoiceIndex)
-    //    {
-    //        case 0: Application.Quit(); break;  // Exit the application
-    //        case 1: HideExitPopup(); isOtherPanelActive = false; break;  // Don't exit
-    //    }
-    //}
 
     public void ShowErrorPopup()
     {
@@ -134,7 +105,6 @@ public class TerminalButtonController2 : MonoBehaviour
 
     public void ShowReplayPopup()
     {
-        isLaunchComfirmationActive = true;
         typeSound.Play();
         isOtherPanelActive = true;
         launchComfirmation.SetActive(true);
@@ -142,7 +112,6 @@ public class TerminalButtonController2 : MonoBehaviour
 
     public void HideReplayPopup()
     {
-        isLaunchComfirmationActive = false;
         typeSound.Play();
         isOtherPanelActive = false;
         launchComfirmation.SetActive(false);

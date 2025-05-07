@@ -13,6 +13,7 @@ public class DialogueManager : MonoBehaviour
     private VisualManager visualManager;
     private DialogueChoice choiceUI;
 
+    public string nextSceneName;
 
     [Header("UI References")]
     public TMP_Text speakerText;
@@ -80,9 +81,9 @@ public class DialogueManager : MonoBehaviour
 
         if (!story.canContinue)
         {
-            PlayerPrefs.SetInt("Round_1_Completed", 1);
-            PlayerPrefs.Save();
-            SceneManager.LoadScene("Interface2");
+            //PlayerPrefs.SetInt("Round_1_Completed", 1);
+            //PlayerPrefs.Save();
+            SceneManager.LoadScene(nextSceneName);
             return;
         }
 
