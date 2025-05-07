@@ -17,7 +17,7 @@ public class UserInterface2 : MonoBehaviour
     public TMP_Text fileTree;
     public TMP_Text filePreview;
     public TMP_Text pointerText;
-    public Image buttons;
+
 
     [Header("Text Content")]
     string treeText;
@@ -25,11 +25,13 @@ public class UserInterface2 : MonoBehaviour
 
     private bool skipTyping = false;
 
+    // ✅ New flag
+    public bool isTypingFinished { get; private set; } = false;
+
     private void Awake()
     {
         treeText = fileTree.text;
         previewText = filePreview.text;
-
     }
 
     void Start()
@@ -37,8 +39,6 @@ public class UserInterface2 : MonoBehaviour
         fileTree.text = "";
         filePreview.text = "";
         pointerText.gameObject.SetActive(false);
-        buttons.gameObject.SetActive(false);
-
         StartCoroutine(TypeSequence());
     }
 
@@ -68,15 +68,16 @@ public class UserInterface2 : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         typeSound.Play();
-        buttons.gameObject.SetActive(true);
+
+        // ✅ Mark typing as complete
+        isTypingFinished = true;
     }
 
     IEnumerator TypeRichText(string source, TMP_Text target)
     {
-        // Start infinite shake loop (only once per text target)
         StartCoroutine(ShakeText(target));
-
         int i = 0;
+
         while (i < source.Length)
         {
             if (skipTyping)
@@ -108,8 +109,6 @@ public class UserInterface2 : MonoBehaviour
         }
     }
 
-
-
     IEnumerator BlinkPrompt()
     {
         while (true)
@@ -129,10 +128,9 @@ public class UserInterface2 : MonoBehaviour
             float offsetY = Random.Range(-shakeIntensity, shakeIntensity);
             textComponent.transform.localPosition = originalPos + new Vector3(offsetX, offsetY, 0);
 
-            yield return new WaitForSeconds(0.02f); // controls shake speed
+            yield return new WaitForSeconds(0.02f);
         }
     }
-
 
 
 }

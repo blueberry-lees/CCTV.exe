@@ -5,6 +5,11 @@ using UnityEngine;
 using UnityEngine.Events;
 
 
+/// <summary>
+/// Must go with "NavigableOption" script
+/// Attach the "NavigableOption" script on the selectable objs with text ui.And drag them into the 'NavigableOption' list in "NavigableOption" script. 
+/// Note: this script has only been tested on obj under Canvas
+/// </summary>
 public class NavigableOption : MonoBehaviour
 {
     [Tooltip("The text label to change color on highlight. Will auto-assign if left empty.")]

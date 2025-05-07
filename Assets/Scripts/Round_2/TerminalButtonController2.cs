@@ -10,11 +10,10 @@ public class TerminalButtonController2 : MonoBehaviour
     // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
     // Public Fields (Inspector)
     // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+    public UserInterface2 userInterface2;
 
-    [Header("Button References")]
-    public TMP_Text[] buttons;  // Array of button texts
-
-    private int currentIndex = 0;  // Current index for navigation between the launch, delete and exit buttons
+    [Header("Main Panel")]
+    public GameObject mainPanel;
 
 
     [Header("Error Popup")]
@@ -22,11 +21,11 @@ public class TerminalButtonController2 : MonoBehaviour
 
     [Header("Exit Popup")]
     public GameObject exitPopupPanel;  // Exit popup panel
-    public TMP_Text[] yesOrNo;  // Yes/No text options for exit
+   
 
-    private float exitInputDelay = 0.2f;  // Delay for exit input
-    private float exitPanelOpenedTime = 0f;  // Time when exit panel was opened
-    private int exitChoiceIndex = 0;  // Current choice for the exit (Yes/No)
+    //private float exitInputDelay = 0.2f;  // Delay for exit input
+    //private float exitPanelOpenedTime = 0f;  // Time when exit panel was opened
+    //private int exitChoiceIndex = 0;  // Current choice for the exit (Yes/No)
 
     [Header("Launch Popup")]
     public GameObject launchPopupPanel;  // Launch popup panel
@@ -61,34 +60,30 @@ public class TerminalButtonController2 : MonoBehaviour
 
     void Start()
     {
-        // Initial setup for buttons and panels
-        HighlightButton(0);
+        userInterface2 = GetComponent<UserInterface2>();
         errorPopupText.gameObject.SetActive(false);  // Hide error popup initially
         exitPopupPanel.gameObject.SetActive(false);  // Hide exit popup initially
         launchPopupPanel.gameObject.SetActive(false);  // Hide launch popup initially
         launchComfirmation.gameObject.SetActive(false); //HIDE launch comfirmation initially
+        mainPanel.gameObject.SetActive(false);
     }
 
     void Update()
     {
         // Handle input for main panel navigation (not other panels)
-        if (!isOtherPanelActive)
-        {
-            if (Input.GetKeyDown(KeyCode.RightArrow)) Navigate(1);
-            if (Input.GetKeyDown(KeyCode.LeftArrow)) Navigate(-1);
-            if (Input.GetKeyDown(KeyCode.Return)) ActivateButton(currentIndex);
-        }
+        
+
 
         // Handle input for exit panel
-        if (isOtherPanelActive && isExitPanelActive)
+        if (isOtherPanelActive )
         {
-            if (Time.time - exitPanelOpenedTime >= exitInputDelay)
-            {
-                if (Input.GetKeyDown(KeyCode.UpArrow)) Choice(1);
-                if (Input.GetKeyDown(KeyCode.DownArrow)) Choice(-1);
-                if (Input.GetKeyDown(KeyCode.Return)) ActivateExitChoice(exitChoiceIndex);
-            }
+            mainPanel.gameObject.SetActive(false);
         }
+        else if (userInterface2.isTypingFinished)
+        {
+            mainPanel.gameObject.SetActive(true);
+        }
+
 
         if (isOtherPanelActive && isLaunchComfirmationActive)
         {
@@ -101,52 +96,26 @@ public class TerminalButtonController2 : MonoBehaviour
     // Navigation and Activation Methods
     // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
-    void Navigate(int dir)
-    {
-        // Navigate through buttons
-        typeSound.Play();
-        buttons[currentIndex].color = normalColor;
-        currentIndex = (currentIndex + dir + buttons.Length) % buttons.Length;
-        HighlightButton(currentIndex);
-    }
+    //void Choice(int dir)
+    //{
+    //    // Navigate through Yes/No choices
+    //    typeSound.Play();
+    //    yesOrNo[exitChoiceIndex].color = normalColor;
+    //    exitChoiceIndex = (exitChoiceIndex + dir + yesOrNo.Length) % yesOrNo.Length;
+    //    yesOrNo[exitChoiceIndex].color = highlightColor;
+    //}
 
-    void Choice(int dir)
-    {
-        // Navigate through Yes/No choices
-        typeSound.Play();
-        yesOrNo[exitChoiceIndex].color = normalColor;
-        exitChoiceIndex = (exitChoiceIndex + dir + yesOrNo.Length) % yesOrNo.Length;
-        yesOrNo[exitChoiceIndex].color = highlightColor;
-    }
 
-    void HighlightButton(int index)
-    {
-        // Highlight selected button
-        buttons[index].color = highlightColor;
-    }
-
-    void ActivateButton(int index)
-    {
-        // Activate the selected button and show corresponding popup
-        typeSound.Play();
-        switch (index)
-        {
-            case 0: ShowLaunchPopup(); break;
-            case 1: ShowErrorPopup(); break;
-            case 2: ShowExitPopup(); break;
-        }
-    }
-
-    void ActivateExitChoice(int index)
-    {
-        // Handle exit choice (Yes/No)
-        typeSound.Play();
-        switch (exitChoiceIndex)
-        {
-            case 0: Application.Quit(); break;  // Exit the application
-            case 1: HideExitPopup(); isOtherPanelActive = false; break;  // Don't exit
-        }
-    }
+    //void ActivateExitChoice(int index)
+    //{
+    //    // Handle exit choice (Yes/No)
+    //    typeSound.Play();
+    //    switch (exitChoiceIndex)
+    //    {
+    //        case 0: Application.Quit(); break;  // Exit the application
+    //        case 1: HideExitPopup(); isOtherPanelActive = false; break;  // Don't exit
+    //    }
+    //}
 
     public void ShowErrorPopup()
     {
@@ -192,38 +161,24 @@ public class TerminalButtonController2 : MonoBehaviour
 
     public void ShowExitPopup()
     {
-        // Show exit confirmation popup
-        typeSound.Play();
-        isOtherPanelActive = true;
-        isExitPanelActive = true;
+        isOtherPanelActive = true; 
         exitPopupPanel.SetActive(true);
-        exitChoiceIndex = 0;
-
-        for (int i = 0; i < yesOrNo.Length; i++) yesOrNo[i].color = normalColor;
-        yesOrNo[exitChoiceIndex].color = highlightColor;
-
-        exitPanelOpenedTime = Time.time;  // Mark time when exit panel opened
     }
 
     public void HideExitPopup()
     {
         // Hide exit popup
+        isOtherPanelActive = false;
         exitPopupPanel.gameObject.SetActive(false);
+
     }
 
     public void ShowLaunchPopup()
     {
         // Show launch popup
-        typeSound.Play();
         isOtherPanelActive = true;
-        isExitPanelActive = false;
         launchPopupPanel.SetActive(true);
-        //logIndex = 0;
-
-        //for (int i = 0; i < logs.Length; i++) logs[i].color = normalColor;
-        //logs[logIndex].color = highlightColor;
-
-        //launchPanelOpenedTime = Time.time;  // Mark time when launch panel opened
+       
     }
 
     public void HideLaunchPopup()
@@ -239,5 +194,10 @@ public class TerminalButtonController2 : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+        Debug.Log("Exiting game...");
+    }
 
 }

@@ -5,6 +5,13 @@ using UnityEngine.UI;
 using TMPro;
 
 
+/// <summary>
+/// Must go with "NavigableOption" script
+/// This script is used to manage panels with choices, attach this script to a non-option obj/ the panel that holds the options.
+/// And then attach the "NavigableOption" script on the selectable objs with text ui.And drag them into the 'NavigableOption' list. 
+/// this script also includes a highlighter box, make sure the box is under the same canvas.
+/// Note: this script has only been tested on obj under Canvas
+/// </summary>
 public class MenuNavigatorWithHighlighter: MonoBehaviour
 {
     public RectTransform highlightBox;
