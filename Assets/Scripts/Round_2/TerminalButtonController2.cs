@@ -14,6 +14,9 @@ public class TerminalButtonController2 : MonoBehaviour
     [Header("Button References")]
     public TMP_Text[] buttons;  // Array of button texts
 
+    private int currentIndex = 0;  // Current index for navigation between the launch, delete and exit buttons
+
+
     [Header("Error Popup")]
     public Image errorPopupText;  // Reference to the error popup
 
@@ -21,10 +24,17 @@ public class TerminalButtonController2 : MonoBehaviour
     public GameObject exitPopupPanel;  // Exit popup panel
     public TMP_Text[] yesOrNo;  // Yes/No text options for exit
 
+    private float exitInputDelay = 0.2f;  // Delay for exit input
+    private float exitPanelOpenedTime = 0f;  // Time when exit panel was opened
+    private int exitChoiceIndex = 0;  // Current choice for the exit (Yes/No)
+
     [Header("Launch Popup")]
     public GameObject launchPopupPanel;  // Launch popup panel
-    public TMP_Text[] logs;  // Array of logs displayed in launch popup
-    
+
+    [Header("Launch Comfirmation")]
+    public GameObject launchComfirmation; //comfirm launch panel
+
+
 
     [Header("Audio")]
     public AudioSource typeSound;  // Typing sound effect
@@ -36,24 +46,14 @@ public class TerminalButtonController2 : MonoBehaviour
     
 
     // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // Private Fields
+    // Booleans
     // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
-    private int currentIndex = 0;  // Current index for navigation between the launch, delete and exit buttons
-    
     
     private bool isOtherPanelActive = false;  // To track if other panels are active
     private bool isExitPanelActive = false;  // To track if exit panel is active
     private bool isErrorPopupActive = false;  // To track if error popup is active
-
-    private float exitInputDelay = 0.2f;  // Delay for exit input
-    private float exitPanelOpenedTime = 0f;  // Time when exit panel was opened
-    private int exitChoiceIndex = 0;  // Current choice for the exit (Yes/No)
-
-    //private float launchInputDelay = 0.2f;  // Delay for launch panel input
-    //private float launchPanelOpenedTime = 0f;  // Time when launch panel was opened
-    //private int logIndex = 0;  // Current log index for navigation
-
+    private bool isLaunchComfirmationActive = false;
 
     // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
     // Unity Methods
@@ -66,6 +66,7 @@ public class TerminalButtonController2 : MonoBehaviour
         errorPopupText.gameObject.SetActive(false);  // Hide error popup initially
         exitPopupPanel.gameObject.SetActive(false);  // Hide exit popup initially
         launchPopupPanel.gameObject.SetActive(false);  // Hide launch popup initially
+        launchComfirmation.gameObject.SetActive(false); //HIDE launch comfirmation initially
     }
 
     void Update()
@@ -89,16 +90,11 @@ public class TerminalButtonController2 : MonoBehaviour
             }
         }
 
-        // Handle input for launch panel
-        //if (isOtherPanelActive && !isExitPanelActive)
-        //{
-        //    if (Time.time - launchPanelOpenedTime >= launchInputDelay)
-        //    {
-        //        if (Input.GetKeyDown(KeyCode.UpArrow)) NavigateLog(-1);
-        //        if (Input.GetKeyDown(KeyCode.DownArrow)) NavigateLog(1);
-        //        if (Input.GetKeyDown(KeyCode.Return)) ActivateLog(logIndex);
-        //    }
-        //}
+        if (isOtherPanelActive && isLaunchComfirmationActive)
+        {
+            HideLaunchPopup();
+        }
+
     }
 
     // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -165,6 +161,22 @@ public class TerminalButtonController2 : MonoBehaviour
         // Hide the error popup
         errorPopupText.gameObject.SetActive(false);
         isErrorPopupActive = false;
+    }
+
+    public void ShowReplayPopup()
+    {
+        isLaunchComfirmationActive = true;
+        typeSound.Play();
+        isOtherPanelActive = true;
+        launchComfirmation.SetActive(true);
+    }
+
+    public void HideReplayPopup()
+    {
+        isLaunchComfirmationActive = false;
+        typeSound.Play();
+        isOtherPanelActive = false;
+        launchComfirmation.SetActive(false);
     }
 
     IEnumerator WaitForAnyKeyToHideError()

@@ -42,13 +42,15 @@ public class MenuNavigator1 : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Return))
         {
-            typeSound?.Play();
+            PlayNavigateSound();
             options[currentIndex].onSelected?.Invoke();
         }
     }
 
+   
     void Navigate(int direction)
     {
+        PlayNavigateSound();
         options[currentIndex].Unhighlight(normalColor);
         currentIndex = (currentIndex + direction + options.Length) % options.Length;
         MoveHighlightTo(currentIndex);
@@ -103,5 +105,11 @@ public class MenuNavigator1 : MonoBehaviour
         }
 
         highlightBox.localScale = originalScale;
+    }
+
+    void PlayNavigateSound()
+    {
+        typeSound.pitch = Random.Range(0.9f, 1.1f);
+        typeSound?.Play();
     }
 }

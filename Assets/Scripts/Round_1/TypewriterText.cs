@@ -20,6 +20,7 @@ public class TypewriterText : MonoBehaviour
     private void Awake()
     {
         fullText = textComponent.text;
+        textComponent = GetComponent<TextMeshProUGUI>();
     }
 
     private void OnEnable()
