@@ -5,7 +5,7 @@ using TMPro;
 public class TypewriterText : MonoBehaviour
 {
     public TMP_Text textComponent;
-    [TextArea] public string fullText;
+    string fullText;
 
     [Header("Typing Settings")]
     public float typeSpeed = 0.05f;
@@ -16,6 +16,11 @@ public class TypewriterText : MonoBehaviour
     public float shakeSpeed = 0.02f;
 
     private bool skipTyping = false;
+
+    private void Awake()
+    {
+        fullText = textComponent.text;
+    }
 
     private void OnEnable()
     {

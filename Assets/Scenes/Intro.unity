@@ -575,21 +575,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55cb70edeb5872b4e894d8a957a2d92c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fullText: "     <<<<color=#FF2D71> CCTV.exe</color> : : <color=#FF2D71>Input Protocols</color>
-    ----  <color=#FF2D71>Interface</color> [v1.<color=#FF2D71>3</color>] >>>\n\n    
-    > <color=#FF2D71>UP / Down / Left / Right </color> \u2192  Navigate \n\r\r\n    
-    > <color=#FF2D71>ENTER </color>                    \u2192  Interact (<color=#FF2D71>IF</color>
-    permitted)\n\n     > <color=#FF2D71>SPACE </color>                    \u2192 
-    Skip (<color=#FF2D71>IF</color> permitted)\n\r\n     > <color=#FF2D71>ESC</color>                      
-    \u2192  Terminate session <color=#FF2D71>or</color> access settings\r\n\r\n    
-    -------------------------------------------------------------\n\n\r      <color=#FF2D71>NOTE:
-    </color>\n\n     - Subject POV: Restricted <color=#FF2D71>to</color> available
-    memory fragments.\n\r\n     - Data may be incomplete, corrupted, <color=#FF2D71>or</color>
-    emotionally biased.\n\r\n     - Playback integrity <color=#FF2D71>not</color>
-    guaranteed.\r\n\r\n\n     ----- Begin <color=#FF2D71>when </color> ready -------------------------------------"
   typeDelay: 0.03
   typeSound: {fileID: 2067076872}
-  terminalText: {fileID: 1283599252}
+  typeOutText: {fileID: 1283599252}
   pressKeyPrompt: {fileID: 526158419}
 --- !u!4 &1197493727
 Transform:

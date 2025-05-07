@@ -30,7 +30,7 @@ public class TerminalButtonController2 : MonoBehaviour
     public AudioSource typeSound;  // Typing sound effect
 
     [Header("Text Colors")]
-    public Color normalColor = Color.green;  // Normal button color
+    public Color normalColor = Color.white;  // Normal button color
     public Color highlightColor = Color.white;  // Highlighted button color
 
     
@@ -50,9 +50,9 @@ public class TerminalButtonController2 : MonoBehaviour
     private float exitPanelOpenedTime = 0f;  // Time when exit panel was opened
     private int exitChoiceIndex = 0;  // Current choice for the exit (Yes/No)
 
-    private float launchInputDelay = 0.2f;  // Delay for launch panel input
-    private float launchPanelOpenedTime = 0f;  // Time when launch panel was opened
-    private int logIndex = 0;  // Current log index for navigation
+    //private float launchInputDelay = 0.2f;  // Delay for launch panel input
+    //private float launchPanelOpenedTime = 0f;  // Time when launch panel was opened
+    //private int logIndex = 0;  // Current log index for navigation
 
 
     // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -206,12 +206,12 @@ public class TerminalButtonController2 : MonoBehaviour
         isOtherPanelActive = true;
         isExitPanelActive = false;
         launchPopupPanel.SetActive(true);
-        logIndex = 0;
+        //logIndex = 0;
 
-        for (int i = 0; i < logs.Length; i++) logs[i].color = normalColor;
-        logs[logIndex].color = highlightColor;
+        //for (int i = 0; i < logs.Length; i++) logs[i].color = normalColor;
+        //logs[logIndex].color = highlightColor;
 
-        launchPanelOpenedTime = Time.time;  // Mark time when launch panel opened
+        //launchPanelOpenedTime = Time.time;  // Mark time when launch panel opened
     }
 
     public void HideLaunchPopup()
@@ -221,34 +221,11 @@ public class TerminalButtonController2 : MonoBehaviour
         isOtherPanelActive = false;
     }
 
+
     public void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
     }
-
-    //void NavigateLog(int dir)
-    //{
-    //    // Navigate through logs in launch popup
-    //    typeSound.Play();
-    //    logs[logIndex].color = normalColor;
-    //    logIndex = (logIndex + dir + logs.Length) % logs.Length;
-    //    logs[logIndex].color = highlightColor;
-    //}
-
-    //void ActivateLog(int index)
-    //{
-    //    //Activate the selected log and load the corresponding scene
-    //    typeSound.Play();
-    //    switch (index)
-    //    {
-    //        case 0: ShowErrorPopup(); break;
-    //        case 1: ShowErrorPopup(); break;
-    //        case 2: ShowErrorPopup(); break;
-    //        case 3: ShowErrorPopup(); break;
-    //        case 4: SceneManager.LoadScene("Round_1"); break;
-    //        case 5: HideLaunchPopup(); break;
-    //    }
-    //}
 
 
 }

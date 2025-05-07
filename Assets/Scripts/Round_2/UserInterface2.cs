@@ -20,13 +20,17 @@ public class UserInterface2 : MonoBehaviour
     public Image buttons;
 
     [Header("Text Content")]
-    [TextArea(5, 20)]
-    public string treeText;
-
-    [TextArea(5, 20)]
-    public string previewText;
+    string treeText;
+    string previewText;
 
     private bool skipTyping = false;
+
+    private void Awake()
+    {
+        treeText = fileTree.text;
+        previewText = filePreview.text;
+
+    }
 
     void Start()
     {

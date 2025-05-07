@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using Ink.Runtime;
 
+[RequireComponent(typeof(DialogueChoice))]
 public class DialogueManager : MonoBehaviour
 {
 

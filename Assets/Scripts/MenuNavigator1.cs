@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+
 public class MenuNavigator1 : MonoBehaviour
 {
     public RectTransform highlightBox;
     public float moveSpeed = 10f;
     public float scaleUp = 1.1f;
     public float scaleSpeed = 10f;
-    public Color normalColor = Color.green;
+    public Color normalColor = Color.grey;
     public Color highlightColor = Color.white;
     public AudioSource typeSound;
 
@@ -20,6 +21,7 @@ public class MenuNavigator1 : MonoBehaviour
     void Start()
     {
         StartCoroutine(InitHighlightPosition());
+        MoveHighlightTo(currentIndex, true);
     }
 
     IEnumerator InitHighlightPosition()

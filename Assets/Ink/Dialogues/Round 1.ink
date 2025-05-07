@@ -40,7 +40,13 @@ She greeted the man.
 #speaker:Narrator
 He barely responds. Just a nod.
 
-*[walk in] -> Stuck_elevator
+->enter_elevator
+= enter_elevator
+
++[stay at the entrance] 
+    You waited outside, but noyhong happens. 
+    ->enter_elevator
+    +[walk in] -> Stuck_elevator
 
 
 = Stuck_elevator

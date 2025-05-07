@@ -20,11 +20,8 @@ public class UserInterface : MonoBehaviour
     public Image buttons;
 
     [Header("Text Content")]
-    [TextArea(5, 20)]
-    public string treeText;
-
-    [TextArea(5, 20)]
-    public string previewText;
+    string treeText;
+    string previewText;
 
     
 
@@ -37,6 +34,13 @@ public class UserInterface : MonoBehaviour
     // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
     // Unity Methods
     // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+    private void Awake()
+    {
+        treeText = fileTree.text;
+        previewText = filePreview.text;
+
+    }
 
     void Start()
     {

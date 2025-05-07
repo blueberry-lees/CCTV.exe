@@ -122,238 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &19646396
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 19646397}
-  - component: {fileID: 19646400}
-  - component: {fileID: 19646399}
-  - component: {fileID: 19646398}
-  - component: {fileID: 19646401}
-  m_Layer: 5
-  m_Name: FILE_004
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &19646397
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 19646396}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 86366927}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 583.8, y: 48.84}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &19646398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 19646396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 19646399}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 420880363}
-        m_TargetAssemblyTypeName: TerminalButtonController2, Assembly-CSharp
-        m_MethodName: ShowErrorPopup
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &19646399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 19646396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: 'FILE_004: [DELETED]'
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 1
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &19646400
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 19646396}
-  m_CullTransparentMesh: 1
---- !u!114 &19646401
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 19646396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df406e2228566df47b776994bdc95c70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  label: {fileID: 0}
-  onSelected:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 420880363}
-        m_TargetAssemblyTypeName: TerminalButtonController2, Assembly-CSharp
-        m_MethodName: ShowErrorPopup
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &58605587
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,9 +132,9 @@ GameObject:
   m_Component:
   - component: {fileID: 58605588}
   - component: {fileID: 58605591}
+  - component: {fileID: 58605592}
   - component: {fileID: 58605590}
   - component: {fileID: 58605589}
-  - component: {fileID: 58605592}
   m_Layer: 5
   m_Name: FILE_002
   m_TagString: Untagged
@@ -400,7 +168,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 58605587}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -436,19 +204,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 58605590}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 420880363}
-        m_TargetAssemblyTypeName: TerminalButtonController2, Assembly-CSharp
-        m_MethodName: ShowErrorPopup
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &58605590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -478,8 +234,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4291940817
+  m_fontColor: {r: 0.81960785, g: 0.81960785, b: 0.81960785, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -606,14 +362,12 @@ RectTransform:
   - {fileID: 1650583451}
   - {fileID: 58605588}
   - {fileID: 1155272012}
-  - {fileID: 19646397}
-  - {fileID: 2020815280}
   m_Father: {fileID: 175014418}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0000076293945, y: -60}
-  m_SizeDelta: {x: 987.57, y: 676.04}
+  m_AnchoredPosition: {x: 5.65, y: -66.415}
+  m_SizeDelta: {x: 998.87, y: 663.21}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &86366928
 MonoBehaviour:
@@ -632,8 +386,8 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 4
-  m_Spacing: 80.9
+  m_ChildAlignment: 1
+  m_Spacing: 162.99
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -840,17 +594,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highlightBox: {fileID: 670539648}
   moveSpeed: 10
-  scaleUp: 1.1
+  scaleUp: 13.63
   scaleSpeed: 10
-  normalColor: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 0.08627451}
-  highlightColor: {r: 1, g: 1, b: 1, a: 0.5254902}
+  normalColor: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
+  highlightColor: {r: 1, g: 1, b: 1, a: 1}
   typeSound: {fileID: 2052641273}
   options:
   - {fileID: 1650583455}
   - {fileID: 58605592}
   - {fileID: 1155272016}
-  - {fileID: 19646401}
-  - {fileID: 2020815284}
   - {fileID: 1656919352}
 --- !u!1 &271936819
 GameObject:
@@ -1076,7 +828,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textComponent: {fileID: 343431130}
-  fullText: '[EXIT]'
   typeSpeed: 0.05
   typeSound: {fileID: 0}
   shakeIntensity: 0.5
@@ -1132,7 +883,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textComponent: {fileID: 381236726}
-  fullText: '[No]'
   typeSpeed: 0.05
   typeSound: {fileID: 2052641273}
   shakeIntensity: 0.5
@@ -1286,19 +1036,6 @@ MonoBehaviour:
   filePreview: {fileID: 1604431294}
   pointerText: {fileID: 1985025965}
   buttons: {fileID: 162659784}
-  treeText: "> \r<color=#FF2D71>SYSTEM_ROOT</color>\n\u2502\r\n\u251C\u2500\u2500
-    <color=#FF2D71>RECORDS</color>/\r\n\u2502   \u251C\u2500\u2500 elevator_log_0314.m??   
-    [<color=#FF2D71>CRC_ERROR</color>]\r\n\u2502   \u2514\u2500\u2500 mani\u0192est.j<color=#FF2D71>$on</color>   
-    [!<color=#FF2D71>MISSING_FIELDS</color>]\r\n\u2502\r\n\u251C\u2500\u2500 <color=#FF2D71>ARCHIVE</color>/\r\n\u2502  
-    \u251C\u2500\u2500 b<color=#FF2D71>@ckup_03</color>!<color=#FF2D71>3</color>/\r\n\u2502  
-    \u251C\u2500\u2500 bac\u256Bkup_0312/    [<color=#FF2D71>INCOMPLETE</color>]\r\n\u2502\r\n\u251C\u2500\u2500
-    <color=#FF2D71>CORRUPTED</color>/\r\n\u2502   \u251C\u2500\u2500 CCTV_oldfeed.t\u2261p\r\n\u2502  
-    \u2514\u2500\u2500 \n\u2502\u2502\r\n\u2514\u2500\u2500  \u2588\u2588 <color=#FF2D71>SYSTEM_FLAG</color>:
-    [<color=#FF2D71>INTEGRITY FAIL</color>]"
-  previewText: "<color=#FF2D71>[ XXXXXXXXXXX.???   ]</color>\n\n----------------------\n\n>
-    <color=#FF2D71>Status:</color> Recovered\n\r\n> Source: <color=#FF2D71>/C0R*UPT3D</color>\n\r\n>
-    Integrity: Compromised\n\r\n> Last Access: <color=#FF2D71>??/??/25</color>\n\n\r\n>
-    Note: <color=#FF2D71>Incident review pending...\r</color>\r</color>\r\r"
 --- !u!114 &420880363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1321,13 +1058,7 @@ MonoBehaviour:
   - {fileID: 723337740}
   - {fileID: 381236726}
   launchPopupPanel: {fileID: 175014417}
-  logs:
-  - {fileID: 1650583453}
-  - {fileID: 58605590}
-  - {fileID: 1155272014}
-  - {fileID: 19646399}
-  - {fileID: 2020815282}
-  - {fileID: 1656919349}
+  logs: []
   typeSound: {fileID: 2052641273}
   normalColor: {r: 0.6117647, g: 0.6117647, b: 0.6117647, a: 1}
   highlightColor: {r: 0.9960785, g: 0.1764706, b: 0.4431373, a: 1}
@@ -1565,14 +1296,14 @@ RectTransform:
   m_GameObject: {fileID: 670539647}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.3125, y: 1.8375, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 175014418}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -19, y: 210.99998}
+  m_AnchoredPosition: {x: -19, y: 193}
   m_SizeDelta: {x: 598.56, y: 108.38}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &670539649
@@ -1595,8 +1326,8 @@ MonoBehaviour:
   - {fileID: 1650583452}
   - {fileID: 58605589}
   - {fileID: 1155272013}
-  - {fileID: 19646398}
-  - {fileID: 2020815281}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 1656919348}
 --- !u!114 &670539650
 MonoBehaviour:
@@ -1687,7 +1418,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textComponent: {fileID: 723337740}
-  fullText: '[Yes]'
   typeSpeed: 0.05
   typeSound: {fileID: 2052641273}
   shakeIntensity: 0.5
@@ -1841,7 +1571,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textComponent: {fileID: 894687589}
-  fullText: '> SYSTEM_LOG_ARCHIVE\<color=#FF2D71>REVIEW_INDEX  </color>'
   typeSpeed: 0.05
   typeSound: {fileID: 2052641273}
   shakeIntensity: 0.5
@@ -2057,7 +1786,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textComponent: {fileID: 1029872359}
-  fullText: '> <color=#FF2D71>Abort review? </color>Unsaved insight may be l0st.'
   typeSpeed: 0.05
   typeSound: {fileID: 2052641273}
   shakeIntensity: 0.5
@@ -2306,9 +2034,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1155272012}
   - component: {fileID: 1155272015}
+  - component: {fileID: 1155272016}
   - component: {fileID: 1155272014}
   - component: {fileID: 1155272013}
-  - component: {fileID: 1155272016}
   m_Layer: 5
   m_Name: FILE_003
   m_TagString: Untagged
@@ -2342,7 +2070,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155272011}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -2378,19 +2106,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1155272014}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 420880363}
-        m_TargetAssemblyTypeName: TerminalButtonController2, Assembly-CSharp
-        m_MethodName: ShowErrorPopup
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1155272014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2420,8 +2136,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4291940817
+  m_fontColor: {r: 0.81960785, g: 0.81960785, b: 0.81960785, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2665,8 +2381,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textComponent: {fileID: 1356750599}
-  fullText: " <color=#FF2D71>> ERROR</color>: FILE INTEGRITY PRESERVED \u2014 <color=#FF2D71>DELETION
-    DENIED</color>"
   typeSpeed: 0.05
   typeSound: {fileID: 2052641273}
   shakeIntensity: 0.5
@@ -2934,7 +2648,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1628793663
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3002,9 +2716,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1650583451}
   - component: {fileID: 1650583454}
+  - component: {fileID: 1650583455}
   - component: {fileID: 1650583453}
   - component: {fileID: 1650583452}
-  - component: {fileID: 1650583455}
   m_Layer: 5
   m_Name: FILE_001
   m_TagString: Untagged
@@ -3029,7 +2743,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 583.8, y: 48.84}
+  m_SizeDelta: {x: 583.80005, y: 48.839996}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1650583452
 MonoBehaviour:
@@ -3038,7 +2752,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1650583450}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -3074,19 +2788,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1650583453}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 420880363}
-        m_TargetAssemblyTypeName: TerminalButtonController2, Assembly-CSharp
-        m_MethodName: ShowErrorPopup
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1650583453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3107,7 +2809,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'FILE_001: [DELETED]'
+  m_text: "<color=#AAAAFF>[REVIEWED]</color> FILE_001:<color=#FF2D71>[C0RR|_|PT3D]</color>
+    - Integrity: <color=#FF2D71>11%\r</color>\n\n      Status: FLAGGED - autoboot_enabled\r\n     
+    Note: data_fragmented / content_<color=#FF2D71>unstable\r\r</color> "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -3116,8 +2820,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4291940817
+  m_fontColor: {r: 0.81960785, g: 0.81960785, b: 0.81960785, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3170,7 +2874,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -259.9612, y: 0, z: -364.9784, w: -5.1648216}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3202,14 +2906,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 420880363}
         m_TargetAssemblyTypeName: TerminalButtonController2, Assembly-CSharp
-        m_MethodName: ShowErrorPopup
-        m_Mode: 1
+        m_MethodName: LoadScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Round_1
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &1655387670
@@ -3299,9 +3003,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1656919351}
   - component: {fileID: 1656919350}
+  - component: {fileID: 1656919352}
   - component: {fileID: 1656919349}
   - component: {fileID: 1656919348}
-  - component: {fileID: 1656919352}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -3316,7 +3020,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1656919347}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -3352,19 +3056,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1656919349}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 420880363}
-        m_TargetAssemblyTypeName: TerminalButtonController2, Assembly-CSharp
-        m_MethodName: HideLaunchPopup
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1656919349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3394,8 +3086,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4291940817
+  m_fontColor: {r: 0.81960785, g: 0.81960785, b: 0.81960785, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3657,7 +3349,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textComponent: {fileID: 1685433267}
-  fullText: '[LAUNCH REVIEW]'
   typeSpeed: 0.05
   typeSound: {fileID: 0}
   shakeIntensity: 0.5
@@ -3810,7 +3501,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textComponent: {fileID: 1716844275}
-  fullText: '[DELETE]'
   typeSpeed: 0.05
   typeSound: {fileID: 0}
   shakeIntensity: 0.5
@@ -4017,226 +3707,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2020815279
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2020815280}
-  - component: {fileID: 2020815283}
-  - component: {fileID: 2020815282}
-  - component: {fileID: 2020815281}
-  - component: {fileID: 2020815284}
-  m_Layer: 5
-  m_Name: FILE_005
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2020815280
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2020815279}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 86366927}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 583.8, y: 48.84}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2020815281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2020815279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 2020815282}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 420880363}
-        m_TargetAssemblyTypeName: TerminalButtonController2, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Round_1
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &2020815282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2020815279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: 'FILE_005: <color=#AAAAFF>[REVIEWED]</color>...'
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 1
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &2020815283
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2020815279}
-  m_CullTransparentMesh: 1
---- !u!114 &2020815284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2020815279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df406e2228566df47b776994bdc95c70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  label: {fileID: 0}
-  onSelected:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 420880363}
-        m_TargetAssemblyTypeName: TerminalButtonController2, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Round_1
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &2052641272
 GameObject:
   m_ObjectHideFlags: 0
