@@ -62,9 +62,28 @@ public class NameUIController : MonoBehaviour
     IEnumerator TypeWriterEffect(string text, float speed)
     {
         introText.text = "";
-        foreach (char c in text)
+        int i = 0;
+
+        while (i < text.Length)
         {
-            introText.text += c;
+            // If we encounter a rich text tag, e.g., <color=#FF0000>
+            if (text[i] == '<')
+            {
+                int closingIndex = text.IndexOf('>', i);
+                if (closingIndex != -1)
+                {
+                    // Add the whole tag instantly
+                    string tag = text.Substring(i, closingIndex - i + 1);
+                    introText.text += tag;
+                    i = closingIndex + 1;
+                    continue;
+                }
+            }
+
+            // Add one visible character at a time
+            introText.text += text[i];
+            i++;
+
             yield return new WaitForSeconds(speed);
         }
     }
@@ -93,9 +112,9 @@ public class NameUIController : MonoBehaviour
 
         yield return StartCoroutine(TypeWriterEffect("[11:59:58] ACCESSING MEMORY.LOG...\n", 0.03f));
         yield return WaitForKeyPress(KeyCode.Space);
-        yield return StartCoroutine(TypeWriterEffect("[11:59:59] WELCOME BACK, " + name + "\n", 0.03f));
+        yield return StartCoroutine(TypeWriterEffect("[11:59:59] WELCOME BACK, " + "<color=#FF0000>" + name + "</color>" + "\n", 0.03f));
         yield return WaitForKeyPress(KeyCode.Space);
-        yield return StartCoroutine(TypeWriterEffect("[00:00:00] OBSERVATION RESUMED.", 0.03f));
+        yield return StartCoroutine(TypeWriterEffect("[00:00:00] <color=#FF0000>OBSERVATION RESUMED.</color>", 0.03f));
         yield return WaitForKeyPress(KeyCode.Space);
         LoadNextScene();
     }

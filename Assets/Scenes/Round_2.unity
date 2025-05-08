@@ -261,7 +261,7 @@ MonoBehaviour:
   dialogueText: {fileID: 1681324135}
   typingAudio: {fileID: 305486186}
   sfxAudio: {fileID: 1611546671}
-  inkJSON: {fileID: 4900000, guid: 91a8810662ff0f940af11317b42f4300, type: 3}
+  inkJSON: {fileID: 4900000, guid: de0ff94d93bee2b48bb1ee2190cbf503, type: 3}
   defaultSpeed: 0.05
 --- !u!82 &305486186
 AudioSource:

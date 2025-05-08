@@ -256,12 +256,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec9bb238fb423084295fa371dae27063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: Interface3
+  nextSceneName: Interface4
   speakerText: {fileID: 703291666}
   dialogueText: {fileID: 1681324135}
   typingAudio: {fileID: 305486186}
   sfxAudio: {fileID: 1611546671}
-  inkJSON: {fileID: 4900000, guid: 8d95ce62926cf3742856a19de2bd7209, type: 3}
+  inkJSON: {fileID: 4900000, guid: de0ff94d93bee2b48bb1ee2190cbf503, type: 3}
   defaultSpeed: 0.05
 --- !u!82 &305486186
 AudioSource:
