@@ -178,6 +178,8 @@ MonoBehaviour:
   enableShake: 0
   shakeIntensity: 0.5
   shakeSpeed: 0.02
+  enableBlink: 0
+  blinkInterval: 0.5
 --- !u!114 &23957787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -460,6 +462,8 @@ MonoBehaviour:
   enableShake: 0
   shakeIntensity: 0.9
   shakeSpeed: 0.02
+  enableBlink: 0
+  blinkInterval: 0.5
 --- !u!1 &85403490
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,103 +663,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!1 &162659781
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 162659782}
-  - component: {fileID: 162659785}
-  - component: {fileID: 162659784}
-  - component: {fileID: 162659786}
-  m_Layer: 5
-  m_Name: MainPanel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &162659782
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 162659781}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.542957, y: 2.542957, z: 2.542957}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 1541561612}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 33.005005}
-  m_SizeDelta: {x: 0, y: 66.01001}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &162659784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 162659781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 505496b96782bba47876281ecfe49835, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &162659785
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 162659781}
-  m_CullTransparentMesh: 1
---- !u!114 &162659786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 162659781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8a4a084af39c9447ba9804f9945ff4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  options:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  moveSpeed: 10
-  normalColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  highlightColor: {r: 1, g: 1, b: 1, a: 1}
-  navigationSound: {fileID: 168218706}
-  navigationMode: 0
 --- !u!1 &168218705
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,6 +867,7 @@ GameObject:
   - component: {fileID: 175014420}
   - component: {fileID: 175014419}
   - component: {fileID: 175014421}
+  - component: {fileID: 175014422}
   m_Layer: 5
   m_Name: LauchPopupPanel
   m_TagString: Untagged
@@ -1052,6 +960,102 @@ MonoBehaviour:
   - {fileID: 1155272016}
   - {fileID: 1650583455}
   - {fileID: 1656919352}
+--- !u!82 &175014422
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175014417}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 4ecd0d0c8bb848f49b11fc57788af30f, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &271936819
 GameObject:
   m_ObjectHideFlags: 0
@@ -1063,6 +1067,7 @@ GameObject:
   - component: {fileID: 271936820}
   - component: {fileID: 271936822}
   - component: {fileID: 271936821}
+  - component: {fileID: 271936823}
   m_Layer: 5
   m_Name: ErrorPop-up
   m_TagString: Untagged
@@ -1128,6 +1133,102 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 271936819}
   m_CullTransparentMesh: 1
+--- !u!82 &271936823
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271936819}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 94433f1538b8e584e8ecd05bb790d6af, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &303448525
 GameObject:
   m_ObjectHideFlags: 0
@@ -1383,6 +1484,8 @@ MonoBehaviour:
   enableShake: 0
   shakeIntensity: 0.86
   shakeSpeed: 0.02
+  enableBlink: 0
+  blinkInterval: 0.5
 --- !u!114 &460494521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1704,8 +1807,8 @@ GameObject:
   - component: {fileID: 706205290}
   - component: {fileID: 706205294}
   - component: {fileID: 706205293}
-  - component: {fileID: 706205292}
   - component: {fileID: 706205291}
+  - component: {fileID: 706205295}
   m_Layer: 5
   m_Name: Button_Delete
   m_TagString: Untagged
@@ -1760,27 +1863,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  shakeIntensity: 0.5
+  shakeIntensity: 0
   enableShakeOnSelect: 0
-  onSelectShakeIntensity: 1
---- !u!114 &706205292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 706205289}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 155415728181fc849b0877e881bde744, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textComponent: {fileID: 706205293}
-  typeSpeed: 0.05
-  typeSound: {fileID: 0}
-  enableShake: 0
-  shakeIntensity: 0.5
-  shakeSpeed: 0.02
+  onSelectShakeIntensity: 0
 --- !u!114 &706205293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1878,6 +1963,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 706205289}
   m_CullTransparentMesh: 1
+--- !u!114 &706205295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706205289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 155415728181fc849b0877e881bde744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textComponent: {fileID: 0}
+  typeSpeed: 0.05
+  typeSound: {fileID: 0}
+  enableShake: 0
+  shakeIntensity: 0
+  shakeSpeed: 0
+  enableBlink: 0
+  blinkInterval: 0
 --- !u!1 &894687586
 GameObject:
   m_ObjectHideFlags: 0
@@ -1935,6 +2040,8 @@ MonoBehaviour:
   enableShake: 0
   shakeIntensity: 0.5
   shakeSpeed: 0.02
+  enableBlink: 0
+  blinkInterval: 0.5
 --- !u!114 &894687589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2152,6 +2259,8 @@ MonoBehaviour:
   enableShake: 0
   shakeIntensity: 0.5
   shakeSpeed: 0.02
+  enableBlink: 0
+  blinkInterval: 0.5
 --- !u!114 &1053344955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2602,6 +2711,8 @@ MonoBehaviour:
   enableShake: 0
   shakeIntensity: 0.9
   shakeSpeed: 0.02
+  enableBlink: 0
+  blinkInterval: 0.5
 --- !u!1 &1176003050
 GameObject:
   m_ObjectHideFlags: 0
@@ -2854,6 +2965,8 @@ MonoBehaviour:
   enableShake: 0
   shakeIntensity: 0.5
   shakeSpeed: 0.02
+  enableBlink: 0
+  blinkInterval: 0.5
 --- !u!1 &1390590477
 GameObject:
   m_ObjectHideFlags: 0
@@ -2911,6 +3024,8 @@ MonoBehaviour:
   enableShake: 0
   shakeIntensity: 0.5
   shakeSpeed: 0.02
+  enableBlink: 0
+  blinkInterval: 0.5
 --- !u!114 &1390590480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3135,7 +3250,6 @@ RectTransform:
   m_Children:
   - {fileID: 2014610740}
   - {fileID: 303448526}
-  - {fileID: 162659782}
   - {fileID: 175014418}
   - {fileID: 271936820}
   - {fileID: 1676110949}
@@ -3481,6 +3595,8 @@ MonoBehaviour:
   enableShake: 0
   shakeIntensity: 10
   shakeSpeed: 0.02
+  enableBlink: 0
+  blinkInterval: 0.5
 --- !u!1 &1656919347
 GameObject:
   m_ObjectHideFlags: 0
@@ -3666,6 +3782,8 @@ MonoBehaviour:
   enableShake: 0
   shakeIntensity: 0.9
   shakeSpeed: 0.02
+  enableBlink: 0
+  blinkInterval: 0.5
 --- !u!1 &1676110948
 GameObject:
   m_ObjectHideFlags: 0
@@ -3775,8 +3893,8 @@ GameObject:
   - component: {fileID: 1685433266}
   - component: {fileID: 1685433268}
   - component: {fileID: 1685433267}
-  - component: {fileID: 1685433269}
   - component: {fileID: 1685433270}
+  - component: {fileID: 1685433271}
   m_Layer: 5
   m_Name: Button_Review
   m_TagString: Untagged
@@ -3901,24 +4019,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1685433265}
   m_CullTransparentMesh: 1
---- !u!114 &1685433269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1685433265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 155415728181fc849b0877e881bde744, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textComponent: {fileID: 1685433267}
-  typeSpeed: 0.05
-  typeSound: {fileID: 0}
-  enableShake: 0
-  shakeIntensity: 0.5
-  shakeSpeed: 0.02
 --- !u!114 &1685433270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3950,6 +4050,26 @@ MonoBehaviour:
   shakeIntensity: 0.5
   enableShakeOnSelect: 0
   onSelectShakeIntensity: 1
+--- !u!114 &1685433271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1685433265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 155415728181fc849b0877e881bde744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textComponent: {fileID: 0}
+  typeSpeed: 0.05
+  typeSound: {fileID: 0}
+  enableShake: 0
+  shakeIntensity: 0
+  shakeSpeed: 0.02
+  enableBlink: 0
+  blinkInterval: 0.5
 --- !u!1 &1716628845
 GameObject:
   m_ObjectHideFlags: 0
@@ -4071,6 +4191,8 @@ MonoBehaviour:
   enableShake: 0
   shakeIntensity: 0.5
   shakeSpeed: 0.02
+  enableBlink: 0
+  blinkInterval: 0.5
 --- !u!114 &1830599888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4368,6 +4490,8 @@ MonoBehaviour:
   enableShake: 1
   shakeIntensity: 0.9
   shakeSpeed: 0.02
+  enableBlink: 1
+  blinkInterval: 1
 --- !u!1 &1929954673
 GameObject:
   m_ObjectHideFlags: 0
@@ -4425,6 +4549,8 @@ MonoBehaviour:
   enableShake: 0
   shakeIntensity: 0.5
   shakeSpeed: 0.02
+  enableBlink: 0
+  blinkInterval: 0.5
 --- !u!114 &1929954676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4943,8 +5069,8 @@ GameObject:
   - component: {fileID: 2061581262}
   - component: {fileID: 2061581266}
   - component: {fileID: 2061581265}
-  - component: {fileID: 2061581264}
   - component: {fileID: 2061581263}
+  - component: {fileID: 2061581267}
   m_Layer: 5
   m_Name: Button_Exit
   m_TagString: Untagged
@@ -5002,24 +5128,6 @@ MonoBehaviour:
   shakeIntensity: 0.5
   enableShakeOnSelect: 0
   onSelectShakeIntensity: 1
---- !u!114 &2061581264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2061581261}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 155415728181fc849b0877e881bde744, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textComponent: {fileID: 2061581265}
-  typeSpeed: 0.05
-  typeSound: {fileID: 0}
-  enableShake: 0
-  shakeIntensity: 0.5
-  shakeSpeed: 0.02
 --- !u!114 &2061581265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5117,6 +5225,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2061581261}
   m_CullTransparentMesh: 1
+--- !u!114 &2061581267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061581261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 155415728181fc849b0877e881bde744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textComponent: {fileID: 0}
+  typeSpeed: 0.05
+  typeSound: {fileID: 0}
+  enableShake: 0
+  shakeIntensity: 0
+  shakeSpeed: 0.02
+  enableBlink: 0
+  blinkInterval: 0.5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

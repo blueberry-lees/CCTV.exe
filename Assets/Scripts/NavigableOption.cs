@@ -24,28 +24,39 @@ public class NavigableOption : MonoBehaviour
     private Coroutine shakeCoroutine;
     private Vector3 originalPos;
 
+    private RectTransform rectTransform;
+    private Vector2 originalAnchoredPos;
+
     private void Awake()
     {
         if (label == null)
             label = GetComponent<TMP_Text>();
 
-        originalPos = transform.localPosition;
+        rectTransform = GetComponent<RectTransform>();
+        
     }
 
     private void OnEnable()
     {
-        // Start shaking with the default shake intensity if enabled
+        StartCoroutine(DelayedShakeInit());
+    }
+
+    private IEnumerator DelayedShakeInit()
+    {
+        yield return null; // Wait one frame
+        rectTransform = GetComponent<RectTransform>();
+        originalAnchoredPos = rectTransform.anchoredPosition;
+
         if (!enableShakeOnSelect)
             shakeCoroutine = StartCoroutine(ShakeRoutine(shakeIntensity));
     }
-
     private void OnDisable()
     {
         if (shakeCoroutine != null)
         {
             StopCoroutine(shakeCoroutine);
             shakeCoroutine = null;
-            transform.localPosition = originalPos;
+            rectTransform.anchoredPosition = originalAnchoredPos;
         }
     }
 
@@ -81,20 +92,19 @@ public class NavigableOption : MonoBehaviour
             StopCoroutine(shakeCoroutine);
         }
 
-        transform.localPosition = originalPos; // Reset position to avoid stuck offsets
-        shakeCoroutine = StartCoroutine(ShakeRoutine(intensity));
+        rectTransform.anchoredPosition = originalAnchoredPos;
+        shakeCoroutine = StartCoroutine(ShakeRoutine(intensity)); 
     }
 
     private IEnumerator ShakeRoutine(float intensity)
     {
-        // Continuously shake the object within the given intensity range
         while (true)
         {
             float offsetX = Random.Range(-intensity, intensity);
             float offsetY = Random.Range(-intensity, intensity);
-            transform.localPosition = originalPos + new Vector3(offsetX, offsetY, 0);
+            rectTransform.anchoredPosition = originalAnchoredPos + new Vector2(offsetX, offsetY);
 
-            yield return new WaitForSeconds(0.02f); // Controls shake speed
+            yield return new WaitForSeconds(0.02f);
         }
     }
 }

@@ -49,10 +49,6 @@ public class UserInterface2 : MonoBehaviour
             skipTyping = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            SceneManager.LoadScene("Intro");
-        }
     }
 
     IEnumerator TypeSequence()

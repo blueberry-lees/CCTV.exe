@@ -70,7 +70,12 @@ public class TerminalButtonController2 : MonoBehaviour
 
     void Update()
     {
-    
+
+
+        if (userInterface2.isTypingFinished && Input.GetKeyDown(KeyCode.Escape))
+        {
+            ShowExitPopup();
+        }
 
         // Handle main panel and other panel availability
         if (isOtherPanelActive )
