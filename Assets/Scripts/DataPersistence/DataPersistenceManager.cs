@@ -10,6 +10,11 @@ public class DataPersistenceManager : MonoBehaviour
     public event Action OnDataLoaded; //chat gpt fix on continue button not showing even when there's game data 
 
 
+    [Header("Debugging")]
+    [SerializeField] private bool initializeDataIfNull = false;
+
+
+
     [Header("File Storage Config")]
 
     [SerializeField] private string fileName;
@@ -70,10 +75,17 @@ public class DataPersistenceManager : MonoBehaviour
         this.gameData = new GameData();
     }
 
+
     public void LoadGame()
     {
         //Load any saved data from a file using the data handler
         this.gameData = dataHandler.Load();
+
+        //start a new game if the data is null and we're configured to initialize data for debugging purposes
+        if (this.gameData == null && initializeDataIfNull)
+        {
+            NewGame();
+        }
 
         //if no data can be loaded, dont continue
         if (this.gameData == null)
@@ -90,10 +102,10 @@ public class DataPersistenceManager : MonoBehaviour
 
         // Notify listeners that loading is done
         OnDataLoaded?.Invoke();
-     
-
-
     }
+
+
+
 
     public void SaveGame()
     {

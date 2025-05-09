@@ -359,7 +359,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 4
   m_Spacing: 49.7
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -1114,6 +1114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b1522a61cd54bf4383e89082ed654a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  continueButton: {fileID: 781938628}
 --- !u!1 &1369132633
 GameObject:
   m_ObjectHideFlags: 0
