@@ -9,7 +9,7 @@ using Ink.Runtime;
 [RequireComponent(typeof(DialogueChoice))]
 public class DialogueManager : MonoBehaviour, IDataPersistence
 {
-
+    public int storyProgress  = 0; //test out save game script
     private int deathCount = 0; //test out save game script
 
     private VisualManager visualManager;
@@ -50,12 +50,16 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
         this.deathCount = data.deathCount;
+        this.storyProgress = data.storyProgress;
+        Debug.Log("data load" + this.storyProgress);
     }
 
 
     public void SaveData(ref GameData data)
     {
         data.deathCount = this.deathCount;
+        data.storyProgress = this.storyProgress;
+        Debug.Log("data saved" + this.storyProgress);
     }
 
 
@@ -66,6 +70,25 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         visualManager = GetComponent<VisualManager>();
 
         story = new Story(inkJSON.text);
+
+        // ✅ Set progress into Ink before story runs
+        story.variablesState["progress"] = storyProgress;
+
+        // ✅ Build and jump to the appropriate knot
+        string knotName = $"chapter_{storyProgress}";
+        try
+        {
+            story.ChoosePathString(knotName);
+        }
+        catch (StoryException e)
+        {
+            Debug.LogWarning($"Knot not found: {knotName}. Exception: {e.Message}");
+        }
+
+        // ✅ Optional: sync progress back from Ink if it changes immediately
+        if (story.variablesState["progress"] is int val)
+            storyProgress = val;
+
         choiceUI = GetComponent<DialogueChoice>();
         choiceUI.Init(story, this);
 
@@ -101,20 +124,23 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     {
         deathCount++;
         Debug.Log("Death Count: " + deathCount);
+
         if (!story.canContinue)
         {
-            //PlayerPrefs.SetInt("Round_1_Completed", 1);
-            //PlayerPrefs.Save();
             SceneManager.LoadScene(nextSceneName);
             return;
         }
-        
 
-        string line = story.Continue().Trim();        // Get the next line
-        List<string> tags = story.currentTags;        // Then grab the tags from this line
+        string line = story.Continue().Trim();
+        List<string> tags = story.currentTags;
 
-        HandleTags(tags);                             // Now handle tags for THIS line
-        StartCoroutine(TypeText(line));               // Then show the line
+        // ✅ Update storyProgress after continuing the story
+        if (story.variablesState["progress"] is int val)
+            storyProgress = val;
+
+        HandleTags(tags);
+        StartCoroutine(TypeText(line));
+        Debug.Log("Ink progress value: " + story.variablesState["progress"]);
     }
 
     float GetFloatFromInk(string varName, float defaultValue)

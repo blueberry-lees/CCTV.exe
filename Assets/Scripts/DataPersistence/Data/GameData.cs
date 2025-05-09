@@ -7,6 +7,7 @@ using UnityEngine;
 public class GameData
 {
     public int deathCount;
+    public int storyProgress;
 
 
 
@@ -15,5 +16,6 @@ public class GameData
     public GameData()
     {
         this.deathCount = 0;
+        this.storyProgress = 0;
     }
 }

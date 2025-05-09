@@ -7,13 +7,26 @@
 //#expression:
 
 //#effect
+VAR progress = 0
+
+-> Round1
+
+=== Round1 ===
+
++{progress == 0} [...] ->chapter_0
++{progress == 1} [...] ->chapter_1
++{progress == 2} [...] ->chapter_2
++{progress == 3} [...] ->chapter_3
++{progress == 4} [...] ->chapter_4
++{progress == 5} [...] ->chapter_5
++{progress == 6} [...] ->chapter_6
 
 
 
--> Round1_start
 
-=== Round1_start ===
-
+-> chapter_0
+=== chapter_0 ===
+~progress = 0
 #SFX: Ding
 #background: ElevatorDark
 #speaker:Narrator
@@ -40,17 +53,12 @@ She greeted the man.
 #speaker:Narrator
 He barely responds. Just a nod.
 
-->enter_elevator
-= enter_elevator
-
-+[stay at the entrance] 
-    You waited outside, but noyhong happens. 
-    ->enter_elevator
-    +[walk in] -> Stuck_elevator
+*[walk in] -> chapter_1
 
 
-= Stuck_elevator
 
+=== chapter_1 ===
+~progress = 1
 #speaker:Female
 #expression:InnerThought
 ...
@@ -79,15 +87,19 @@ You hear a sudden *click*—the familiar hum of movement... doesn't come.
 #speaker:Narrator
 You walk back to check the elevator panel.
 
-*[Presses the 'Open' button.] #SFX: Elevator_button 
-    Nothing. #speaker:Narrator
-    
-    **[Tries the 'Emergency' button.] #SFX: Elevator_button
-    ...no response.#speaker:Narrator
+*[Presses the 'Open' button.] 
+    #SFX: Elevator_button
+    #speaker:Narrator
+    Nothing.
+    **[Tries the 'Emergency' button.]
+    #SFX: Elevator_button
+    #speaker:Narrator
+    ...no response.
 
-*[Tries the 'Emergency' button.] #SFX: Elevator_button
-    ...no response.  #speaker:Narrator
-    
+*[Tries the 'Emergency' button.] 
+    #SFX: Elevator_button
+    #speaker:Narrator
+    ...no response.
     **[Presses the 'Open' button.] 
     #SFX: Elevator_button
     #speaker:Narrator
@@ -172,8 +184,7 @@ He mummbled. Quietly.
 
 * [Stay silent.]
 
-#speaker:Female
-#expression:Neutral
+#speaker:Female, #expression:Neutral
 "..."
 
 #speaker:Narrator
@@ -185,17 +196,16 @@ The silence stretches...
 
     ** [Still stay silent.]
     
-    #speaker:Female
-    #expression:Neutral
+    #speaker:Female, #expression:Neutral
     "..."
 
--> Interaction_start
+-> chapter_2
 
 
 
 
-=== Interaction_start ===
-
+=== chapter_2 ===
+~progress = 2
 #speaker:Male
 #expression:Shadow
 "Ehem..."
@@ -252,10 +262,10 @@ He clears his throat.
 - //////
 
 
--> Unease_grows
+-> chapter_3
 
-= Unease_grows
-
+=== chapter_3
+~progress = 3
 #speaker:Narrator
 The air feels thick.
 
@@ -290,11 +300,11 @@ The air feels thick.
 *[Something’s off.] 
 
 -
-->Tension_rise
+->chapter_4
 
 
-= Tension_rise
-
+=== chapter_4
+~progress = 4
 *    ["Why are you sweating so much?"]
 
     #speaker:Female
@@ -351,10 +361,10 @@ The air feels thick.
 *   [Pull the knife.] 
 *   [Pull the knife.] 
 -
--> Attack
+->chapter_5
 
-= Attack
-
+=== chapter_5
+~progress = 5
 #speaker:Female 
 #expression:Neutral
 "Stay away from me!"
@@ -390,10 +400,11 @@ They won't believe you.
 Because...
 
 
--> Round1_ending
+-> chapter_6
 
 
-=== Round1_ending ===
+=== chapter_6 ===
+~progress = 6
 ///No narrator part - animation? 
 #speaker:Narrator
 The screen flickers. CCTV footage plays: grainy, overhead. The girl stands tall. The man is hunched, small.
