@@ -7,8 +7,10 @@ using TMPro;
 using Ink.Runtime;
 
 [RequireComponent(typeof(DialogueChoice))]
-public class DialogueManager : MonoBehaviour
+public class DialogueManager : MonoBehaviour, IDataPersistence
 {
+
+    private int deathCount = 0; //test out save game script
 
     private VisualManager visualManager;
     private DialogueChoice choiceUI;
@@ -31,6 +33,7 @@ public class DialogueManager : MonoBehaviour
     private Story story;
     private bool isTyping = false;
     private bool skipTyping = false;
+   
 
     private string currentSpeaker = "Narrator"; //the current speaker set to narrator by default
     private Dictionary<string, AudioClip> speakerTypingSounds = new();
@@ -42,6 +45,21 @@ public class DialogueManager : MonoBehaviour
         { "Female", "#FFB6C1" },
         { "Narrator", "#FFFFFF" }
     };
+
+
+    public void LoadData(GameData data)
+    {
+        this.deathCount = data.deathCount;
+    }
+
+
+    public void SaveData(ref GameData data)
+    {
+        data.deathCount = this.deathCount;
+    }
+
+
+
 
     void Start()
     {
@@ -72,13 +90,17 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Space))
             ContinueStory();
+
+        
+
     }
 
     public void ContinueStory()
     {
-
+        deathCount++;
+        Debug.Log("Death Count: " + deathCount);
         if (!story.canContinue)
         {
             //PlayerPrefs.SetInt("Round_1_Completed", 1);
@@ -86,6 +108,7 @@ public class DialogueManager : MonoBehaviour
             SceneManager.LoadScene(nextSceneName);
             return;
         }
+        
 
         string line = story.Continue().Trim();        // Get the next line
         List<string> tags = story.currentTags;        // Then grab the tags from this line
