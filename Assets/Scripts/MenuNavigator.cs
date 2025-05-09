@@ -14,85 +14,83 @@ using TMPro;
 public class MenuNavigator : MonoBehaviour
 {
     [Header("Settings")]
-    public NavigableOption[] options;
+    public NavigableOption[] options;  // Will filter at runtime
+    private List<NavigableOption> filteredOptions = new List<NavigableOption>();
+
     public float moveSpeed = 10f;
     public Color normalColor = Color.grey;
     public Color highlightColor = Color.white;
     public AudioSource navigationSound;
 
     public NavigationMode navigationMode = NavigationMode.Vertical;
-    public enum NavigationMode
-    {
-        Vertical,
-        Horizontal
-    }
+    public enum NavigationMode { Vertical, Horizontal }
 
     private int currentIndex = 0;
 
-
     void Start()
     {
+        // Remove null or inactive options at runtime
+        foreach (var option in options)
+        {
+            if (option != null && option.gameObject.activeInHierarchy)
+                filteredOptions.Add(option);
+        }
+
         StartCoroutine(DelayedHighlight());
     }
 
     IEnumerator DelayedHighlight()
     {
-        yield return null; // Wait one frame so layout has finished
+        yield return null; // Wait one frame
 
         foreach (var group in GetComponentsInChildren<LayoutGroup>())
-        {
             LayoutRebuilder.ForceRebuildLayoutImmediate(group.GetComponent<RectTransform>());
-        }
 
-        HighlightCurrentOption();
+        if (filteredOptions.Count > 0)
+            HighlightCurrentOption();
     }
+
     void Update()
     {
+        if (filteredOptions.Count == 0) return;
+
         if (navigationMode == NavigationMode.Vertical)
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-                Navigate(-1);
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
-                Navigate(1);
+            if (Input.GetKeyDown(KeyCode.UpArrow)) Navigate(-1);
+            else if (Input.GetKeyDown(KeyCode.DownArrow)) Navigate(1);
         }
         else if (navigationMode == NavigationMode.Horizontal)
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-                Navigate(-1);
-            else if (Input.GetKeyDown(KeyCode.RightArrow))
-                Navigate(1);
+            if (Input.GetKeyDown(KeyCode.LeftArrow)) Navigate(-1);
+            else if (Input.GetKeyDown(KeyCode.RightArrow)) Navigate(1);
         }
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
             PlayNavigateSound();
-            options[currentIndex].onSelected?.Invoke();
+            filteredOptions[currentIndex].onSelected?.Invoke();
         }
     }
 
     void Navigate(int direction)
     {
         PlayNavigateSound();
-        options[currentIndex].Unhighlight(normalColor);
-        currentIndex = (currentIndex + direction + options.Length) % options.Length;
+        filteredOptions[currentIndex].Unhighlight(normalColor);
+        currentIndex = (currentIndex + direction + filteredOptions.Count) % filteredOptions.Count;
         HighlightCurrentOption();
     }
 
     void HighlightCurrentOption()
     {
-        // Highlight the selected option and apply the shake effect if necessary
-        options[currentIndex].Highlight(highlightColor);
+        filteredOptions[currentIndex].Highlight(highlightColor);
     }
 
     void PlayNavigateSound()
     {
-        if ((navigationSound != null))
+        if (navigationSound != null)
         {
             navigationSound.pitch = Random.Range(0.9f, 1.1f);
-            navigationSound?.Play();
+            navigationSound.Play();
         }
-        else
-            return;
     }
-        
 }

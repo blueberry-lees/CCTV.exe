@@ -51,7 +51,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     {
         this.deathCount = data.deathCount;
         this.storyProgress = data.storyProgress;
-        Debug.Log("data load" + this.storyProgress);
+        Debug.Log("dialogue data loaded: [" + this.storyProgress + "]");
     }
 
 
@@ -59,7 +59,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     {
         data.deathCount = this.deathCount;
         data.storyProgress = this.storyProgress;
-        Debug.Log("data saved" + this.storyProgress);
+        Debug.Log("dialogue data saved: [" + this.storyProgress + "]");
     }
 
 
@@ -123,7 +123,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     public void ContinueStory()
     {
         deathCount++;
-        Debug.Log("Death Count: " + deathCount);
+        //Debug.Log("Death Count: " + deathCount);
 
         if (!story.canContinue)
         {

@@ -9,9 +9,17 @@
 
 //#effect
 
--> round_2
+VAR progress = 0
 
-=== round_2 ===
+-> Round2
+
+=== Round2 ===
+
++{progress == 0} [...] ->chapter_0
++{progress == 1} [...] ->chapter_1
++{progress == 2} [...] ->chapter_2
++{progress == 3} [...] ->chapter_3
+
 
 //Both actors in the elevator, this time the man appears skinny and...different 
 
@@ -32,9 +40,9 @@ This all feels familiar.
 (...I killed him. Didn't I?)
 
 
--> scene_intro
-
-=scene_intro
+-> chapter_0
+=== chapter_0 ===
+~progress = 0
 
 *   [Stay silent.]
 
@@ -50,7 +58,7 @@ This all feels familiar.
 
 -> small_talk
 
-=== observe ===
+= observe 
 
 He shifts nervously, glancing at the buttons. The elevator hums, motionless.
 
@@ -58,7 +66,7 @@ Akward silence stretches. The air feels thick.
 
 -> check_buttons
 
-=== small_talk ===
+= small_talk 
 
 He looks surprised, but responds.
 
@@ -74,7 +82,7 @@ He looks surprised, but responds.
 
 -> observe
 
-=== check_buttons ===
+= check_buttons 
 
 You press the emergency button again. Nothing. No sound, no light.
 
@@ -98,7 +106,8 @@ You chose not to talk.
 
 -> rising_tension
 
-=== dialogue_explain ===
+= dialogue_explain 
+
 
 He shrugs.
 
@@ -113,8 +122,11 @@ a knife...
 ...but why?
 
 -> rising_tension
+= rising_tension 
 
-=== rising_tension ===
+->chapter_1
+=== chapter_1 ===
+~progress = 1
 
 ...!
 
@@ -136,7 +148,7 @@ You didn't take the knife out, but you still hold on to it firmly.
 
 -> inner_struggle
 
-=== inner_struggle ===
+= inner_struggle 
 
 You try taking a deep breath.
 
@@ -148,7 +160,10 @@ Startled by the sudden attention, you reached into your bag—
 
 -> attack_choice
 
-=== knife_prompt ===
+
+
+
+= knife_prompt 
 
 You looked at the man standing next to you. 
 
@@ -157,8 +172,14 @@ Noticing your stare, he looked at you too.
 -> attack_choice
 
 
-=== attack_choice ===
 
+
+
+= attack_choice 
+
+->chapter_2
+=== chapter_2 ===
+~progress = 2
 //Major options start point
 
 He looked confused.
@@ -174,7 +195,7 @@ You took the knife out.
 -> hesitation_reveal
 
 
-=== failed_attack ===
+= failed_attack 
 
 You lunge, but he dodges.
 
@@ -188,7 +209,7 @@ Your vision blurs. You stagger... and suddenly, everything changes.
 
 -> cctv
 
-=== hesitation_reveal ===
+= hesitation_reveal 
 
 You hesitate.
 
@@ -197,7 +218,7 @@ MAN: "Are you okay? Why do you look so scared?"
 -> cctv
 
 
-== Rescue_comes
+=== Rescue_comes
 
 Rescue arrives, bursting in. You’re on the ground, shaking.
 
@@ -211,6 +232,10 @@ Just for a moment.
 -> end_scene
 
 === cctv ===
+
+->chapter_3
+=== chapter_3 ===
+~progress = 3
 
 //The illusion breaks.
 

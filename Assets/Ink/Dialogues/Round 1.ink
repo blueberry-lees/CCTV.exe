@@ -9,9 +9,6 @@
 //#effect
 VAR progress = 0
 
--> Round1
-
-=== Round1 ===
 
 +{progress == 0} [...] ->chapter_0
 +{progress == 1} [...] ->chapter_1
@@ -27,6 +24,7 @@ VAR progress = 0
 -> chapter_0
 === chapter_0 ===
 ~progress = 0
+...
 #SFX: Ding
 #background: ElevatorDark
 #speaker:Narrator
