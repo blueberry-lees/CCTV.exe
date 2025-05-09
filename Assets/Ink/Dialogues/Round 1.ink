@@ -79,19 +79,15 @@ You hear a sudden *click*—the familiar hum of movement... doesn't come.
 #speaker:Narrator
 You walk back to check the elevator panel.
 
-*[Presses the 'Open' button.] 
-    #SFX: Elevator_button
-    #speaker:Narrator
-    Nothing.
-    **[Tries the 'Emergency' button.]
-    #SFX: Elevator_button
-    #speaker:Narrator
-    ...no response.
+*[Presses the 'Open' button.] #SFX: Elevator_button 
+    Nothing. #speaker:Narrator
+    
+    **[Tries the 'Emergency' button.] #SFX: Elevator_button
+    ...no response.#speaker:Narrator
 
-*[Tries the 'Emergency' button.] 
-    #SFX: Elevator_button
-    #speaker:Narrator
-    ...no response.
+*[Tries the 'Emergency' button.] #SFX: Elevator_button
+    ...no response.  #speaker:Narrator
+    
     **[Presses the 'Open' button.] 
     #SFX: Elevator_button
     #speaker:Narrator
