@@ -67,14 +67,7 @@ public class DataPersistenceManager : MonoBehaviour
     }
 
 
-    public void ChangeSelectedProfileId(string newProfiled)
-    {
 
-        //update the profile to use for saving and loading
-        this.selectedProfileId = newProfiled;
-        //load the game, which will use that profile, updating our game data accordingly
-        LoadGame();
-    }
 
 
 
@@ -107,14 +100,7 @@ public class DataPersistenceManager : MonoBehaviour
         //push the loaded data to all other scripts that need it
         foreach (IDataPersistence dataPersistencObj in dataPersistenceObjects)
         {
-            if (dataPersistencObj != null)
-            {
-                dataPersistencObj.SaveData(ref gameData);
-            }
-            else
-            {
-                Debug.LogWarning("Found null IDataPersistence object in list.");
-            }
+            dataPersistencObj.LoadData(gameData);
         }
 
         PlayTimeTracker.Instance?.StartTracking(); // resume timing
@@ -137,10 +123,11 @@ public class DataPersistenceManager : MonoBehaviour
 
 
         //chatgpt fix to 'null reference' here
-        if (dataPersistenceObjects == null || dataPersistenceObjects.Count == 0)
+        if (dataPersistenceObjects == null)
         {
             dataPersistenceObjects = FindAllDataPersistenceObjects();
         }
+
         //if we dont have any data to save, log a warnbing here
         if (this.gameData ==null)
         {
@@ -167,11 +154,10 @@ public class DataPersistenceManager : MonoBehaviour
 
     private List<IDataPersistence> FindAllDataPersistenceObjects()
     {
-        IEnumerable<IDataPersistence> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>(true)
-            .OfType<IDataPersistence>()
-            .Where(obj => obj != null);
+        IEnumerable<IDataPersistence> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistence>();
 
         return new List<IDataPersistence>(dataPersistenceObjects);
+
     }
 
     public bool HasGameData()

@@ -2,58 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 
-[RequireComponent(typeof(Button))]
 public class SaveSlot : MonoBehaviour
 {
-    [Header("UI Reference")]
-    [SerializeField] private TextMeshProUGUI slotInfoText;
+    [Header("Profile")]
 
-    public string ProfileId { get; private set; }
+    [SerializeField] private string profileId = "";
 
-    private SaveSlotsMenu menu;
-    private Button button;
+    [Header("Content")]
+    [SerializeField] private GameObject noDataContent;
 
-    private void Awake()
+    [SerializeField] private GameObject hasDataContent;
+
+    [SerializeField] private TextMeshProUGUI  percentageCompleteText;
+
+    [SerializeField] private TextMeshProUGUI progressText;
+
+    public void SetData(GameData data)
     {
-        button = GetComponent<Button>();
-    }
-
-    // Called by SaveSlotsMenu
-    public void Initialize(SaveSlotsMenu menuRef, string profileId, GameData data, bool isLoading)
-    {
-        menu = menuRef;
-        ProfileId = profileId;
-
+        //there's no data for this profileId
         if (data == null)
         {
-            slotInfoText.text = "No saved data.";
+            noDataContent.SetActive(true);
+            hasDataContent.SetActive(false);
         }
+        //there's data for this profile
         else
         {
-            string timePlayed = data.GetFormattedPlayTime();
-            int chapter = data.storyProgress;
-            slotInfoText.text = $"{timePlayed} Time Played\nChapter: {chapter}";
-        }
+            noDataContent.SetActive(false);
+            hasDataContent.SetActive(true);
 
-        bool hasData = data != null;
-        SetInteractable(hasData || !isLoading);
-    }
-
-    public void SetInteractable(bool interactable)
-    {
-        button.interactable = interactable;
-    }
-
-    // Hook this to NavigableOption.onSelected
-    public void OnSelected()
-    {
-        if (button.interactable && menu != null)
-        {
-            menu.OnSlotSelected(this);
+            //TODO: remeber to fetch data in GetTimePlayed() in GameData.cs
+            percentageCompleteText.text = data.GetFormattedPlayTime() + "Time Played";
+            progressText.text = "Story Progress:" + data.storyProgress;
         }
     }
+
+    public string GetProfileId()
+    {
+        return this.profileId;
+    }
+
 }
-
