@@ -26,6 +26,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     private FileDataHandler dataHandler;
 
+    private string selectedProfileId = "test";
     public static DataPersistenceManager instance { get; private set; }
 
     private void Awake()
@@ -73,13 +74,15 @@ public class DataPersistenceManager : MonoBehaviour
     public void NewGame()
     {
         this.gameData = new GameData();
+        PlayTimeTracker.Instance?.StartTracking(); // start fresh session time
+
     }
 
 
     public void LoadGame()
     {
         //Load any saved data from a file using the data handler
-        this.gameData = dataHandler.Load();
+        this.gameData = dataHandler.Load(selectedProfileId);
 
         //start a new game if the data is null and we're configured to initialize data for debugging purposes
         if (this.gameData == null && initializeDataIfNull)
@@ -100,6 +103,8 @@ public class DataPersistenceManager : MonoBehaviour
             dataPersistencObj.LoadData(gameData);
         }
 
+        PlayTimeTracker.Instance?.StartTracking(); // resume timing
+
         // Notify listeners that loading is done
         OnDataLoaded?.Invoke();
     }
@@ -109,6 +114,14 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void SaveGame()
     {
+        // Add current session time before saving
+        if (PlayTimeTracker.Instance != null && this.gameData != null)
+        {
+            float sessionTime = PlayTimeTracker.Instance.StopTracking();
+            this.gameData.totalPlayTimeSeconds += sessionTime;
+        }
+
+
         //chatgpt fix to 'null reference' here
         if (dataPersistenceObjects == null)
         {
@@ -131,7 +144,7 @@ public class DataPersistenceManager : MonoBehaviour
         }
 
         //save that data to a file using the data handler
-        dataHandler.Save(gameData);
+        dataHandler.Save(gameData, selectedProfileId);
     }
 
     private void OnApplicationQuit()
@@ -150,6 +163,11 @@ public class DataPersistenceManager : MonoBehaviour
     public bool HasGameData()
     {
         return gameData != null;
+    }
+
+    public Dictionary<string, GameData> GetAllProfilesGameData()
+    {
+        return dataHandler.LoadAllProfiles();
     }
 
 }
