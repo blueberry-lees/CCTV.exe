@@ -18,16 +18,16 @@ public class VisualManager : MonoBehaviour
         femalePortraitImage.gameObject.SetActive(false);
         malePortraitImage.gameObject.SetActive(false);
     }
-    public void ChangeCharacterExpression(string speaker, string expression)
+    public void ChangeCharacterExpression(string character, string expression)
     {
-        if (speaker == "Narrator")
-        {
-            //femalePortraitImage.gameObject.SetActive(false);
-            //malePortraitImage.gameObject.SetActive(false);
-            return;
-        }
+        //if (character == "Narrator")
+        //{
+        //    femalePortraitImage.gameObject.SetActive(false);
+        //    malePortraitImage.gameObject.SetActive(false);
+        //    return;
+        //}
 
-        string path = $"Portraits/{speaker}/{expression}";
+        string path = $"Portraits/{character}/{expression}";
         Sprite portrait = Resources.Load<Sprite>(path);
         if (!portrait)
         {
@@ -35,23 +35,23 @@ public class VisualManager : MonoBehaviour
             return;
         }
 
-        //femalePortraitImage.gameObject.SetActive(false);
-        //malePortraitImage.gameObject.SetActive(false);
+        femalePortraitImage.gameObject.SetActive(false);
+        malePortraitImage.gameObject.SetActive(false);
 
-        switch (speaker)
+        switch (character)
         {
-            case "Female":
+            case "You":
                 femalePortraitImage.sprite = portrait;
                 femalePortraitImage.gameObject.SetActive(true);
                 break;
 
-            case "Male":
+            case "Killer":
                 malePortraitImage.sprite = portrait;
                 malePortraitImage.gameObject.SetActive(true);
                 break;
 
             default:
-                Debug.Log($"Unknown speaker: {speaker}");
+                Debug.Log($"Unknown character: {character}");
                 break;
         }
         

@@ -33,8 +33,8 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     private Story story;
     private bool isTyping = false;
     private bool skipTyping = false;
-   
 
+    private string currentCharacter = "Narrator";
     private string currentSpeaker = "Narrator"; //the current speaker set to narrator by default
     private Dictionary<string, AudioClip> speakerTypingSounds = new();
 
@@ -224,28 +224,30 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
 
             switch (key)
             {
-                case "speaker":    
+                case "speaker":
                     speakerText.text = val;
-                    currentSpeaker = val;
-
-                    if (val == "Narrator") //if the speaker is narrator close all portrait
-                        visualManager.ChangeCharacterExpression("Narrator", ""); // Force hiding portraits
+                    currentSpeaker = val; // This controls text color and typing sound
                     break;
 
-                case "sfx":
-                    PlaySFX(val);
+                case "character":
+                    currentCharacter = val; // This controls which visual asset is used
                     break;
 
                 case "expression":
-                    ChangeCharacterExpression(currentSpeaker, val);
+                    ChangeCharacterExpression(currentCharacter, val); // Use currentCharacter here
                     break;
 
                 case "background":
                     ChangeEnvironmentBackground(val);
                     break;
+
+                case "sfx":
+                    PlaySFX(val);
+                    break;
             }
         }
     }
+
 
     void PlaySFX(string clipName)
     {
@@ -253,9 +255,9 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         if (clip) sfxAudio.PlayOneShot(clip);
         else Debug.LogWarning($"SFX not found: {clipName}");
     }
-    private void ChangeCharacterExpression(string speaker, string expression)
+    private void ChangeCharacterExpression(string character, string expression)
     {
-        visualManager.ChangeCharacterExpression(speaker, expression);
+        visualManager.ChangeCharacterExpression(character, expression);
     }
 
     private void ChangeEnvironmentBackground(string backgroundName)

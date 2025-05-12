@@ -1,32 +1,64 @@
 VAR trust_level = 0
 VAR look_away = false
 // === ROUND 1 START ===
--> elevator_intro
 
-=== elevator_intro ===
-#pause_scene
-#show_scene("elevator_dim")
-#set_expression("neutral")
 
-You step into the elevator, the soft hum of machinery buzzing faintly beneath your feet. It's cold. Sterile. Like the air is waiting for something to happen.
+
+// tags contain 
+
+//#speaker:
+
+//#SFX:
+
+//#expression:
+//#character: Killer, You
+//#effect
+VAR progress = 0
++{progress == 0} [...] ->chapter_0
++{progress == 1} [...] ->chapter_1
++{progress == 2} [...] ->chapter_2
++{progress == 3} [...] ->chapter_3
++{progress == 4} [...] ->chapter_4
++{progress == 5} [...] ->chapter_5
+
+
+ ->chapter_0
+ === chapter_0
+
+//elevator_intro 
+~progress = 0
+#SFX: Ding
+#background: ElevatorOpen
+#speaker:Narrator
+The elevator dings.
+#pause(1.0)
+
+You step into the elevator, the soft hum of machinery buzzing faintly beneath your feet. 
+#pause(1.0)
+
+It's cold. Sterile. Like the air is waiting for something to happen.
 
 #pause(1.0)
 
 The doors begin to close. But just before they shut—
 
-#pause(1.0)
-
+#Background: HandOnDoor
 A hand stops them.
 
 #pause(0.5)
 
 A man steps in.
 
--> describe_man
+ ->chapter_1
+ === chapter_1
+ 
 
-=== describe_man ===
-#show_character("Man", "smile_neutral")
+//describe_man 
+~progress = 1
 
+#character: Killer
+#expression: NeutralLookAway
+#background: ElevatorDark
 He’s average. Tallish. Pale. Clean suit. Polished shoes.
 
 But there’s something... off.
@@ -42,10 +74,15 @@ You feel it immediately. That gnawing twitch in your chest. The feeling again.
     ~ look_away = false
 
 -
--> small_talk_start
 
-=== small_talk_start ===
-# show_expression("uneasy")
+
+ ->chapter_2
+ === chapter_2
+
+//small_talk_start 
+~progress = 2
+
+#speaker: Narrator
 
 The elevator begins its slow descent.
 
@@ -55,80 +92,99 @@ Too long.
 
 He finally speaks.
 
-MAN:  
-(pleasant)  
+#speaker: Male
+#character: Killer
+#expression:Smile1
 "Going down?"
 
+#speaker: Narrator
 You don’t answer right away. Something in your throat locks.
+ #speaker:Female
 
-*   [nervous smile]
-    "Y-yeah. Just... just heading down."
+*   [nervous smile] "Y-yeah. Just... just heading down."
 
-*   [bluntly]  
-    "Yes."
+*   [bluntly]  "Yes."
 
-*   [joke]  
-    "Only way to go from the top, right?"
+*   [joke]  "Only way to go from the top, right?"
     ~ trust_level = 3
 
 -
-MAN:  
-(chuckles softly)  
+#speaker: Male
+#character: Killer
+#expression:SmileLookAway 
 "Suppose so."  
-"Funny thing, these little boxes. Tiny worlds. No escape. Just you and... whoever walks in."
+"Funny thing, these little boxes."
+"Tiny worlds. No escape. "
+"Just you and... whoever walks in."
 
+#speaker:Narrator
+#character: Killer
+#expression:NeutralLookAway 
 He pauses. Like he’s letting the words hang in the air for too long.
 
+#expression:NeutralLook 
 Like he's watching them sink into your skin.
+#speaker:Female
 
-*   [awkward laugh]  
-    "Yeah... elevators are weird."
+*   [awkward laugh]  "Yeah... elevators are weird."
 
-*   [tense]  
-    "What do you mean by that?"
+*   [tense]  "What do you mean by that?"
 
-*   [joking]  
-    "Sounds like a setup for a horror movie."
+*   [joking]  "Sounds like a setup for a horror movie."
     
 -
-MAN:  
-"Horror... hmm. Maybe. Or just a moment where everything slips. When you realize you were never alone to begin with."
+#speaker: Male
+#character: Killer
+#expression:SmileLook
+"Horror... hmm. Maybe."
+"Or just a moment where everything slips."
+"When you realize you were never alone to begin with."
 
+#speaker:Narrator
 You laugh nervously, but it dies in your throat.
 
--> delusion_hint
 
-=== delusion_hint ===
-#show_expression("tense")
+ ->chapter_3
+ === chapter_3
+
+
+//delusion_hint 
+~progress = 3
+
+#speaker:Narrator
 
 There’s something wrong.
 
 His reflection in the elevator mirror behind him—it doesn’t move when he does.
 
-You blink. Look again.
+You blink. 
+
+Look again.
 
 It’s back to normal.
 
 Was it?
 
-*   [rub your eyes] 
-    You blink a few more times, heart thudding. Maybe you’re tired.
+*   [rub your eyes] You blink a few more times, heart thudding. Maybe you’re tired.
 
-*   [look again]  
-    You focus on the reflection. It stares back. Eyes too wide.
+*   [look again]  You focus on the reflection. It stares back. Eyes too wide.
 
-*   [step back slightly]  
-    You shift away, gripping your bag tighter.
+*   [step back slightly]  You shift away, gripping your bag tighter.
 -
--> voice_in_head
 
-=== voice_in_head ===
+
+ ->chapter_4
+ === chapter_4
+ 
+
+//voice_in_head 
+~progress = 4
+
 #show_expression("paranoid")
-
+#speaker: Narrator
 A whisper curls in your mind. Soft. Familiar.
 
-???:  
-"He’s not real. He’s not real. Not this time."
+???: "He’s not real. He’s not real. Not this time."
 
 You shake your head. The whisper is gone.
 
@@ -137,45 +193,54 @@ Black, like a void.
 
 Then they’re normal again.
 
-MAN:  
+#speaker: Male
+#character: Killer
+#expression:NeutralLook  
 "You alright? You look pale."
 
-*   [lie]  
-    "Just tired. Didn’t sleep well."
+#speaker: Female
 
-*   [avoid]  
-    "I’m fine."
+*   [lie]  "Just tired. Didn’t sleep well."
 
-*   [truth]  
-    "Do you ever feel like someone’s lying to you? Even if they say all the right things?"
+*   [avoid]  "I’m fine."
+
+*   [truth]  "Do you ever feel like someone’s lying to you? Even if they say all the right things?"
 -
-MAN:  
-(smiles, pauses too long)  
+#speaker: Male
+#character: Killer
+#expression:SmileLook  
+
+#pause(1.0)
 "All the time."
 
--> ending_choice_1
 
-=== ending_choice_1 ===
+ ->chapter_5
+ === chapter_5
+ 
+~progress = 5
+#speaker: Narrator
 The elevator dings.
 
 You’re almost at the lobby.
 
-He steps closer. Just slightly. Almost imperceptibly.
+He steps closer. 
+Just slightly. Almost imperceptibly.
 
 But you notice.
 
-MAN:  
+#speaker: Male
+#character: Killer
+#expression:Smile1
 "I think we'll be seeing more of each other."
 
-*   [freeze]  
-    You don't respond. Can't.
-*   [respond]  
-    "I... hope not."
-*   [fake a smile]  
-    "Looking forward to it."
+#speaker: Female
+
+*   [freeze]  You don't respond. Can't.
+*   [respond]  "I... hope not."
+*   [fake a smile] "Looking forward to it."
     
     -
-
+#speaker: Narrator
 The elevator doors open.
 
 He steps out, but just before turning the corner, he glances back.
