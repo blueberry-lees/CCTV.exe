@@ -22,8 +22,8 @@ public class VisualManager : MonoBehaviour
     {
         if (speaker == "Narrator")
         {
-            femalePortraitImage.gameObject.SetActive(false);
-            malePortraitImage.gameObject.SetActive(false);
+            //femalePortraitImage.gameObject.SetActive(false);
+            //malePortraitImage.gameObject.SetActive(false);
             return;
         }
 
@@ -35,8 +35,8 @@ public class VisualManager : MonoBehaviour
             return;
         }
 
-        femalePortraitImage.gameObject.SetActive(false);
-        malePortraitImage.gameObject.SetActive(false);
+        //femalePortraitImage.gameObject.SetActive(false);
+        //malePortraitImage.gameObject.SetActive(false);
 
         switch (speaker)
         {
