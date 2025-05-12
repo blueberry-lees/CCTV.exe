@@ -9,7 +9,7 @@
 //#effect
 VAR progress = 0
 VAR happy = true
-
+/////
 
 {progress:
 - 0: ->chapter_0
