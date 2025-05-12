@@ -2,46 +2,58 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 
+[RequireComponent(typeof(Button))]
 public class SaveSlot : MonoBehaviour
 {
-    [Header("Profile")]
+    [Header("UI Reference")]
+    [SerializeField] private TextMeshProUGUI slotInfoText;
 
-    [SerializeField] private string profileId = "";
+    public string ProfileId { get; private set; }
 
-    [Header("Content")]
-    [SerializeField] private GameObject noDataContent;
+    private SaveSlotsMenu menu;
+    private Button button;
 
-    [SerializeField] private GameObject hasDataContent;
-
-    [SerializeField] private TextMeshProUGUI  percentageCompleteText;
-
-    [SerializeField] private TextMeshProUGUI progressText;
-
-    public void SetData(GameData data)
+    private void Awake()
     {
-        //there's no data for this profileId
+        button = GetComponent<Button>();
+    }
+
+    // Called by SaveSlotsMenu
+    public void Initialize(SaveSlotsMenu menuRef, string profileId, GameData data, bool isLoading)
+    {
+        menu = menuRef;
+        ProfileId = profileId;
+
         if (data == null)
         {
-            noDataContent.SetActive(true);
-            hasDataContent.SetActive(false);
+            slotInfoText.text = "No saved data.";
         }
-        //there's data for this profile
         else
         {
-            noDataContent.SetActive(false);
-            hasDataContent.SetActive(true);
+            string timePlayed = data.GetFormattedPlayTime();
+            int chapter = data.storyProgress;
+            slotInfoText.text = $"{timePlayed} Time Played\nChapter: {chapter}";
+        }
 
-            //TODO: remeber to fetch data in GetTimePlayed() in GameData.cs
-            percentageCompleteText.text = data.GetFormattedPlayTime() + "Time Played";
-            progressText.text = "Story Progress:" + data.storyProgress;
+        bool hasData = data != null;
+        SetInteractable(hasData || !isLoading);
+    }
+
+    public void SetInteractable(bool interactable)
+    {
+        button.interactable = interactable;
+    }
+
+    // Hook this to NavigableOption.onSelected
+    public void OnSelected()
+    {
+        if (button.interactable && menu != null)
+        {
+            menu.OnSlotSelected(this);
         }
     }
-
-    public string GetProfileId()
-    {
-        return this.profileId;
-    }
-
 }
+

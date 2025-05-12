@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private SaveSlotsMenu saveSlotsMenu;
 
     [SerializeField] private GameObject continueButton;
+
+    [SerializeField] private GameObject loadGameButton;
 
     private void OnEnable()
     {
@@ -31,16 +34,21 @@ public class MainMenu : MonoBehaviour
     {
         // Only run this AFTER data is fully loaded
         continueButton.SetActive(DataPersistenceManager.instance.HasGameData());
+        loadGameButton.SetActive(DataPersistenceManager.instance.HasGameData());
         Debug.Log("MainMenu received data loaded event.");
     }
 
     public void OnNewGameClicked()
     {
-        //create a new game -  which will initialize our game data
-        DataPersistenceManager.instance.NewGame();
-        //Load the gameplay scene -  which will in turn save the game because of
-        //OnSceneUnloaded() in the DataPersistenceManager
-        SceneManager.LoadSceneAsync("Round_3");
+        saveSlotsMenu.ActivateMenu(false);
+        this.DeactivateMenu();
+    }
+
+
+    public void OnLoadGameClicked()
+    {
+        saveSlotsMenu.ActivateMenu(true);
+        this.DeactivateMenu();
     }
 
     public void OnContinueGameClicked()
@@ -50,4 +58,15 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadSceneAsync("Round_3");
 
     }
+
+    public void ActivateMenu()
+    {
+        this.gameObject.SetActive(true);
+    }
+
+    public void DeactivateMenu()
+    {
+        this .gameObject.SetActive(false);
+    }
+
 }
