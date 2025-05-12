@@ -61,7 +61,7 @@ He barely responds. Just a nod.
 
 
 === chapter_1 ===
-~progress += 1
+~progress = 1
 #speaker:Female
 #expression:InnerThought
 ...
@@ -208,7 +208,7 @@ The silence stretches...
 
 
 === chapter_2 ===
-~progress += 1
+~progress = 2
 #speaker:Male
 #expression:Shadow
 "Ehem..."
@@ -268,7 +268,7 @@ He clears his throat.
 -> chapter_3
 
 === chapter_3
-~progress += 1
+~progress = 3
 #speaker:Narrator
 The air feels thick.
 
@@ -307,7 +307,7 @@ The air feels thick.
 
 
 === chapter_4
-~progress += 1
+~progress = 4
 *    ["Why are you sweating so much?"]
 
     #speaker:Female
@@ -367,7 +367,7 @@ The air feels thick.
 ->chapter_5
 
 === chapter_5
-~progress += 1
+~progress = 5
 #speaker:Female 
 #expression:Neutral
 "Stay away from me!"
@@ -407,7 +407,7 @@ Because...
 
 
 === chapter_6 ===
-~progress += 1
+~progress = 6
 ///No narrator part - animation? 
 #speaker:Narrator
 The screen flickers. CCTV footage plays: grainy, overhead. The girl stands tall. The man is hunched, small.
