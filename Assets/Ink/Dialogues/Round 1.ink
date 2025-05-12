@@ -29,9 +29,10 @@ VAR happy = true
 ~progress = 0
 ~ temp aggressive = false
 //temp var can only be used inside a knot
+#background: ElevatorDark
+
 ...
 #SFX: Ding
-#background: ElevatorDark
 #speaker:Narrator
 The elevator dings.
 

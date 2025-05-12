@@ -34,4 +34,12 @@ public class PlayerNameHandler : MonoBehaviour
     {
         return !string.IsNullOrEmpty(PlayerName);
     }
+
+
+    public void ResetPlayerPref()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        Debug.LogWarning("PlayerPrefs have been reset.");
+    }
 }

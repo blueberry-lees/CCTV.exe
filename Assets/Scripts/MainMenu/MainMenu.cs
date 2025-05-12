@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject continueButton;
+    public string nextSceneName;
 
     private void OnEnable()
     {
@@ -37,14 +38,14 @@ public class MainMenu : MonoBehaviour
         DataPersistenceManager.instance.NewGame();
         //Load the gameplay scene -  which will in turn save the game because of
         //OnSceneUnloaded() in the DataPersistenceManager
-        SceneManager.LoadSceneAsync("Round_3");
+        SceneManager.LoadSceneAsync(nextSceneName);
     }
 
     public void OnContinueGameClicked()
     {
         //load the next scene -  which will in turn load the game because of 
         //OnSceneLoaded() in the DataPersistenceManager
-        SceneManager.LoadSceneAsync("Round_3");
+        SceneManager.LoadSceneAsync(nextSceneName);
 
     }
 }

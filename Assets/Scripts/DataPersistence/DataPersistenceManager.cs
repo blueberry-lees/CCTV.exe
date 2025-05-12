@@ -9,7 +9,8 @@ public class DataPersistenceManager : MonoBehaviour
 {
     public event Action OnDataLoaded; //chat gpt fix on continue button not showing even when there's game data 
 
-
+  
+     
     [Header("Debugging")]
     [SerializeField] private bool initializeDataIfNull = false;
 
@@ -73,8 +74,14 @@ public class DataPersistenceManager : MonoBehaviour
     public void NewGame()
     {
         this.gameData = new GameData();
+        ResetPlayerPref();
     }
-
+    public void ResetPlayerPref()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        Debug.LogWarning("PlayerPrefs have been reset.");
+    }
 
     public void LoadGame()
     {

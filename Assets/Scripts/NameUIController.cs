@@ -4,9 +4,11 @@ using UnityEngine.EventSystems;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System;
 
 public class NameUIController : MonoBehaviour
 {
+  
     public GameObject nameInputPanel;
     public TMP_Text namePromptText; // Reference to "What's your name?"
     public TMP_InputField nameInputField;
@@ -15,6 +17,8 @@ public class NameUIController : MonoBehaviour
 
     void Start()
     {
+        // Find the DateTimeDisplay script in the scene
+    
         // Hide everything by default
         nameInputPanel.SetActive(false);
         namePromptText.gameObject.SetActive(false);
@@ -46,6 +50,7 @@ public class NameUIController : MonoBehaviour
 
     public void ConfirmName()
     {
+        Debug.Log("name confirmed");
         string name = nameInputField.text.Trim();
         if (string.IsNullOrEmpty(name)) return;
 
@@ -92,14 +97,19 @@ public class NameUIController : MonoBehaviour
     {
         introText.text = "";
 
-        yield return StartCoroutine(TypeWriterEffect("[11:59:58] ACCESSING MEMORY.LOG...\n", 0.03f));
+        // Use DateTime display from DateTimeDisplay
+        string dateTime = DateTime.Now.ToString("[hh:mm tt]");
+
+        // Display the real-time DateTime in the intro
+        yield return StartCoroutine(TypeWriterEffect(dateTime + " ACCESSING MEMORY.LOG...\n", 0.03f));
         yield return WaitForKeyPress(KeyCode.Space);
 
-        yield return StartCoroutine(TypeWriterEffect("[11:59:59] WELCOME, " + name + "\n", 0.03f));
+        yield return StartCoroutine(TypeWriterEffect(dateTime + " WELCOME, " + name + "\n", 0.03f));
         yield return WaitForKeyPress(KeyCode.Space);
 
-        yield return StartCoroutine(TypeWriterEffect("[00:00:00] OBSERVATION BEGINS.", 0.03f));
+        yield return StartCoroutine(TypeWriterEffect(dateTime + " OBSERVATION BEGINS.", 0.03f));
         yield return WaitForKeyPress(KeyCode.Space);
+
         // Save that player has now played
         PlayerPrefs.SetInt("hasPlayedBefore", 1);
         PlayerPrefs.Save();
@@ -110,12 +120,15 @@ public class NameUIController : MonoBehaviour
     {
         introText.text = "";
 
-        yield return StartCoroutine(TypeWriterEffect("[11:59:58] ACCESSING MEMORY.LOG...\n", 0.03f));
+        string dateTime = DateTime.Now.ToString("[hh:mm tt]");
+
+        yield return StartCoroutine(TypeWriterEffect(dateTime + " ACCESSING MEMORY.LOG...\n", 0.03f));
         yield return WaitForKeyPress(KeyCode.Space);
-        yield return StartCoroutine(TypeWriterEffect("[11:59:59] WELCOME BACK, " + "<color=#FF0000>" + name + "</color>" + "\n", 0.03f));
+        yield return StartCoroutine(TypeWriterEffect(dateTime + " WELCOME BACK, " + "<color=#FF0000>" + name + "</color>" + "\n", 0.03f));
         yield return WaitForKeyPress(KeyCode.Space);
-        yield return StartCoroutine(TypeWriterEffect("[00:00:00] <color=#FF0000>OBSERVATION RESUMED.</color>", 0.03f));
+        yield return StartCoroutine(TypeWriterEffect(dateTime + " OBSERVATION RESUMED.", 0.03f));
         yield return WaitForKeyPress(KeyCode.Space);
+
         LoadNextScene();
     }
 
