@@ -1,5 +1,8 @@
 VAR trust_level = 0
 VAR look_away = false
+VAR progress = 0
+
+
 // === ROUND 1 START ===
 
 
@@ -13,7 +16,7 @@ VAR look_away = false
 //#expression:
 //#character: Killer, You
 //#effect
-VAR progress = 0
+
 +{progress == 0} [...] ->chapter_0
 +{progress == 1} [...] ->chapter_1
 +{progress == 2} [...] ->chapter_2
@@ -78,7 +81,7 @@ You feel it immediately. That gnawing twitch in your chest. The feeling again.
 
  ->chapter_2
  === chapter_2
-
+#background: ElevatorDark
 //small_talk_start 
 ~progress = 2
 
@@ -147,12 +150,13 @@ You laugh nervously, but it dies in your throat.
  ->chapter_3
  === chapter_3
 
-
+#background: ElevatorDark
 //delusion_hint 
 ~progress = 3
 
 #speaker:Narrator
-
+#character: Killer
+#expression:NeutralLookAway
 There’s something wrong.
 
 His reflection in the elevator mirror behind him—it doesn’t move when he does.
@@ -175,7 +179,7 @@ Was it?
 
  ->chapter_4
  === chapter_4
- 
+ #background: ElevatorDark
 
 //voice_in_head 
 ~progress = 4
@@ -216,7 +220,7 @@ Then they’re normal again.
 
  ->chapter_5
  === chapter_5
- 
+ #background: ElevatorDark
 ~progress = 5
 #speaker: Narrator
 The elevator dings.

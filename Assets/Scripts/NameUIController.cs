@@ -14,7 +14,7 @@ public class NameUIController : MonoBehaviour
     public TMP_InputField nameInputField;
     public TextMeshProUGUI introText;
     public string nextSceneName;
-
+    public GameObject confirmPanel;
     void Start()
     {
         // Find the DateTimeDisplay script in the scene
@@ -22,6 +22,7 @@ public class NameUIController : MonoBehaviour
         // Hide everything by default
         nameInputPanel.SetActive(false);
         namePromptText.gameObject.SetActive(false);
+        confirmPanel.gameObject.SetActive(false);
         introText.text = "";
 
         if (PlayerPrefs.HasKey("hasPlayedBefore"))
@@ -46,6 +47,7 @@ public class NameUIController : MonoBehaviour
         yield return null;
         EventSystem.current.SetSelectedGameObject(nameInputField.gameObject);
         nameInputField.ActivateInputField();
+        confirmPanel.gameObject.SetActive(true);
     }
 
     public void ConfirmName()
