@@ -1,16 +1,19 @@
-// tags contain 
+/*
+TAGS CONTAIN : 
+#speaker:
+#SFX:
+#expression:
+#effect
+*/
 
-//#speaker:
-
-//#SFX:
-
-//#expression:
-
-//#effect
+//Global Variables
 VAR progress = 0
-VAR happy = true
-/////
+VAR friendly = false
+VAR unfriendly = false
+VAR neutral = false
 
+
+//Statements
 {progress:
 - 0: ->chapter_0
 - 1: ->chapter_1
@@ -26,13 +29,14 @@ VAR happy = true
 
 -> chapter_0
 === chapter_0 ===
+
+
 ~progress = 0
 ~ temp aggressive = false
 //temp var can only be used inside a knot
-#background: ElevatorDark
-
 ...
 #SFX: Ding
+#background: ElevatorDark
 #speaker:Narrator
 The elevator dings.
 
@@ -62,7 +66,7 @@ He barely responds. Just a nod.
 
 
 === chapter_1 ===
-~progress = 1
+~progress += 1
 #speaker:Female
 #expression:InnerThought
 ...
@@ -209,7 +213,7 @@ The silence stretches...
 
 
 === chapter_2 ===
-~progress = 2
+~progress += 1
 #speaker:Male
 #expression:Shadow
 "Ehem..."
@@ -265,11 +269,11 @@ He clears his throat.
 
 - //////
 
-
+TODO: haha
 -> chapter_3
 
 === chapter_3
-~progress = 3
+~progress += 1
 #speaker:Narrator
 The air feels thick.
 
@@ -308,7 +312,7 @@ The air feels thick.
 
 
 === chapter_4
-~progress = 4
+~progress += 1
 *    ["Why are you sweating so much?"]
 
     #speaker:Female
@@ -368,7 +372,7 @@ The air feels thick.
 ->chapter_5
 
 === chapter_5
-~progress = 5
+~progress += 1
 #speaker:Female 
 #expression:Neutral
 "Stay away from me!"
@@ -408,7 +412,7 @@ Because...
 
 
 === chapter_6 ===
-~progress = 6
+~progress += 1
 ///No narrator part - animation? 
 #speaker:Narrator
 The screen flickers. CCTV footage plays: grainy, overhead. The girl stands tall. The man is hunched, small.
