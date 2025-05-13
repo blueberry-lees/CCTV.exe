@@ -1,28 +1,34 @@
+
+/*
+TAGS CONTAIN : 
+#speaker:
+#SFX:
+#expression:
+#effect
+//#character: Killer, You
+
+*/
+
+//Global Variables
+
+VAR friendly = false
+VAR unfriendly = false
+VAR neutral = false
 VAR trust_level = 0
 VAR look_away = false
 VAR progress = 0
 
 
-// === ROUND 1 START ===
+//Statements
+{progress:
+- 0: ->chapter_0
+- 1: ->chapter_1
+- 2: ->chapter_2
+- 3: ->chapter_3
+- 4: ->chapter_4
+- 5: ->chapter_5
+}
 
-
-
-// tags contain 
-
-//#speaker:
-
-//#SFX:
-
-//#expression:
-//#character: Killer, You
-//#effect
-
-+{progress == 0} [...] ->chapter_0
-+{progress == 1} [...] ->chapter_1
-+{progress == 2} [...] ->chapter_2
-+{progress == 3} [...] ->chapter_3
-+{progress == 4} [...] ->chapter_4
-+{progress == 5} [...] ->chapter_5
 
 
  ->chapter_0
