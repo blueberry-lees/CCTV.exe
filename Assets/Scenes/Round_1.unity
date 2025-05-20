@@ -258,12 +258,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   storyProgress: 0
+  currentChapter: 0
   nextSceneName: Interface1
   speakerText: {fileID: 703291666}
   dialogueText: {fileID: 1681324135}
   typingAudio: {fileID: 305486186}
   sfxAudio: {fileID: 1611546671}
-  inkJSON: {fileID: 4900000, guid: a4cc6b0bd963780458005e46a42d7a37, type: 3}
+  currentInkJSON: {fileID: 0}
+  r1: {fileID: 4900000, guid: a4cc6b0bd963780458005e46a42d7a37, type: 3}
+  r2: {fileID: 4900000, guid: f8f500710345da54bbfb32a44e77f21c, type: 3}
+  r3: {fileID: 4900000, guid: 85459eedc696dd64b9c6a9515a6ca328, type: 3}
+  r4: {fileID: 0}
   defaultSpeed: 0.05
 --- !u!82 &305486186
 AudioSource:

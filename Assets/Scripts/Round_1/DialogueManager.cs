@@ -6,12 +6,18 @@ using UnityEngine.UI;
 using TMPro;
 using Ink.Runtime;
 
+
+public enum Chapters { Round1, Round2, Round3, Round4 }
+
 [RequireComponent(typeof(DialogueChoice))]
 public class DialogueManager : MonoBehaviour, IDataPersistence
 {
+    [Header("Data to save")]
     public int storyProgress  = 0; //test out save game script
-    private int deathCount = 0; //test out save game script
+    public Chapters currentChapter = Chapters.Round1;
 
+
+    [Header("Scripts ref")]
     private VisualManager visualManager;
     private DialogueChoice choiceUI;
 
@@ -27,7 +33,11 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     public AudioSource sfxAudio;
 
     [Header("Ink Settings")]
-    public TextAsset inkJSON;
+    //public TextAsset inkJSON;
+    public TextAsset currentInkJSON;
+    public TextAsset r1, r2, r3, r4;
+
+
     public float defaultSpeed = 0.03f;
 
     private Story story;
@@ -49,27 +59,48 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        this.deathCount = data.deathCount;
         this.storyProgress = data.storyProgress;
         Debug.Log("dialogue data loaded: [" + this.storyProgress + "]");
+
     }
 
 
     public void SaveData(ref GameData data)
     {
-        data.deathCount = this.deathCount;
         data.storyProgress = this.storyProgress;
         Debug.Log("dialogue data saved: [" + this.storyProgress + "]");
+
+        
     }
 
 
+    //choose the chapter (enum) to chage the inkJson files accordingly
+    public void DefineChapter(Chapters selectedChapter)
+    {
+        currentChapter = selectedChapter;
 
+        switch (selectedChapter)
+        {
+            case Chapters.Round1: currentInkJSON = r1;  break;
+            case Chapters.Round2: currentInkJSON = r2;  break;
+            case Chapters.Round3: currentInkJSON = r3; break;
+            case Chapters.Round4: currentInkJSON = r4; break;
+
+        }
+        
+    }
+
+
+    
 
     void Start()
     {
+        DefineChapter(Chapters.Round1);
+
+
         visualManager = GetComponent<VisualManager>();
 
-        story = new Story(inkJSON.text);
+        story = new Story(currentInkJSON.text);
 
         // ✅ Set progress into Ink before story runs
         story.variablesState["progress"] = storyProgress;
@@ -122,11 +153,16 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
 
     public void ContinueStory()
     {
-        deathCount++;
-        //Debug.Log("Death Count: " + deathCount);
+        //TODO: how to save dialogue progress without the story progress int?
 
         if (!story.canContinue)
         {
+            SaveStoryRound(1);
+            Debug.Log("no more story/story ends");
+            //TODO: playerpref round 1 end...
+            //if round 1 end go to interface version 2
+            //from version 2 set story progress to 7, and load round 1 scene again with round 2 contents
+
             SceneManager.LoadScene(nextSceneName);
             return;
         }
@@ -266,4 +302,14 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     }
 
 
+
+
+
+    public void SaveStoryRound(int completedRound)
+    {
+        PlayerPrefs.SetInt("Round", completedRound);
+        PlayerPrefs.Save();
+    }
+
 }
+

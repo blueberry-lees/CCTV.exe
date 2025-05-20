@@ -6,7 +6,9 @@ using UnityEngine;
 [System.Serializable]
 public class GameData
 {
-    public int deathCount;
+    public enum Rounds { Round1, Round2, Round3, Round4 }
+    public Rounds currentRound = Rounds.Round1;
+
     public int storyProgress;
 
 
@@ -15,7 +17,7 @@ public class GameData
     //the game starts with when there's no data to load
     public GameData()
     {
-        this.deathCount = 0;
+      this.currentRound = Rounds.Round1;
         this.storyProgress = 0;
     }
 }
