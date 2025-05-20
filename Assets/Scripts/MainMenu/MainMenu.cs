@@ -17,13 +17,7 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    private void OnDisable()
-    {
-        if (DataPersistenceManager.instance != null)
-        {
-            DataPersistenceManager.instance.OnDataLoaded -= OnDataLoaded;
-        }
-    }
+
 
     private void OnDataLoaded()
     {
@@ -47,5 +41,14 @@ public class MainMenu : MonoBehaviour
         //OnSceneLoaded() in the DataPersistenceManager
         SceneManager.LoadSceneAsync(nextSceneName);
 
+    }
+
+
+    private void OnDisable()
+    {
+        if (DataPersistenceManager.instance != null)
+        {
+            DataPersistenceManager.instance.OnDataLoaded -= OnDataLoaded;
+        }
     }
 }

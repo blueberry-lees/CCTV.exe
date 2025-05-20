@@ -15,6 +15,7 @@ public class NameUIController : MonoBehaviour
     public TextMeshProUGUI introText;
     public string nextSceneName;
     public GameObject confirmPanel;
+    public GameObject errorMessage;
     void Start()
     {
         // Find the DateTimeDisplay script in the scene
@@ -28,7 +29,7 @@ public class NameUIController : MonoBehaviour
         if (PlayerPrefs.HasKey("hasPlayedBefore"))
         {
             // Show returning intro with typewriter effect
-            StartCoroutine(ShowReturningIntro(PlayerNameHandler.Instance.PlayerName));
+            StartCoroutine(ShowReturningIntro(PlayerNameHandler.instance.PlayerName));
         }
         else
         {
@@ -52,18 +53,36 @@ public class NameUIController : MonoBehaviour
 
     public void ConfirmName()
     {
-        Debug.Log("name confirmed");
         string name = nameInputField.text.Trim();
-        if (string.IsNullOrEmpty(name)) return;
+        if (string.IsNullOrEmpty(name))
+        {
+            Debug.Log("No name found");
+            StartCoroutine(ErrorMessage(3f));
+            return;
+        }
+        else
+        {
+            Debug.Log("Name confirmed: " + name);
+            
+        }
 
-        PlayerNameHandler.Instance.SavePlayerName(name);
+            PlayerNameHandler.instance.SavePlayerName(name);
 
-        // Hide input UI
-        namePromptText.gameObject.SetActive(false);
-        nameInputPanel.SetActive(false);
+            // Hide input UI
+            namePromptText.gameObject.SetActive(false);
+            nameInputPanel.SetActive(false);
 
-        // Start first intro typewriter effect
-        StartCoroutine(ShowFirstIntro(name));
+            // Start first intro typewriter effect
+            StartCoroutine(ShowFirstIntro(name));
+   
+    }
+
+    public IEnumerator ErrorMessage(float s)
+    {
+        errorMessage.gameObject.SetActive(true);
+        yield return new WaitForSeconds(s);
+        errorMessage.gameObject.SetActive(false);
+       
     }
 
     IEnumerator TypeWriterEffect(string text, float speed)

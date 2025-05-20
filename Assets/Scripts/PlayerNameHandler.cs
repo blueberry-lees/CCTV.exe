@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerNameHandler : MonoBehaviour
+public class PlayerNameHandler :MonoBehaviour
 {
-    public static PlayerNameHandler Instance;
+    public static PlayerNameHandler instance;
 
     public string PlayerName { get; private set; }
 
     void Awake()
     {
-        if (Instance == null)
+        if (instance == null)
         {
-            Instance = this;
+            instance = this;
             DontDestroyOnLoad(gameObject); // Persist this object across scenes
             PlayerName = PlayerPrefs.GetString("playerName", "");
         }
@@ -20,6 +20,16 @@ public class PlayerNameHandler : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        //if (instance != null)
+        //{
+        //    Debug.Log("Found more than one Data Persistence Manager in the scene. Destroying the newest one.");
+        //    Destroy(this.gameObject);
+        //    return;
+
+        //}
+        //instance = this;
+        //DontDestroyOnLoad(this.gameObject);
+
     }
 
     public void SavePlayerName(string name)
