@@ -11,10 +11,10 @@ public class TerminalIntro : MonoBehaviour
 
     [Header("Text Settings")]
     [TextArea(5, 20)]
-    string fullText;  // The full text to be displayed on the terminal
+    public string fullText;  // The full text to be displayed on the terminal
     public float typeDelay = 0.03f;  // Delay between each character while typing
     public AudioSource typeSound;  // Sound played during typing
-    public TMP_Text typeOutText;  // Text object displaying the terminal text
+    public TMP_Text terminalText;  // Text object displaying the terminal text
     public TMP_Text pressKeyPrompt;  // Prompt that tells the player to press a key to continue
 
     // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -28,17 +28,13 @@ public class TerminalIntro : MonoBehaviour
     // Unity Methods
     // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
-    void Awake()
-    {
-        fullText = typeOutText.text;
-    }
     void Start()
     {
         // Initialize flags and UI elements
         skipTyping = false;
         finishedTyping = false;
 
-        typeOutText.text = "";
+        terminalText.text = "";
         pressKeyPrompt.gameObject.SetActive(false);
         StartCoroutine(TypeTextWithRichSupport());
     }
@@ -64,7 +60,7 @@ public class TerminalIntro : MonoBehaviour
         {
             if (skipTyping)
             {
-                typeOutText.text = fullText;
+                terminalText.text = fullText;
                 break;
             }
 
@@ -76,7 +72,7 @@ public class TerminalIntro : MonoBehaviour
                 {
                     while (i <= tagEnd)
                     {
-                        typeOutText.text += fullText[i];
+                        terminalText.text += fullText[i];
                         i++;
                     }
                     continue;
@@ -84,7 +80,7 @@ public class TerminalIntro : MonoBehaviour
             }
 
             // Add the character to the terminal text
-            typeOutText.text += fullText[i];
+            terminalText.text += fullText[i];
 
             // Play typing sound for non-whitespace characters
             if (!char.IsWhiteSpace(fullText[i]) && typeSound)

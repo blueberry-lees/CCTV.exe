@@ -5,12 +5,10 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class TerminalButtonController2 : MonoBehaviour
+public class TerminalButtonController : MonoBehaviour
 {
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // Public Fields (Inspector)
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-    public UserInterface2 userInterface2;
+
+    public UserInterface userInterface;
 
     [Header("Main Panel")]
     public GameObject mainPanel;
@@ -21,11 +19,7 @@ public class TerminalButtonController2 : MonoBehaviour
 
     [Header("Exit Popup")]
     public GameObject exitPopupPanel;  // Exit popup panel
-   
-
-    //private float exitInputDelay = 0.2f;  // Delay for exit input
-    //private float exitPanelOpenedTime = 0f;  // Time when exit panel was opened
-    //private int exitChoiceIndex = 0;  // Current choice for the exit (Yes/No)
+  
 
     [Header("Launch Popup")]
     public GameObject launchPopupPanel;  // Launch popup panel
@@ -34,33 +28,18 @@ public class TerminalButtonController2 : MonoBehaviour
     public GameObject launchComfirmation; //comfirm launch panel
 
 
-
     [Header("Audio")]
-    public AudioSource typeSound;  // Typing sound effect
+    public AudioSource popupSound;  // Typing sound effect
 
-    [Header("Text Colors")]
-    public Color normalColor = Color.white;  // Normal button color
-    public Color highlightColor = Color.white;  // Highlighted button color
-
-    
-
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // Booleans
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
     
     private bool isOtherPanelActive = false;  // To track if other panels are active
-    //private bool isExitPanelActive = false;  // To track if exit panel is active
     private bool isErrorPopupActive = false;  // To track if error popup is active
-    //private bool isLaunchComfirmationActive = false;
 
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // Unity Methods
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
     void Start()
     {
-        userInterface2 = GetComponent<UserInterface2>();
+        userInterface = GetComponent<UserInterface>();
         errorPopupText.gameObject.SetActive(false);  // Hide error popup initially
         exitPopupPanel.gameObject.SetActive(false);  // Hide exit popup initially
         launchPopupPanel.gameObject.SetActive(false);  // Hide launch popup initially
@@ -72,7 +51,7 @@ public class TerminalButtonController2 : MonoBehaviour
     {
 
 
-        if (userInterface2.isTypingFinished && Input.GetKeyDown(KeyCode.Escape))
+        if (userInterface.isTypingFinished && Input.GetKeyDown(KeyCode.Escape))
         {
             ShowExitPopup();
         }
@@ -82,7 +61,7 @@ public class TerminalButtonController2 : MonoBehaviour
         {
             mainPanel.gameObject.SetActive(false);
         }
-        else if (userInterface2.isTypingFinished)
+        else if (userInterface.isTypingFinished)
         {
             mainPanel.gameObject.SetActive(true);
         }
@@ -96,7 +75,7 @@ public class TerminalButtonController2 : MonoBehaviour
     public void ShowErrorPopup()
     {
         // Show error popup and wait for key press to hide
-        typeSound.Play();
+        popupSound.Play();
         errorPopupText.gameObject.SetActive(true);
         if (!isErrorPopupActive) StartCoroutine(WaitForAnyKeyToHideError());
     }
@@ -110,14 +89,14 @@ public class TerminalButtonController2 : MonoBehaviour
 
     public void ShowReplayPopup()
     {
-        typeSound.Play();
+        popupSound.Play();
         isOtherPanelActive = true;
         launchComfirmation.SetActive(true);
     }
 
     public void HideReplayPopup()
     {
-        typeSound.Play();
+        popupSound.Play();
         isOtherPanelActive = false;
         launchComfirmation.SetActive(false);
     }
@@ -166,12 +145,6 @@ public class TerminalButtonController2 : MonoBehaviour
     public void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
-    }
-
-    public void QuitGame()
-    {
-        Application.Quit();
-        Debug.Log("Exiting game...");
     }
 
 }

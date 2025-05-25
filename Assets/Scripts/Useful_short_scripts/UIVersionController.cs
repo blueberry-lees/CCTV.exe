@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum InterfaceVersion { version1, version2, version3, version4 }
 
-public class TerminalUI : MonoBehaviour/*, IDataPersistence*/
+public class UIVersionController : MonoBehaviour/*, IDataPersistence*/
 {
     GameData gameData;
     public InterfaceVersion interfaceVersion = InterfaceVersion.version1;

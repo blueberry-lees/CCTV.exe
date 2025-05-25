@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UserInterface2 : MonoBehaviour
+public class UserInterface : MonoBehaviour
 {
     [Header("Typing Settings")]
     public float typeDelay = 0.03f;
