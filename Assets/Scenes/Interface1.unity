@@ -306,6 +306,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 420880360}
   - {fileID: 2014610740}
   - {fileID: 303448526}
   - {fileID: 175014418}
@@ -1297,12 +1298,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 420880358}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.53638387, y: -0.8568209, z: 168.72209}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 57.92946, y: -92.53665, z: 8501.986}
+  m_LocalScale: {x: 108, y: 108, z: 108}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 24595731}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &420880362
 MonoBehaviour:
@@ -1334,7 +1335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5a389cea27e3c4438db665c10a3dcd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userInterface2: {fileID: 0}
+  userInterface: {fileID: 0}
   mainPanel: {fileID: 303448525}
   errorPopupText: {fileID: 4299340598814246002}
   exitPopupPanel: {fileID: 1176003050}
@@ -2064,8 +2065,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e32d839911210f449f751f45dd2ff2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flickerText: {fileID: 894687589}
-  flickerSpeed: 0.1
 --- !u!1 &1024793788
 GameObject:
   m_ObjectHideFlags: 0
@@ -5348,5 +5347,4 @@ SceneRoots:
   - {fileID: 2052641274}
   - {fileID: 168218707}
   - {fileID: 122025102}
-  - {fileID: 420880360}
   - {fileID: 1541561612}
