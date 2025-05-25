@@ -14,19 +14,21 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
 {
     [Header("Data to save")]
     public int storyProgress  = 0; //test out save game script
-    public Chapters currentChapter = Chapters.Round1;
+    public Chapters currentChapter = Chapters.Round1; //TODO: link this to the swutch csae below
 
 
     [Header("Scripts ref")]
     private VisualManager visualManager;
     private DialogueChoice choiceUI;
 
-    public string nextSceneName;
+    public string nextSceneName;//TODO: remove this
 
     [Header("UI References")]
     public TMP_Text speakerText;
     public TMP_Text dialogueText;
-    
+
+    public float typeSpeed = 0.05f;
+
 
     [Header("Audio")]
     public AudioSource typingAudio;
@@ -38,7 +40,6 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     public TextAsset r1, r2, r3, r4;
 
 
-    public float defaultSpeed = 0.03f;
 
     private Story story;
     private bool isTyping = false;
@@ -75,9 +76,8 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
 
 
     //choose the chapter (enum) to chage the inkJson files accordingly
-    public void DefineChapter(Chapters selectedChapter)
+    public void ChangeChapterTo(Chapters selectedChapter)
     {
-        currentChapter = selectedChapter;
 
         switch (selectedChapter)
         {
@@ -91,40 +91,21 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     }
 
 
-    
+    void Awake()
+    {
+        choiceUI = GetComponent<DialogueChoice>();
+        visualManager = GetComponent<VisualManager>();
+        ChangeChapterTo(currentChapter);
+    }
 
     void Start()
     {
-        DefineChapter(Chapters.Round1);
 
-
-        visualManager = GetComponent<VisualManager>();
-
+        
         story = new Story(currentInkJSON.text);
+        ProcessStoryProgressAndStart();
 
-        // ✅ Set progress into Ink before story runs
-        story.variablesState["progress"] = storyProgress;
 
-        // ✅ Build and jump to the appropriate knot
-        string knotName = $"chapter_{storyProgress}";
-        try
-        {
-            story.ChoosePathString(knotName);
-        }
-        catch (StoryException e)
-        {
-            Debug.LogWarning($"Knot not found: {knotName}. Exception: {e.Message}");
-        }
-
-        // ✅ Optional: sync progress back from Ink if it changes immediately
-        if (story.variablesState["progress"] is int val)
-            storyProgress = val;
-
-        choiceUI = GetComponent<DialogueChoice>();
-        choiceUI.Init(story, this);
-
-        LoadTypingSounds();
-        ContinueStory();
     }
 
     void Update()
@@ -146,10 +127,34 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
 
         if (Input.GetKeyDown(KeyCode.Space))
             ContinueStory();
-
-        
-
     }
+
+    public void ProcessStoryProgressAndStart()
+    {
+        //  Set progress into Ink before story runs
+        story.variablesState["progress"] = storyProgress;
+
+        //  Build and jump to the appropriate knot
+        string knotName = $"chapter_{storyProgress}";
+        try
+        {
+            story.ChoosePathString(knotName);
+        }
+        catch (StoryException e)
+        {
+            Debug.LogWarning($"Knot not found: {knotName}. Exception: {e.Message}");
+        }
+
+        // Optional: sync progress back from Ink if it changes immediately
+        if (story.variablesState["progress"] is int val)
+            storyProgress = val;
+       
+        choiceUI.Init(story, this);
+
+        LoadTypingSounds();
+        ContinueStory();
+    }
+
 
     public void ContinueStory()
     {
@@ -197,7 +202,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         dialogueText.text = "";
         skipTyping = false;
 
-        float speed = GetFloatFromInk("speed", defaultSpeed);
+        float speed = GetFloatFromInk("speed", typeSpeed);
         float delay = GetFloatFromInk("delay", 0f);
         yield return new WaitForSeconds(delay);
 

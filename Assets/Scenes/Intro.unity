@@ -337,7 +337,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -413, y: 278}
+  m_AnchoredPosition: {x: -436, y: 325}
   m_SizeDelta: {x: 161.3, y: 76.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &270912819
@@ -549,7 +549,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -0.36999512, y: 49.79001}
+  m_AnchoredPosition: {x: -0.36999512, y: 150}
   m_SizeDelta: {x: -20.69, y: 82.42}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &526158419
@@ -683,8 +683,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -469, y: 357}
-  m_SizeDelta: {x: 161.3, y: 76.5}
+  m_AnchoredPosition: {x: -469, y: 426}
+  m_SizeDelta: {x: 169, y: 85.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &659596891
 MonoBehaviour:
@@ -853,10 +853,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 45664354}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.3699646, y: -7.5}
-  m_SizeDelta: {x: -20.69, y: -15}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 929.31, y: 935}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1283599252
 MonoBehaviour:
@@ -878,17 +878,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "          <<<<color=#FF2D71> CCTV.exe</color> : : <color=#FF2D71>Input
-    Protocols</color> >>>\n\n             \n                       \u2192  Navigate
-    \n\r\r\n                    \n                        \u2192  Interact (<color=#FF2D71>IF</color>
-    permitted)\n\n                                         \n                            
-    \u2192  Skip (<color=#FF2D71>IF</color> permitted)\n\r\n                             
-    \n                   \u2192  Terminate session <color=#FF2D71>or</color> access
-    settings\r\n\r\n     -------------------------------------------------------------\n\r     
-    <color=#FF2D71>NOTE: </color>\n\n     - Subject POV: Restricted <color=#FF2D71>to</color>
-    available memory fragments.\n\r\n     - Data may be incomplete, corrupted, <color=#FF2D71>or</color>
-    emotionally biased.\n\r\n     - Playback integrity <color=#FF2D71>not</color>
-    guaranteed.\r\n\r\n     ----- Begin <color=#FF2D71>when </color> ready -------------------------------------"
+  m_text: "       <<<<color=#FF2D71> CCTV.exe</color> : : <color=#FF2D71>Input Protocols</color>
+    >>>\n\n             \n              \u2192  Navigate \n\r\r\n                   
+    \n             \u2192  Confirm (<color=#FF2D71>IF</color> permitted)\n\n                                        
+    \n                \u2192  Skip (<color=#FF2D71>IF</color> permitted)\n\r\n                             
+    \n          \u2192  Access settings\r\n\r\n\n     ----- Begin <color=#FF2D71>when
+    </color> ready -------------------"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -915,8 +910,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26.8
-  m_fontSizeBase: 26.8
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -951,7 +946,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 17.59439, y: 8.358307, z: 12.946106, w: -3.0533905}
+  m_margin: {x: 17.59439, y: 127.8761, z: 12.946106, w: 225.31085}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1067,7 +1062,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -438, y: 135}
+  m_AnchoredPosition: {x: -438, y: 139}
   m_SizeDelta: {x: 161.3, y: 76.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1590853033
@@ -1117,6 +1112,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1780668498}
+  - component: {fileID: 1780668499}
+  - component: {fileID: 1780668502}
+  - component: {fileID: 1780668501}
+  - component: {fileID: 1780668500}
   m_Layer: 5
   m_Name: KeyIcons
   m_TagString: Untagged
@@ -1144,9 +1143,73 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 236, y: -39}
+  m_AnchoredPosition: {x: 174, y: -197}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1780668499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1780668497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4ff07f0f5ef8b548a4952569c51c584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delayLoadObj:
+  - {fileID: 659596889}
+  activationTime: 1
+  deactivationTime: 1
+--- !u!114 &1780668500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1780668497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4ff07f0f5ef8b548a4952569c51c584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delayLoadObj:
+  - {fileID: 1590853031}
+  activationTime: 2.5
+  deactivationTime: 1
+--- !u!114 &1780668501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1780668497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4ff07f0f5ef8b548a4952569c51c584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delayLoadObj:
+  - {fileID: 1891494250}
+  activationTime: 2
+  deactivationTime: 1
+--- !u!114 &1780668502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1780668497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4ff07f0f5ef8b548a4952569c51c584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delayLoadObj:
+  - {fileID: 270912817}
+  activationTime: 1.5
+  deactivationTime: 1
 --- !u!1 &1891494250
 GameObject:
   m_ObjectHideFlags: 0
@@ -1181,7 +1244,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -429, y: 207}
+  m_AnchoredPosition: {x: -439, y: 243}
   m_SizeDelta: {x: 161.3, y: 76.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1891494252

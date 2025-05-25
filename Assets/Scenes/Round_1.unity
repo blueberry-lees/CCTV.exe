@@ -262,6 +262,7 @@ MonoBehaviour:
   nextSceneName: Interface1
   speakerText: {fileID: 703291666}
   dialogueText: {fileID: 1681324135}
+  typeSpeed: 0.05
   typingAudio: {fileID: 305486186}
   sfxAudio: {fileID: 1611546671}
   currentInkJSON: {fileID: 0}
@@ -269,7 +270,6 @@ MonoBehaviour:
   r2: {fileID: 4900000, guid: f8f500710345da54bbfb32a44e77f21c, type: 3}
   r3: {fileID: 4900000, guid: 85459eedc696dd64b9c6a9515a6ca328, type: 3}
   r4: {fileID: 0}
-  defaultSpeed: 0.05
 --- !u!82 &305486186
 AudioSource:
   m_ObjectHideFlags: 0

@@ -29,7 +29,7 @@ public class NameUIController : MonoBehaviour
         if (PlayerPrefs.HasKey("hasPlayedBefore"))
         {
             // Show returning intro with typewriter effect
-            StartCoroutine(ShowReturningIntro(PlayerNameHandler.instance.PlayerName));
+            StartCoroutine(ShowReturningIntro(PlayerNameHandler.instance.playerName));
         }
         else
         {

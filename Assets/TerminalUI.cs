@@ -12,10 +12,10 @@ public class TerminalUI : MonoBehaviour/*, IDataPersistence*/
 
     public int storyProgress;
 
-    //TODO: CheckInterfaceVersion OnEnable()
 
-     void Update()
+     void OnEnable()
     {
+        storyProgress = gameData.storyProgress;
         
         CheckInterfaceVersion();
     }
@@ -43,9 +43,28 @@ public class TerminalUI : MonoBehaviour/*, IDataPersistence*/
         //if round 1 have not complete then interface version is 1
         if (gameData.storyProgress is >= 0 and <= 5)
         {
-            Debug.Log("STORY PROGRESS 0 THEREFORE VER.1");
+            Debug.Log("STORY PROGRESS 0-5 THEREFORE VER.1");
             interfaceVersion = InterfaceVersion.version1;
         }
+        else if (gameData.storyProgress is >= 6 and <= 10)
+        {
+            Debug.Log("STORY PROGRESS 6-10 THEREFORE VER.2");
+            interfaceVersion = InterfaceVersion.version2;
+
+        }
+        else if (gameData.storyProgress is >= 11 and <= 15)
+        {
+            Debug.Log("STORY PROGRESS 11-15 THEREFORE VER.3");
+            interfaceVersion = InterfaceVersion.version3;
+
+        }
+        else if (gameData.storyProgress is >= 16 and <= 20)
+        {
+            Debug.Log("STORY PROGRESS 16-20 THEREFORE VER.4");
+            interfaceVersion = InterfaceVersion.version4;
+
+        }
+
 
 
 

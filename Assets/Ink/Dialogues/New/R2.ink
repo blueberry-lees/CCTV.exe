@@ -1,7 +1,25 @@
 // === ROUND 2 START ===
--> round2_intro
 
-=== round2_intro ===
+
+
+
+VAR progress = 0
+
+
+//Statements
+{progress:
+- 0: ->chapter_0
+- 1: ->chapter_1
+- 2: ->chapter_2
+- 3: ->chapter_3
+- 4: ->chapter_4
+}
+
+
+
+ ->chapter_0
+ === chapter_0
+~progress = 0
 #pause_scene
 #show_scene("elevator_dim")
 #set_expression("neutral")
@@ -16,9 +34,10 @@ The doors begin to close, but a familiar hand halts their motion.
 
 He steps in.
 
--> describe_man_round2
-
-=== describe_man_round2 ===
+ ->chapter_1
+ 
+ === chapter_1
+~progress = 1
 #show_character("Man", "smile_neutral")
 
 His suit is immaculate, but there's a subtle smear on his cuff. His eyes meet yours, and for a fleeting moment, they seem... hollow.
@@ -37,9 +56,9 @@ MAN:
 MAN:
 "Elevators are like confessionals, don't you think? Small spaces where truths slip out."
 
--> elevator_ride_round2
-
-=== elevator_ride_round2 ===
+ ->chapter_2
+ === chapter_2
+~progress = 2
 The elevator hums as it descends. The floor numbers flicker erratically.
 
 MAN:
@@ -73,9 +92,9 @@ MAN:
 MAN:
 "Is it? Perhaps we're all just mirrors, reflecting each other's truths and lies."
 
--> delusion_build_up
-
-=== delusion_build_up ===
+ ->chapter_3
+ === chapter_3
+~progress = 3
 #show_expression("disturbed")
 
 The elevator's lights flicker, and for a moment, the man's reflection doesn't match his movements.
@@ -98,9 +117,9 @@ MAN:
 (chuckles)
 "Aren't we all?"
 
--> climax_round2
-
-=== climax_round2 ===
+ ->chapter_4
+ === chapter_4
+~progress = 4
 The elevator jerks to a halt between floors.
 
 The lights dim.

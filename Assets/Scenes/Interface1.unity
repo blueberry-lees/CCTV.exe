@@ -1269,7 +1269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db39be7e66b3aaa4085a4ff13004250b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interfaceVersion: 0
+  interfaceVersion: 3
   storyProgress: 0
 --- !u!1 &460494518
 GameObject:
@@ -1460,7 +1460,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -717, y: 341}
+  m_AnchoredPosition: {x: -717, y: 280}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &503524297
@@ -1484,10 +1484,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "> SYSTEM_ROOT\r\n\u2502\r\n\u251C\u2500\u2500 RECORDS/\r\n\u2502   \u251C\u2500\u2500
-    elevator_log_0314.mp4\r\n\u2502   \u2514\u2500\u2500 manifest.json\r\n\u2502\r\n\u251C\u2500\u2500
+    elevator.mp4\r\n\u2502   \u2514\u2500\u2500 manifest.json\r\n\u2502\r\n\u251C\u2500\u2500
     ARCHIVE/\r\n\u2502   \u251C\u2500\u2500 backup_0313/\r\n\u2502   \u251C\u2500\u2500
     backup_0312/\r\n\u2502\r\n\u251C\u2500\u2500 CORRUPTED/\r\n\u2502   \u251C\u2500\u2500
-    CCTV_oldfeed.tmp\r\n\u2502     \n   \u2514\u2500\u2500 "
+    CCTV_oldfeed.tmp\r\n\u2502   \u2514\u2500\u2500 "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -3008,8 +3008,7 @@ MonoBehaviour:
   m_text: "<color=#FF2D71>[ CCTV.exe ]</color></color> [v1.<color=#FF2D71>3</color>]
     \n\n----------------------\n\n> <color=#FF2D71>Status:</color> Recovered\n\r\n>
     Source: <color=#FF2D71>/C0R*UPT3D</color>\n\r\n> Integrity: Compromised\n\r\n>
-    Last Access: <color=#FF2D71>??/??/25</color>\n\n\r\n> Note: <color=#FF2D71>Incident
-    review pending...\r</color>"
+    Last Access: <color=#FF2D71>??/??/25</color>\n\n\r"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -3994,6 +3993,18 @@ MonoBehaviour:
   onSelected:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 420880363}
+        m_TargetAssemblyTypeName: TerminalButtonController2, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Round_1
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 420880363}
         m_TargetAssemblyTypeName: TerminalButtonController2, Assembly-CSharp
         m_MethodName: LoadScene

@@ -1,25 +1,15 @@
+// === ROUND 1 START ===
+ ->chapter_0
 
-/*
-TAGS CONTAIN : 
-#speaker:
-#SFX:
-#expression:
-#effect
+// tags contain 
+//#speaker: Male, Female, Narrator
+//#SFX:
+//#expression:
 //#character: Killer, You
+//#effect
 
-*/
+//switch cases
 
-//Global Variables
-
-VAR friendly = false
-VAR unfriendly = false
-VAR neutral = false
-VAR trust_level = 0
-VAR look_away = false
-VAR progress = 0
-
-
-//Statements
 {progress:
 - 0: ->chapter_0
 - 1: ->chapter_1
@@ -27,11 +17,84 @@ VAR progress = 0
 - 3: ->chapter_3
 - 4: ->chapter_4
 - 5: ->chapter_5
+
 }
 
+/* ---------------------------------
+
+   Functions
+
+ ----------------------------------*/
+CONST INITIAL_SWING = 1001
+
+=== function swing_count(x) 
+    ~ return (upness(x) + downness(x)) - 2
+=== function swing_ready(x) 
+    ~ return swing_count(x) >= 2
+=== function raise(ref x)
+	~ x = x + 1000
+=== function elevate(ref x)
+    ~ raise(x)
+    ~ raise(x)
+    ~ raise(x)
+=== function lower(ref x)
+	~ x = x + 1 
+== function ditch (ref x) 
+    ~ lower(x) 
+    ~ lower(x) 
+    ~ lower(x)
+=== function demolish(ref x)
+    ~ x = x + 20
+=== function escalate(ref x)
+    ~ x = x + (20 * 1000)
+=== function upness(x)
+	~ return x / 1000
+
+=== function downness(x)
+	~ return x % 1000
+
+=== function high(x)
+    ~ return (1 * upness(x) >= downness(x) * 9)
+
+=== function up(x)
+	~ return swing_ready(x) && (4 * upness(x) >= downness(x) * 6)
+
+=== function down(x)
+	~ return swing_ready(x) && (6 * upness(x) <= downness(x) * 4)
+	
+=== function low(x)
+	~ return swing_ready(x) && (9 * upness(x) <= downness(x) * 1)
+	
+=== function mid(x)
+    // If the swing isn't ready this returns true 
+    // Because "up is false and down is false"
+    ~ return (not up(x) && not down(x))
 
 
- ->chapter_0
+/* ---------------------------------
+
+   Global Variables
+
+ ----------------------------------*/
+
+VAR progress = 0
+
+VAR trust = INITIAL_SWING
+VAR delusion = INITIAL_SWING
+
+//var for choices
+
+VAR stabbed = false
+VAR refuseToStab = false
+
+
+LIST ending = (none), A, B, C, D
+
+
+//
+// Content
+//
+
  === chapter_0
 
 //elevator_intro 
@@ -55,50 +118,50 @@ The doors begin to close. But just before they shut—
 A hand stops them.
 
 #pause(0.5)
-
-A man steps in.
+#walk sound
+#background man foot walk in
+And a man steps in.
 
  ->chapter_1
  === chapter_1
- 
-
+ ~progress = 1
+~ temp confidence = 0
 //describe_man 
-~progress = 1
+
 
 #character: Killer
 #expression: NeutralLookAway
-#background: ElevatorDark
-He’s average. Tallish. Pale. Clean suit. Polished shoes.
+#background look man down to shoulder and stop
+The man's average. Tallish. Pale. Clean suit. Polished shoes.
 
 But there’s something... off.
 
-His eyes don’t quite match his smile. One lingers too long. The other darts away too quickly.
-
-You feel it immediately. That gnawing twitch in your chest. The feeling again.
 
 *   [look away] You keep your gaze on the floor. The fluorescent lights reflect in the polished steel.
-    ~ look_away = true
-    
-*   [stare at him] You meet his eyes. Something sharp glints in them. Not metal. Something worse.
-    ~ look_away = false
+    ~ confidence = 0
 
+    
+*   [stare at him] You meet his eyes. His eyes don’t quite match his smile. 
+    Something sharp glints in them. Not metal. Something worse.
+    ~ confidence = 1
+
+  
 -
+
 
 
  ->chapter_2
  === chapter_2
-#background: ElevatorDark
+ ~progress = 2
+~ temp confidence = 0
+
 //small_talk_start 
-~progress = 2
+
 
 #speaker: Narrator
-
 The elevator begins its slow descent.
-
 The silence stretches.
-
 Too long.
-
 He finally speaks.
 
 #speaker: Male
@@ -107,15 +170,19 @@ He finally speaks.
 "Going down?"
 
 #speaker: Narrator
-You don’t answer right away. Something in your throat locks.
+You didn’t answer right away. Something in your throat locks.
  #speaker:Female
 
-*   [nervous smile] "Y-yeah. Just... just heading down."
+*   {confidence <= 0}[nervous smile] "Y-yeah. Just... just heading down."
+    ~ confidence = 0 
 
-*   [bluntly]  "Yes."
+*   {confidence >= 0}[bluntly]  "Yes."
+    ~ confidence = 1
+    
+*   {confidence > 0}[make a joke]  "Only way to go from the top, right?"
+    ~ confidence = 2
+ 
 
-*   [joke]  "Only way to go from the top, right?"
-    ~ trust_level = 3
 
 -
 #speaker: Male
@@ -130,16 +197,21 @@ You don’t answer right away. Something in your throat locks.
 #character: Killer
 #expression:NeutralLookAway 
 He pauses. Like he’s letting the words hang in the air for too long.
-
+...
 #expression:NeutralLook 
 Like he's watching them sink into your skin.
 #speaker:Female
 
-*   [awkward laugh]  "Yeah... elevators are weird."
+*   {confidence == 2 or confidence == 0}[awkward laugh]  "Yeah... elevators are weird."
 
-*   [tense]  "What do you mean by that?"
-
-*   [joking]  "Sounds like a setup for a horror movie."
+    
+*   {confidence <= 1}[tense]  "What do you mean by that?"
+    ~lower(trust)
+ 
+    
+*   {confidence >= 1}[joking]  "Sounds like a setup for a horror movie."
+    ~ raise(trust)
+      
     
 -
 #speaker: Male
@@ -155,14 +227,11 @@ You laugh nervously, but it dies in your throat.
 
  ->chapter_3
  === chapter_3
-
-#background: ElevatorDark
 //delusion_hint 
 ~progress = 3
 
 #speaker:Narrator
-#character: Killer
-#expression:NeutralLookAway
+
 There’s something wrong.
 
 His reflection in the elevator mirror behind him—it doesn’t move when he does.
@@ -173,28 +242,35 @@ Look again.
 
 It’s back to normal.
 
-Was it?
+...Was it?
 
 *   [rub your eyes] You blink a few more times, heart thudding. Maybe you’re tired.
-
+ ~ lower(delusion)
+    
 *   [look again]  You focus on the reflection. It stares back. Eyes too wide.
+~ raise(delusion)
 
 *   [step back slightly]  You shift away, gripping your bag tighter.
+
 -
+
+//checking variables
+(Trust - Up: {upness(trust)}, Down: {downness(trust)})
+(Delulu - Up: {upness(delusion)}, Down: {downness(delusion)})
 
 
  ->chapter_4
  === chapter_4
- #background: ElevatorDark
+ ~progress = 4
 
 //voice_in_head 
-~progress = 4
+
 
 #show_expression("paranoid")
 #speaker: Narrator
 A whisper curls in your mind. Soft. Familiar.
 
-???: "He’s not real. He’s not real. Not this time."
+"He’s not real. He’s not. Not this time."
 
 You shake your head. The whisper is gone.
 
@@ -211,10 +287,11 @@ Then they’re normal again.
 #speaker: Female
 
 *   [lie]  "Just tired. Didn’t sleep well."
-
+    ~ lower(trust)
 *   [avoid]  "I’m fine."
-
+    ~mid(trust)
 *   [truth]  "Do you ever feel like someone’s lying to you? Even if they say all the right things?"
+    ~ raise(trust)
 -
 #speaker: Male
 #character: Killer
@@ -223,10 +300,14 @@ Then they’re normal again.
 #pause(1.0)
 "All the time."
 
+//checking variables
+(Trust - Up: {upness(trust)}, Down: {downness(trust)})
+(Delulu - Up: {upness(delusion)}, Down: {downness(delusion)})
+
 
  ->chapter_5
  === chapter_5
- #background: ElevatorDark
+ 
 ~progress = 5
 #speaker: Narrator
 The elevator dings.
@@ -245,11 +326,13 @@ But you notice.
 
 #speaker: Female
 
-*   [freeze]  You don't respond. Can't.
-*   [respond]  "I... hope not."
-*   [fake a smile] "Looking forward to it."
+*   {down(trust)} [freeze]  You don't respond. Can't.
+
+*   {down(trust) or mid(trust)}[respond]  "I... hope not."
+
+*   {mid(trust) or up(trust)}[fake a smile] "Looking forward to it."
     
-    -
+-
 #speaker: Narrator
 The elevator doors open.
 
@@ -267,4 +350,11 @@ You’re alone.
 And yet…  
 you still feel watched.
 
+
+#add a cctv angle here
+
 -> END
+
+//checking variables
+(Trust - Up: {upness(trust)}, Down: {downness(trust)})
+(Delulu - Up: {upness(delusion)}, Down: {downness(delusion)})

@@ -6,7 +6,7 @@ public class PlayerNameHandler :MonoBehaviour
 {
     public static PlayerNameHandler instance;
 
-    public string PlayerName { get; private set; }
+    public string playerName { get; private set; }
 
     void Awake()
     {
@@ -14,7 +14,7 @@ public class PlayerNameHandler :MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject); // Persist this object across scenes
-            PlayerName = PlayerPrefs.GetString("playerName", "");
+            playerName = PlayerPrefs.GetString("playerName", "");
         }
         else
         {
@@ -34,7 +34,7 @@ public class PlayerNameHandler :MonoBehaviour
 
     public void SavePlayerName(string name)
     {
-        PlayerName = name;
+        playerName = name;
         PlayerPrefs.SetString("playerName", name);
         PlayerPrefs.SetInt("hasPlayedBefore", 1);
         PlayerPrefs.Save();
@@ -42,7 +42,7 @@ public class PlayerNameHandler :MonoBehaviour
 
     public bool HasSavedName()
     {
-        return !string.IsNullOrEmpty(PlayerName);
+        return !string.IsNullOrEmpty(playerName);
     }
 
 
