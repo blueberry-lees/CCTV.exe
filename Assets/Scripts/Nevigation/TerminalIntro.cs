@@ -9,10 +9,11 @@ public class TerminalIntro : MonoBehaviour
     // Public Fields (Inspector)
     // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
+    public string nextScene;
+
     [Header("Text Settings")]
-    [TextArea(5, 20)]
-    public string fullText;  // The full text to be displayed on the terminal
-    public float typeDelay = 0.03f;  // Delay between each character while typing
+    private string fullText;  // The full text to be displayed on the terminal
+    public float typeDelay = 0.01f;  // Delay between each character while typing
     public AudioSource typeSound;  // Sound played during typing
     public TMP_Text terminalText;  // Text object displaying the terminal text
     public TMP_Text pressKeyPrompt;  // Prompt that tells the player to press a key to continue
@@ -27,6 +28,12 @@ public class TerminalIntro : MonoBehaviour
     // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
     // Unity Methods
     // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+    private void Awake()
+    {
+        fullText = terminalText.text;
+    }
+
 
     void Start()
     {
@@ -48,7 +55,7 @@ public class TerminalIntro : MonoBehaviour
         }
         else if (finishedTyping && Input.GetKeyDown(KeyCode.Space))
         {
-            SceneManager.LoadScene("Interface1");  // Load the next scene
+            SceneManager.LoadScene(nextScene);  // Load the next scene
         }
     }
 

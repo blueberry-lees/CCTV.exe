@@ -782,7 +782,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1197493727}
-  - component: {fileID: 1197493726}
+  - component: {fileID: 1197493728}
   m_Layer: 0
   m_Name: TaskManager
   m_TagString: Untagged
@@ -790,22 +790,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1197493726
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1197493725}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55cb70edeb5872b4e894d8a957a2d92c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  typeDelay: 0.01
-  typeSound: {fileID: 2067076872}
-  typeOutText: {fileID: 1283599252}
-  pressKeyPrompt: {fileID: 526158419}
 --- !u!4 &1197493727
 Transform:
   m_ObjectHideFlags: 0
@@ -821,6 +805,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1197493728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197493725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 107923de8fdb7cb4f978a7a71afdb866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextScene: Interface1
+  typeDelay: 0.01
+  typeSound: {fileID: 2067076872}
+  terminalText: {fileID: 1283599252}
+  pressKeyPrompt: {fileID: 526158419}
 --- !u!1 &1283599250
 GameObject:
   m_ObjectHideFlags: 0
