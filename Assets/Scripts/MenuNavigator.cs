@@ -75,8 +75,8 @@ public class MenuNavigator : MonoBehaviour
     void Navigate(int direction)
     {
         PlayNavigateSound();
-        filteredOptions[currentIndex].Unhighlight(normalColor);
-        currentIndex = (currentIndex + direction + filteredOptions.Count) % filteredOptions.Count;
+        if (currentIndex < filteredOptions.Count)
+            filteredOptions[currentIndex].Unhighlight(normalColor); currentIndex = (currentIndex + direction + filteredOptions.Count) % filteredOptions.Count;
         HighlightCurrentOption();
     }
 
