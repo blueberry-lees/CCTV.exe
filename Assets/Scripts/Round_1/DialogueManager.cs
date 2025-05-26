@@ -132,8 +132,7 @@ public class DialogueManager : MonoBehaviour
 
     public void CheckReturnPoint()
     {
-        string returnPoint = PlayerPrefs.GetString("ReturnPoint", "");
-
+        string returnPoint = GameState.returnPoint;
         if (!string.IsNullOrEmpty(returnPoint))
         {
             Debug.Log("Jumping to knot: " + returnPoint);
@@ -159,10 +158,9 @@ public class DialogueManager : MonoBehaviour
 
             if (progress == "Round_1_End")
             {
-                PlayerPrefs.SetString("ReturnPoint", "Round_2");
-                PlayerPrefs.SetInt("UIVersion", 2); 
-                //set int uiversion so TerminalUI cs in Interface1 can respond accordingly
-                PlayerPrefs.Save();
+                GameState.returnPoint = "Round_2";
+                GameState.uiVersion = 2;
+                GameState.SaveAll();
                 CheckInterfaceVersion();
                 return;
             }
@@ -311,27 +309,26 @@ public class DialogueManager : MonoBehaviour
     {
         if (story != null)
         {
-            string json = story.state.ToJson();
-            PlayerPrefs.SetString("InkState", json);
-            PlayerPrefs.SetString("LastBackground", lastBackgroundTag);
-            PlayerPrefs.SetString("LastCharacter", lastCharacter);
-            PlayerPrefs.SetString("LastExpression", lastExpressionTag);
-            PlayerPrefs.SetString("LastSpeaker", lastSpeakerTag);
+            GameState.inkStateJSON = story.state.ToJson();
+            GameState.lastBackground = lastBackgroundTag;
+            GameState.lastCharacter = lastCharacter;
+            GameState.lastExpression = lastExpressionTag;
+            GameState.lastSpeaker = lastSpeakerTag;
 
+            GameState.SaveAll(); // Assuming this commits to disk or serialization
 
-            PlayerPrefs.Save();
-            Debug.Log("Saved Ink JSON length: " + json.Length);
+            Debug.Log("Saved Ink JSON length: " + GameState.inkStateJSON.Length);
         }
     }
 
 
     void LoadPlayerPrefs()
     {
-        //load saved values from player prefs
-        lastBackgroundTag = PlayerPrefs.GetString("LastBackground", "");
-        lastCharacter = PlayerPrefs.GetString("LastCharacter", "");
-        lastExpressionTag = PlayerPrefs.GetString("LastExpression", "");
-        lastSpeakerTag = PlayerPrefs.GetString("lastSpeaker", "");
+        //load saved values from player prefs in GameState
+        lastBackgroundTag = GameState.lastBackground;
+        lastCharacter = GameState.lastCharacter;
+        lastExpressionTag = GameState.lastExpression;
+        lastSpeakerTag = GameState.lastSpeaker;
     }
 
 
@@ -345,34 +342,28 @@ public class DialogueManager : MonoBehaviour
 
     public void CheckInterfaceVersion()
     {
-        //if round 1 have not complete then interface version is 1
-        if (PlayerPrefs.GetInt("UIVersion", 0) == 1)
+        switch (GameState.uiVersion)
         {
-            Debug.Log("playerpref UIVerion is 1 THEREFORE VER.1");
-            SceneManager.LoadScene("Interface1");
-        }
-        else if (PlayerPrefs.GetInt("UIVersion", 0) == 2)
-        {
-            Debug.Log("playerpref UIVerion is 2 THEREFORE VER.2");
-            SceneManager.LoadScene("Interface2");
-
-        }
-        else if (PlayerPrefs.GetInt("UIVersion", 0) == 3)
-        {
-            Debug.Log("playerpref UIVerion is 3 THEREFORE VER.3");
-            SceneManager.LoadScene("Interface3");
-
-        }
-        else if (PlayerPrefs.GetInt("UIVersion", 0) == 4)
-        {
-            Debug.Log("playerpref UIVerion is 3 THEREFORE VER.4");
-            SceneManager.LoadScene("Interface4");
-
-        }
-        else
-        {
-            Debug.LogWarning("Version not found");
+            case 1:
+                Debug.Log("UIVersion 1 → Interface1");
+                SceneManager.LoadScene("Interface1");
+                break;
+            case 2:
+                Debug.Log("UIVersion 2 → Interface2");
+                SceneManager.LoadScene("Interface2");
+                break;
+            case 3:
+                Debug.Log("UIVersion 3 → Interface3");
+                SceneManager.LoadScene("Interface3");
+                break;
+            case 4:
+                Debug.Log("UIVersion 4 → Interface4");
+                SceneManager.LoadScene("Interface4");
+                break;
+            default:
+                Debug.LogWarning("Unknown UI Version");
+                break;
         }
     }
 
-    }
+}

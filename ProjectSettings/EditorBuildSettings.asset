@@ -21,15 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Interface3.unity
     guid: ef0bb9fb0d793f947808f71b1ad56066
   - enabled: 1
-    path: Assets/Scenes/Round_1.unity
-    guid: 2700bd64483bfd84d8e9ff371e75485c
-  - enabled: 1
-    path: Assets/Scenes/Round_2.unity
-    guid: c5b0450c9e8e12f4aaa139dee1f97541
-  - enabled: 1
-    path: Assets/Scenes/Round_3.unity
-    guid: acb505bcc82dbd54babeb447e1a1c17a
-  - enabled: 1
     path: Assets/Scenes/Interface4.unity
     guid: 1378c2258f0cfa74481ae83364210bda
+  - enabled: 1
+    path: Assets/Scenes/Round_1.unity
+    guid: 2700bd64483bfd84d8e9ff371e75485c
   m_configObjects: {}

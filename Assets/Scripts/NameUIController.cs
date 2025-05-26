@@ -29,7 +29,7 @@ public class NameUIController : MonoBehaviour
         if (PlayerPrefs.HasKey("hasPlayedBefore"))
         {
             // Show returning intro with typewriter effect
-            StartCoroutine(ShowReturningIntro(PlayerNameHandler.instance.playerName));
+            StartCoroutine(ShowReturningIntro(PlayerNameHandler.playerName));
         }
         else
         {
@@ -66,7 +66,7 @@ public class NameUIController : MonoBehaviour
             
         }
 
-            PlayerNameHandler.instance.SavePlayerName(name);
+            PlayerNameHandler.SavePlayerName(name);
 
             // Hide input UI
             namePromptText.gameObject.SetActive(false);
@@ -164,12 +164,33 @@ public class NameUIController : MonoBehaviour
 
     void LoadNextScene()
     {
-        if (PlayerPrefs.HasKey("UIVersion"))
+        if (PlayerPrefs.GetInt("UIVersion", 0) <= 1)
         {
-            int versionnumber = PlayerPrefs.GetInt("UIVersion", 0);
-            SceneManager.LoadScene("Interface"+ versionnumber);
-            Debug.Log("loading:"+ " Interface" + versionnumber);
+            Debug.Log("playerpref UIVerion is 1 THEREFORE VER.1");
+            SceneManager.LoadScene("Interface1");
         }
-        
+        else if (PlayerPrefs.GetInt("UIVersion", 0) == 2)
+        {
+            Debug.Log("playerpref UIVerion is 2 THEREFORE VER.2");
+            SceneManager.LoadScene("Interface2");
+
+        }
+        else if (PlayerPrefs.GetInt("UIVersion", 0) == 3)
+        {
+            Debug.Log("playerpref UIVerion is 3 THEREFORE VER.3");
+            SceneManager.LoadScene("Interface3");
+
+        }
+        else if (PlayerPrefs.GetInt("UIVersion", 0) == 4)
+        {
+            Debug.Log("playerpref UIVerion is 3 THEREFORE VER.4");
+            SceneManager.LoadScene("Interface4");
+
+        }
+        else
+        {
+            Debug.LogWarning("Version not found");
+        }
+
     }
 }
