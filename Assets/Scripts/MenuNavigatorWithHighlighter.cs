@@ -45,7 +45,7 @@ public class MenuNavigatorWithHighlighter : MonoBehaviour
 
     IEnumerator InitHighlightPosition()
     {
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(1f);
         foreach (var group in GetComponentsInChildren<LayoutGroup>())
             LayoutRebuilder.ForceRebuildLayoutImmediate(group.GetComponent<RectTransform>());
 
