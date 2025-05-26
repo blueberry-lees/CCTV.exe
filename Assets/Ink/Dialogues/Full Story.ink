@@ -8,19 +8,6 @@
 //#character: Killer, You
 //#effect
 
-//switch cases
-
-//{progress:
-//- 0: ->Round_1
-//}
-//- 1: ->chapter_1
-//- 2: ->chapter_2
-//- 3: ->chapter_3
-//- 4: ->chapter_4
-//- 5: ->chapter_5
-
-//}
-
 /* ---------------------------------
 
    Functions
