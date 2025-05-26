@@ -20,15 +20,7 @@ public class PlayerNameHandler :MonoBehaviour
         {
             Destroy(gameObject);
         }
-        //if (instance != null)
-        //{
-        //    Debug.Log("Found more than one Data Persistence Manager in the scene. Destroying the newest one.");
-        //    Destroy(this.gameObject);
-        //    return;
-
-        //}
-        //instance = this;
-        //DontDestroyOnLoad(this.gameObject);
+      
 
     }
 

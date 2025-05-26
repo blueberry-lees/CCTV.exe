@@ -164,10 +164,11 @@ public class NameUIController : MonoBehaviour
 
     void LoadNextScene()
     {
-        if (nextSceneName != null)
+        if (PlayerPrefs.HasKey("UIVersion"))
         {
-            SceneManager.LoadScene(nextSceneName);
-            Debug.Log("loading"+ nextSceneName);
+            int versionnumber = PlayerPrefs.GetInt("UIVersion", 0);
+            SceneManager.LoadScene("Interface"+ versionnumber);
+            Debug.Log("loading:"+ " Interface" + versionnumber);
         }
         
     }

@@ -6,49 +6,27 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] private GameObject continueButton;
-    public string nextSceneName;
-
-    private void OnEnable()
+    public string nextScene;
+    public GameObject playerInstruction;
+   public void NewGame()
     {
-        if (DataPersistenceManager.instance != null)
-        {
-            DataPersistenceManager.instance.OnDataLoaded += OnDataLoaded;
-        }
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        SceneManager.LoadScene(nextScene);
     }
 
-
-
-    private void OnDataLoaded()
+    public void ContinueGame()
     {
-        // Only run this AFTER data is fully loaded
-        continueButton.SetActive(DataPersistenceManager.instance.HasGameData());
-        Debug.Log("MainMenu received data loaded event.");
+        SceneManager.LoadScene(nextScene);
     }
 
-    public void OnNewGameClicked()
+    public void HowToPlay()
     {
-        //create a new game -  which will initialize our game data
-        DataPersistenceManager.instance.NewGame();
-        //Load the gameplay scene -  which will in turn save the game because of
-        //OnSceneUnloaded() in the DataPersistenceManager
-        SceneManager.LoadSceneAsync(nextSceneName);
+        playerInstruction.SetActive(true);
     }
 
-    public void OnContinueGameClicked()
+    public void QuitGame()
     {
-        //load the next scene -  which will in turn load the game because of 
-        //OnSceneLoaded() in the DataPersistenceManager
-        SceneManager.LoadSceneAsync(nextSceneName);
-
-    }
-
-
-    private void OnDisable()
-    {
-        if (DataPersistenceManager.instance != null)
-        {
-            DataPersistenceManager.instance.OnDataLoaded -= OnDataLoaded;
-        }
+        Application.Quit();
     }
 }

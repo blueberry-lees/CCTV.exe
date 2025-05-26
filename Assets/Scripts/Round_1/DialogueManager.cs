@@ -369,6 +369,10 @@ public class DialogueManager : MonoBehaviour
             SceneManager.LoadScene("Interface4");
 
         }
+        else
+        {
+            Debug.LogWarning("Version not found");
+        }
     }
 
     }
