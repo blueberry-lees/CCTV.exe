@@ -62,6 +62,7 @@ public class TerminalButtonController2 : MonoBehaviour
     // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
     void Start()
+        
     {
         userInterface2 = GetComponent<UserInterface2>();
         errorPopupText.gameObject.SetActive(false);  // Hide error popup initially
