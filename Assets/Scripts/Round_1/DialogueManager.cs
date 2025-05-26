@@ -146,7 +146,7 @@ public class DialogueManager : MonoBehaviour
         if (!story.canContinue)
         {
             SaveInkState();
-            Debug.LogWarning("Story can not continue, return to interface");
+            Debug.LogWarning("Story can not continue, return to interface1");
             SceneManager.LoadScene("Interface1");
             return;
         }
@@ -163,8 +163,7 @@ public class DialogueManager : MonoBehaviour
                 PlayerPrefs.SetInt("UIVersion", 2); 
                 //set int uiversion so TerminalUI cs in Interface1 can respond accordingly
                 PlayerPrefs.Save();
-
-                SceneManager.LoadScene("Interface1");
+                CheckInterfaceVersion();
                 return;
             }
         }
@@ -342,4 +341,34 @@ public class DialogueManager : MonoBehaviour
         PlayerPrefs.Save();
         Debug.Log("PlayerPrefs reset.");
     }
-}
+
+
+    public void CheckInterfaceVersion()
+    {
+        //if round 1 have not complete then interface version is 1
+        if (PlayerPrefs.GetInt("UIVersion", 0) == 1)
+        {
+            Debug.Log("playerpref UIVerion is 1 THEREFORE VER.1");
+            SceneManager.LoadScene("Interface1");
+        }
+        else if (PlayerPrefs.GetInt("UIVersion", 0) == 2)
+        {
+            Debug.Log("playerpref UIVerion is 2 THEREFORE VER.2");
+            SceneManager.LoadScene("Interface2");
+
+        }
+        else if (PlayerPrefs.GetInt("UIVersion", 0) == 3)
+        {
+            Debug.Log("playerpref UIVerion is 3 THEREFORE VER.3");
+            SceneManager.LoadScene("Interface3");
+
+        }
+        else if (PlayerPrefs.GetInt("UIVersion", 0) == 4)
+        {
+            Debug.Log("playerpref UIVerion is 3 THEREFORE VER.4");
+            SceneManager.LoadScene("Interface4");
+
+        }
+    }
+
+    }

@@ -1131,7 +1131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delayLoadObj:
   - {fileID: 1378470618}
-  activationTime: 8
+  activationTime: 5
   deactivationTime: 1
 --- !u!114 &1197493734
 MonoBehaviour:
@@ -1147,7 +1147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delayLoadObj:
   - {fileID: 43483279}
-  activationTime: 9
+  activationTime: 6
   deactivationTime: 1
 --- !u!1 &1318267871
 GameObject:
