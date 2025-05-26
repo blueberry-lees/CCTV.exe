@@ -6,50 +6,43 @@ using UnityEngine.UI;
 using TMPro;
 using Ink.Runtime;
 
-
-public enum Chapters { Round1, Round2, Round3, Round4 }
-
 [RequireComponent(typeof(DialogueChoice))]
-public class DialogueManager : MonoBehaviour, IDataPersistence
+public class DialogueManager : MonoBehaviour
 {
-    [Header("Data to save")]
-    public int storyProgress  = 0; //test out save game script
-    public Chapters currentChapter = Chapters.Round1; //TODO: link this to the swutch csae below
+    [Header("Save State")]
+    [TextArea(3, 10)] public string savedInkStateJSON;
 
-
-    [Header("Scripts ref")]
+    [Header("Script References")]
     private VisualManager visualManager;
     private DialogueChoice choiceUI;
 
-    public string nextSceneName;//TODO: remove this
-
-    [Header("UI References")]
+    [Header("UI")]
     public TMP_Text speakerText;
     public TMP_Text dialogueText;
 
-    public float typeSpeed = 0.05f;
+    [Header("Ink")]
+    public TextAsset currentInkJSON;
 
+    [Header("Settings")]
+    public float typeSpeed = 0.05f;
 
     [Header("Audio")]
     public AudioSource typingAudio;
     public AudioSource sfxAudio;
-
-    [Header("Ink Settings")]
-    //public TextAsset inkJSON;
-    public TextAsset currentInkJSON;
-    public TextAsset r1, r2, r3, r4;
-
-
 
     private Story story;
     private bool isTyping = false;
     private bool skipTyping = false;
 
     private string currentCharacter = "Narrator";
-    private string currentSpeaker = "Narrator"; //the current speaker set to narrator by default
+    private string currentSpeaker = "Narrator";
+
+    private string lastBackgroundTag = "";
+    private string lastExpressionTag = "";
+    [HideInInspector] public string lastCharacter = "";
+    private string lastSpeakerTag = "";
+
     private Dictionary<string, AudioClip> speakerTypingSounds = new();
-
-
     private Dictionary<string, string> speakerColors = new()
     {
         { "Male", "#89CFF0" },
@@ -57,59 +50,25 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         { "Narrator", "#FFFFFF" }
     };
 
-
-    public void LoadData(GameData data)
-    {
-        this.storyProgress = data.storyProgress;
-        Debug.Log("dialogue data loaded: [" + this.storyProgress + "]");
-
-    }
-
-
-    public void SaveData(ref GameData data)
-    {
-        data.storyProgress = this.storyProgress;
-        Debug.Log("dialogue data saved: [" + this.storyProgress + "]");
-
-        
-    }
-
-
-    //choose the chapter (enum) to chage the inkJson files accordingly
-    public void ChangeChapterTo(Chapters selectedChapter)
-    {
-
-        switch (selectedChapter)
-        {
-            case Chapters.Round1: currentInkJSON = r1;  break;
-            case Chapters.Round2: currentInkJSON = r2;  break;
-            case Chapters.Round3: currentInkJSON = r3; break;
-            case Chapters.Round4: currentInkJSON = r4; break;
-
-        }
-        
-    }
-
-
     void Awake()
     {
         choiceUI = GetComponent<DialogueChoice>();
         visualManager = GetComponent<VisualManager>();
-        ChangeChapterTo(currentChapter);
+
+        // ResetPlayerPrefs();
     }
 
     void Start()
     {
-
-        
-        story = new Story(currentInkJSON.text);
-        ProcessStoryProgressAndStart();
-
+        LoadStory();
 
     }
 
     void Update()
     {
+
+        savedInkStateJSON = PlayerPrefs.GetString("InkState", "");
+
         if (isTyping)
         {
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
@@ -129,71 +88,93 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
             ContinueStory();
     }
 
-    public void ProcessStoryProgressAndStart()
+    public void LoadStory()
     {
-        //  Set progress into Ink before story runs
-        story.variablesState["progress"] = storyProgress;
+        // Load saved values from PlayerPrefs
+        LoadPlayerPrefs();
+        string savedInkState = PlayerPrefs.GetString("InkState", "");
 
-        //  Build and jump to the appropriate knot
-        string knotName = $"chapter_{storyProgress}";
-        try
+        // Initialize Ink story
+        story = new Story(currentInkJSON.text);
+
+        //check if there's any return point/knot to go back to 
+        CheckReturnPoint();
+
+        // Load previous state if available
+        if (!string.IsNullOrEmpty(savedInkState))
         {
-            story.ChoosePathString(knotName);
-        }
-        catch (StoryException e)
-        {
-            Debug.LogWarning($"Knot not found: {knotName}. Exception: {e.Message}");
+            story.state.LoadJson(savedInkState);
+            Debug.Log("Restored story from saved state.");
+
+            if (!string.IsNullOrEmpty(lastBackgroundTag))
+                ChangeEnvironmentBackground(lastBackgroundTag);
+
+            if (!string.IsNullOrEmpty(lastSpeakerTag))
+                currentSpeaker = lastSpeakerTag; // FIXED
+
+            if (!string.IsNullOrEmpty(lastCharacter) && !string.IsNullOrEmpty(lastExpressionTag))
+                ChangeCharacterExpression(lastCharacter, lastExpressionTag);
         }
 
-        // Optional: sync progress back from Ink if it changes immediately
-        if (story.variablesState["progress"] is int val)
-            storyProgress = val;
-       
+        // Init UI & story
         choiceUI.Init(story, this);
-
         LoadTypingSounds();
-        ContinueStory();
+
+        if (story.canContinue)
+        {
+            ContinueStory();
+        }
+        else
+        {
+            Debug.LogWarning("Ink story cannot continue from this point.");
+        }
     }
 
+    public void CheckReturnPoint()
+    {
+        string returnPoint = PlayerPrefs.GetString("ReturnPoint", "");
+
+        if (!string.IsNullOrEmpty(returnPoint))
+        {
+            Debug.Log("Jumping to knot: " + returnPoint);
+            story.ChoosePathString(returnPoint);
+        }
+    }
 
     public void ContinueStory()
     {
-        //TODO: how to save dialogue progress without the story progress int?
-
         if (!story.canContinue)
         {
-            SaveStoryRound(1);
-            Debug.Log("no more story/story ends");
-            //TODO: playerpref round 1 end...
-            //if round 1 end go to interface version 2
-            //from version 2 set story progress to 7, and load round 1 scene again with round 2 contents
-
-            SceneManager.LoadScene(nextSceneName);
+            SaveInkState();
+            Debug.LogWarning("Story can not continue, return to interface");
+            SceneManager.LoadScene("Interface1");
             return;
         }
 
+        SaveInkState();
         string line = story.Continue().Trim();
-        List<string> tags = story.currentTags;
+        if (story.variablesState["progress"] != null)
+        {
+            string progress = story.variablesState["progress"].ToString();
 
-        // ✅ Update storyProgress after continuing the story
-        if (story.variablesState["progress"] is int val)
-            storyProgress = val;
+            if (progress == "Round_1_End")
+            {
+                PlayerPrefs.SetString("ReturnPoint", "Round_2");
+                PlayerPrefs.SetInt("UIVersion", 2); 
+                //set int uiversion so TerminalUI cs in Interface1 can respond accordingly
+                PlayerPrefs.Save();
+
+                SceneManager.LoadScene("Interface1");
+                return;
+            }
+        }
+
+        List<string> tags = story.currentTags;
 
         HandleTags(tags);
         StartCoroutine(TypeText(line));
-        Debug.Log("Ink progress value: " + story.variablesState["progress"]);
-    }
 
-    float GetFloatFromInk(string varName, float defaultValue)
-    {
-        var val = story.variablesState[varName];
-        return val switch
-        {
-            int i => i,
-            float f => f,
-            double d => (float)d,
-            _ => defaultValue
-        };
+        Debug.Log("Ink progress value: " + story.variablesState["progress"]);
     }
 
     IEnumerator TypeText(string text)
@@ -230,6 +211,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
             }
 
             dialogueText.text += fullText[i++];
+
             if (typingAudio && speakerTypingSounds.TryGetValue(currentSpeaker.ToLower(), out var clip))
             {
                 typingAudio.clip = clip;
@@ -240,9 +222,22 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         }
 
         isTyping = false;
-        if (story.currentChoices.Count > 0) choiceUI.DisplayChoices();
+
+        if (story.currentChoices.Count > 0)
+            choiceUI.DisplayChoices();
     }
 
+    float GetFloatFromInk(string varName, float defaultValue)
+    {
+        var val = story.variablesState[varName];
+        return val switch
+        {
+            int i => i,
+            float f => f,
+            double d => (float)d,
+            _ => defaultValue
+        };
+    }
 
     void LoadTypingSounds()
     {
@@ -266,19 +261,26 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
             switch (key)
             {
                 case "speaker":
+                    lastSpeakerTag = val;
                     speakerText.text = val;
-                    currentSpeaker = val; // This controls text color and typing sound
+                    currentSpeaker = val;
+
                     break;
 
                 case "character":
-                    currentCharacter = val; // This controls which visual asset is used
+                    lastCharacter = val; // Save current character
+                    currentCharacter = val;
+
                     break;
 
                 case "expression":
-                    ChangeCharacterExpression(currentCharacter, val); // Use currentCharacter here
+                    lastExpressionTag = val; // Save current expression
+                    ChangeCharacterExpression(currentCharacter, val);
+
                     break;
 
                 case "background":
+                    lastBackgroundTag = val; // Save current background
                     ChangeEnvironmentBackground(val);
                     break;
 
@@ -289,13 +291,13 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         }
     }
 
-
     void PlaySFX(string clipName)
     {
         var clip = Resources.Load<AudioClip>($"Audio/SFX/{clipName}");
         if (clip) sfxAudio.PlayOneShot(clip);
         else Debug.LogWarning($"SFX not found: {clipName}");
     }
+
     private void ChangeCharacterExpression(string character, string expression)
     {
         visualManager.ChangeCharacterExpression(character, expression);
@@ -306,15 +308,38 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         visualManager.ChangeEnvironmentBackground(backgroundName);
     }
 
-
-
-
-
-    public void SaveStoryRound(int completedRound)
+    private void SaveInkState()
     {
-        PlayerPrefs.SetInt("Round", completedRound);
-        PlayerPrefs.Save();
+        if (story != null)
+        {
+            string json = story.state.ToJson();
+            PlayerPrefs.SetString("InkState", json);
+            PlayerPrefs.SetString("LastBackground", lastBackgroundTag);
+            PlayerPrefs.SetString("LastCharacter", lastCharacter);
+            PlayerPrefs.SetString("LastExpression", lastExpressionTag);
+            PlayerPrefs.SetString("LastSpeaker", lastSpeakerTag);
+
+
+            PlayerPrefs.Save();
+            Debug.Log("Saved Ink JSON length: " + json.Length);
+        }
     }
 
-}
 
+    void LoadPlayerPrefs()
+    {
+        //load saved values from player prefs
+        lastBackgroundTag = PlayerPrefs.GetString("LastBackground", "");
+        lastCharacter = PlayerPrefs.GetString("LastCharacter", "");
+        lastExpressionTag = PlayerPrefs.GetString("LastExpression", "");
+        lastSpeakerTag = PlayerPrefs.GetString("lastSpeaker", "");
+    }
+
+
+    void ResetPlayerPrefs()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        Debug.Log("PlayerPrefs reset.");
+    }
+}

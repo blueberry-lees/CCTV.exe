@@ -257,19 +257,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec9bb238fb423084295fa371dae27063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  storyProgress: 0
-  currentChapter: 0
-  nextSceneName: Interface1
+  savedInkStateJSON: 
   speakerText: {fileID: 703291666}
   dialogueText: {fileID: 1681324135}
+  currentInkJSON: {fileID: 4900000, guid: 7ab8d1fbd2130624b883038326903890, type: 3}
   typeSpeed: 0.05
   typingAudio: {fileID: 305486186}
   sfxAudio: {fileID: 1611546671}
-  currentInkJSON: {fileID: 0}
-  r1: {fileID: 4900000, guid: a4cc6b0bd963780458005e46a42d7a37, type: 3}
-  r2: {fileID: 4900000, guid: f8f500710345da54bbfb32a44e77f21c, type: 3}
-  r3: {fileID: 4900000, guid: 85459eedc696dd64b9c6a9515a6ca328, type: 3}
-  r4: {fileID: 0}
+  lastCharacter: 
 --- !u!82 &305486186
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1613,8 +1608,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 635121400}
+  - {fileID: 1171150909}
   - {fileID: 1415542115}
   - {fileID: 1611546672}
   - {fileID: 305486187}
   - {fileID: 800862891}
-  - {fileID: 1171150909}
