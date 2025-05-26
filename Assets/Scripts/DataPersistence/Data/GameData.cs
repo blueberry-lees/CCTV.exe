@@ -8,7 +8,7 @@ public class GameData
 {
     public enum Rounds { Round1, Round2, Round3, Round4 }
     public Rounds currentRound = Rounds.Round1;
-
+    public string savedInkStateJSON;
     public int storyProgress;
 
 
@@ -19,5 +19,6 @@ public class GameData
     {
       this.currentRound = Rounds.Round1;
         this.storyProgress = 0;
+        
     }
 }

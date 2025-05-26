@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class VisualManager : MonoBehaviour
@@ -13,10 +14,17 @@ public class VisualManager : MonoBehaviour
     public Image backgroundImage;
 
 
+
     private void Start()
     {
         femalePortraitImage.gameObject.SetActive(false);
-        malePortraitImage.gameObject.SetActive(false);
+        if (!PlayerPrefs.HasKey("lastExpression") )
+        {
+            malePortraitImage.gameObject.SetActive(false);
+            
+        }
+        else malePortraitImage.gameObject.SetActive(true);
+
     }
     public void ChangeCharacterExpression(string character, string expression)
     {

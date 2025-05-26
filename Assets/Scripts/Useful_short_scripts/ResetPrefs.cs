@@ -10,4 +10,12 @@ public class ResetPrefs : MonoBehaviour
         PlayerPrefs.Save();
         Debug.Log("PlayerPrefs reset.");
     }
+
+    public void ResetProgress()
+    {
+        PlayerPrefs.DeleteKey("InkState");
+        PlayerPrefs.DeleteKey("Round");
+        PlayerPrefs.Save();
+    }
+    
 }
