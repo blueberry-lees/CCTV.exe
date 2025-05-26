@@ -12,53 +12,67 @@ using TMPro;
 /// this script also includes a highlighter box, make sure the box is under the same canvas.
 /// Note: this script has only been tested on obj under Canvas
 /// </summary>
-public class MenuNavigatorWithHighlighter: MonoBehaviour
+public class MenuNavigatorWithHighlighter : MonoBehaviour
 {
+    [Header("References")]
     public RectTransform highlightBox;
+    public AudioSource typeSound;
+
+    [Header("Navigation Settings")]
     public float moveSpeed = 10f;
     public float scaleUp = 1.1f;
     public float scaleSpeed = 10f;
     public Color normalColor = Color.grey;
     public Color highlightColor = Color.white;
-    public AudioSource typeSound;
 
+    [Header("Options")]
     public NavigableOption[] options;
+    private List<NavigableOption> filteredOptions = new List<NavigableOption>();
+
     private int currentIndex = 0;
 
     void Start()
     {
+        // Filter null or inactive options
+        foreach (var option in options)
+        {
+            if (option != null && option.gameObject.activeInHierarchy)
+                filteredOptions.Add(option);
+        }
+
         StartCoroutine(InitHighlightPosition());
     }
 
     IEnumerator InitHighlightPosition()
     {
         yield return new WaitForEndOfFrame();
-        MoveHighlightTo(currentIndex, true);
+        foreach (var group in GetComponentsInChildren<LayoutGroup>())
+            LayoutRebuilder.ForceRebuildLayoutImmediate(group.GetComponent<RectTransform>());
+
+        if (filteredOptions.Count > 0)
+            MoveHighlightTo(currentIndex, true);
     }
 
     void Update()
     {
+        if (filteredOptions.Count == 0) return;
+
         if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
             Navigate(-1);
-        }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
             Navigate(1);
-        }
         else if (Input.GetKeyDown(KeyCode.Return))
         {
             PlayNavigateSound();
-            options[currentIndex].onSelected?.Invoke();
+            filteredOptions[currentIndex].onSelected?.Invoke();
         }
     }
 
-   
     void Navigate(int direction)
     {
         PlayNavigateSound();
-        options[currentIndex].Unhighlight(normalColor);
-        currentIndex = (currentIndex + direction + options.Length) % options.Length;
+        filteredOptions[currentIndex].Unhighlight(normalColor);
+        currentIndex = (currentIndex + direction + filteredOptions.Count) % filteredOptions.Count;
         MoveHighlightTo(currentIndex);
     }
 
@@ -66,28 +80,24 @@ public class MenuNavigatorWithHighlighter: MonoBehaviour
     {
         StopAllCoroutines();
 
-        // Unhighlight all first
-        for (int i = 0; i < options.Length; i++)
+        for (int i = 0; i < filteredOptions.Count; i++)
         {
             if (i == index) continue;
-            options[i].Unhighlight(normalColor);
+            filteredOptions[i].Unhighlight(normalColor);
         }
 
-        // Move the highlight box
         if (instant)
         {
-            highlightBox.position = options[index].transform.position;
+            highlightBox.position = filteredOptions[index].transform.position;
         }
         else
         {
-            StartCoroutine(SmoothMove(options[index].transform as RectTransform));
+            StartCoroutine(SmoothMove(filteredOptions[index].transform as RectTransform));
             StartCoroutine(ScaleHighlight());
         }
 
-        // Highlight new option
-        options[index].Highlight(highlightColor);
+        filteredOptions[index].Highlight(highlightColor);
     }
-
 
     IEnumerator SmoothMove(RectTransform target)
     {
@@ -125,7 +135,10 @@ public class MenuNavigatorWithHighlighter: MonoBehaviour
 
     void PlayNavigateSound()
     {
-        typeSound.pitch = Random.Range(0.9f, 1.1f);
-        typeSound?.Play();
+        if (typeSound != null)
+        {
+            typeSound.pitch = Random.Range(0.9f, 1.1f);
+            typeSound.Play();
+        }
     }
 }

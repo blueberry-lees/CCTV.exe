@@ -18,6 +18,7 @@ public class TerminalButtonController2 : MonoBehaviour
 
     [Header("Error Popup")]
     public Image errorPopupText;  // Reference to the error popup
+    public Image refusePopupText;  // Reference to the error popup
 
     [Header("Exit Popup")]
     public GameObject exitPopupPanel;  // Exit popup panel
@@ -51,7 +52,9 @@ public class TerminalButtonController2 : MonoBehaviour
     
     private bool isOtherPanelActive = false;  // To track if other panels are active
     //private bool isExitPanelActive = false;  // To track if exit panel is active
-    private bool isErrorPopupActive = false;  // To track if error popup is active
+    private bool isErrorPopupActive = false;
+    
+    private bool isRefusePopupActive = false;  // To track if error popup is active
     //private bool isLaunchComfirmationActive = false;
 
     // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -66,6 +69,7 @@ public class TerminalButtonController2 : MonoBehaviour
         launchPopupPanel.gameObject.SetActive(false);  // Hide launch popup initially
         launchComfirmation.gameObject.SetActive(false); //HIDE launch comfirmation initially
         mainPanel.gameObject.SetActive(false);
+        refusePopupText.gameObject.SetActive(false);
     }
 
     void Update()
@@ -107,6 +111,22 @@ public class TerminalButtonController2 : MonoBehaviour
         errorPopupText.gameObject.SetActive(false);
         isErrorPopupActive = false;
     }
+    
+
+    public void ShowRefusePopup()
+    {
+        // Show error popup and wait for key press to hide
+        typeSound.Play();
+        refusePopupText.gameObject.SetActive(true);
+        if (!isRefusePopupActive) StartCoroutine(WaitForAnyKeyToHideRefuse());
+    }
+
+    public void HideRefusePopup()
+    {
+        // Hide the error popup
+        refusePopupText.gameObject.SetActive(false);
+        isRefusePopupActive = false;
+    }
 
     public void ShowReplayPopup()
     {
@@ -131,6 +151,17 @@ public class TerminalButtonController2 : MonoBehaviour
         while (!Input.anyKeyDown) yield return null;
 
         HideErrorPopup();
+    }
+    
+    IEnumerator WaitForAnyKeyToHideRefuse()
+    {
+        // Wait for any key to hide the error popup
+        isRefusePopupActive = true;
+        yield return null;
+
+        while (!Input.anyKeyDown) yield return null;
+
+        HideRefusePopup();
     }
 
     public void ShowExitPopup()

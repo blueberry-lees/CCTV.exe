@@ -87,22 +87,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdfbdbb87d3286943a057f7791b43141, type: 3}
   m_Name: ChannelMixer
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   redOutRedIn:
-    m_OverrideState: 1
-    m_Value: 128
+    m_OverrideState: 0
+    m_Value: 200
   redOutGreenIn:
     m_OverrideState: 0
-    m_Value: 0
+    m_Value: 122
   redOutBlueIn:
     m_OverrideState: 0
-    m_Value: 0
+    m_Value: 200
   greenOutRedIn:
     m_OverrideState: 0
-    m_Value: 0
+    m_Value: -123
   greenOutGreenIn:
     m_OverrideState: 0
-    m_Value: 100
+    m_Value: 179
   greenOutBlueIn:
     m_OverrideState: 0
     m_Value: 0
@@ -113,8 +113,8 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: -79
   blueOutBlueIn:
-    m_OverrideState: 0
-    m_Value: 100
+    m_OverrideState: 1
+    m_Value: -35
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
-  m_Name: YellowTerminalFilter1 1
+  m_Name: OldEffect
   m_EditorClassIdentifier: 
   components:
   - {fileID: -6170252474791207340}

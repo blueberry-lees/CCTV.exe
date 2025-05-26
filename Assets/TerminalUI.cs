@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public enum InterfaceVersion { version1, version2, version3, version4 }
+//public enum InterfaceVersion { version1, version2, version3, version4 }
 
 public class TerminalUI : MonoBehaviour
 {
