@@ -109,6 +109,7 @@ A hand stops them.
 #pause(0.5)
 #walk sound
 #background man foot walk in
+#background: ElevatorOpen
 And a man steps in.
 
  ->chapter_1
@@ -116,7 +117,8 @@ And a man steps in.
 ~ temp confidence = 0
 //describe_man 
 //~ OnRoundEnd(1)
-
+#background: Elevator
+The door closed, and you managed to take a glance from the corner of your view. 
 #character: Killer
 #expression: NeutralLookAway
 #background look man down to shoulder and stop
