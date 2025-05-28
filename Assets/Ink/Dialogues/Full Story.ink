@@ -65,6 +65,9 @@ CONST INITIAL_SWING = 1001
 
  ----------------------------------*/
 
+VAR speed = 0.05
+VAR delay = 0.1
+
 VAR progress = ""
 
 VAR trust = INITIAL_SWING
@@ -91,6 +94,8 @@ LIST ending = (none), A, B, C, D
 #SFX: Ding
 #background: ElevatorOpen
 #speaker:Narrator
+~ speed = 0.1
+~ delay = 0.5
 The elevator dings.
 #pause(1.0)
 
@@ -709,7 +714,6 @@ The elevator doors open. Same floor. Different you.
 
 
 
-
 // === ROUND 4 START ===
 
 === END_A_INNOCENT
@@ -1166,15 +1170,17 @@ SFX: [Sickening crunch. Blood splatters the elevator wall.]
 
 # (He slumps forward, gurgling, eyes wide.)
 
-MAN: (choked whisper) You... were wrong...
+MAN: (choked whisper) You're... wrong...
 
 # (The doors open. Screams. Police shouting.)
 
 POLICE OFFICER: DROP THE KNIFE! DROP IT NOW!
 
-# (But she just stands there. Covered in blood. Smiling.)
+# (But you just stands there. Covered in blood. Smiling.)
 
-WOMAN: (softly) I’m finally awake.
+You're finally awake.
+WOMAN: Ha..HAHA...AH HAHAHA...ha...
+#cut to black
 
 -> aftermath_delusion
 
@@ -1182,19 +1188,23 @@ WOMAN: (softly) I’m finally awake.
 
 # (Black screen. Soft ambient noise—muffled voices, flickering lights.)
 
-NARRATOR: Days later. A padded room. A woman sits facing a mirror that doesn’t reflect her.
+In a padded room. A woman sits facing a mirror that doesn’t reflect her.
+She's being restrained, tied up with layers of straps and clothings.
+As if she were a bomb. 
 
 THERAPIST (V.O.): You don’t remember, do you?
 
-WOMAN: I remember everything.
+WOMAN: What do you mean? I remember everything.
 
-THERAPIST (V.O.): There was no man.
+THERAPIST (V.O.): ...There was no man.
 
 # (The woman turns to the mirror.)
 
 WOMAN: He was real.
 
 THERAPIST (V.O.): We found no one. No victim. Only you. Covered in blood.
+
+WOMAN: ...Ha. 
 
 WOMAN: (internal) They’re lying. Just like he did. Just like everyone does.
 
@@ -1212,7 +1222,7 @@ WOMAN: (internal) They’re lying. Just like he did. Just like everyone does.
 
 # (The elevator ride is slow. The lights flicker again. Her breathing is shallow, but steady.)
 
-WOMAN: (internal) Maybe I was wrong. Maybe I imagined it. He hasn’t done anything.
+WOMAN: (internal) Maybe I was wrong. Maybe I imagined it. He hasn’t done anything. Afterall.
 
 # (The man stands at the far end, leaning against the rail. Calm. Watching her.)
 
@@ -1222,7 +1232,7 @@ WOMAN: Just tired.
 
 MAN: Tired of being afraid?
 
-WOMAN: …Maybe.
+WOMAN:...
 
 -> denial_choice_approach
 
@@ -1240,9 +1250,9 @@ Stay silent.
 = denial_escape 
 WOMAN: I just want to get out of here.
 
-MAN: (smiles) That makes two of us.
+MAN: (smiles) That makes two.
 
-WOMAN: No more talking. Just let this be over.
+WOMAN: Please...stop talking. Just let this be over with.
 
 -> continue_denial
 
@@ -1262,7 +1272,7 @@ MAN: Then pretend it is. Pretend everything’s fine.
 
 MAN: Still pretending I’m not here?
 
-WOMAN: (internal) If I don’t acknowledge him, he can’t hurt me. Right?
+WOMAN: (internal) If I just ignore him, he can’t hurt me. Right?
 
 -> continue_denial
 
@@ -1300,7 +1310,7 @@ MAN: Just a part of you.
 
 # (She tries to scream. He places a finger on her lips.)
 
-MAN: Shhh. This is your silence. You asked for it.
+MAN: Shhh. This is your choice. You asked for it.
 
 # (He plunges something into her chest. Not a knife — just *darkness*. It spreads like ink.)
 
