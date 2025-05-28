@@ -98,7 +98,8 @@ LIST ending = (none), A, B, C, D
 ~ delay = 0.5
 The elevator dings.
 #pause(1.0)
-
+~ speed = 0.05
+~ delay = 0
 You step into the elevator, the soft hum of machinery buzzing faintly beneath your feet. 
 #pause(1.0)
 
@@ -109,12 +110,16 @@ It's cold. Sterile. Like the air is waiting for something to happen.
 The doors begin to close. But just before they shut—
 
 #Background: HandOnDoor
+~ speed = 0.01
+~ delay = 1
 A hand stops them.
 
 #pause(0.5)
 #walk sound
 #background man foot walk in
 #background: ElevatorOpen
+~ speed = 0.05
+~ delay = 0
 And a man steps in.
 
  ->chapter_1
@@ -128,8 +133,24 @@ The door closed, and you managed to take a glance from the corner of your view.
 #expression: NeutralLookAway
 #background look man down to shoulder and stop
 The man's average. Tallish. Pale. Clean suit. Polished shoes.
+#character: Killer
+#expression: NeutralLookAway
+~ speed = 0.25
+~ delay = 0.5
+But 
+#character: Killer
+#expression: NeutralLookAway
+~ speed = 0.1
+~ delay = 0.5
+there’s something...
 
-But there’s something... off.
+#character: Killer
+#expression: NeutralLookAway
+~ delay = 0.5
+off.
+
+~ speed = 0.05 
+~ delay = 0
 
 
 *   [look away] You keep your gaze on the floor. The fluorescent lights reflect in the polished steel.
