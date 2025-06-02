@@ -3119,7 +3119,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Round_1
+          m_StringArgument: Story
           m_BoolArgument: 0
         m_CallState: 2
   shakeIntensity: 0.5
@@ -4669,7 +4669,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db39be7e66b3aaa4085a4ff13004250b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interfaceVersion: 1
 --- !u!1 &8071714881276813633
 GameObject:
   m_ObjectHideFlags: 0
@@ -5356,6 +5355,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1086908833}
+  - {fileID: 1823098941}
   - {fileID: 2020112833}
   - {fileID: 3731545831509306430}
-  - {fileID: 1823098941}

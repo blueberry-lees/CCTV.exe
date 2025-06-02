@@ -85,11 +85,7 @@ public class DialogueManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
             ContinueStory();
 
-        if (Input.GetKeyDown(KeyCode.Keypad2))
-            SceneManager.LoadScene("Interface2");
 
-        if (Input.GetKeyDown(KeyCode.Keypad1))
-            SceneManager.LoadScene("Interface1");
     }
 
     public void LoadStory()
@@ -149,14 +145,7 @@ public class DialogueManager : MonoBehaviour
 
         if (story.canContinue)
         {
-            //if (story.variablesState["UIVersion"] != null)
-            //{
-            //    int uiV = (int)story.variablesState["UIVersion"];
-
-            //    Debug.Log("hey we got the version from ink, it's : " + uiV.ToString());
-
-            //}
-                SaveInkState();
+            SaveInkState();
             string line = story.Continue().Trim();
             List<string> tags = story.currentTags;
 
@@ -170,8 +159,6 @@ public class DialogueManager : MonoBehaviour
 
             //check what version to load to by fetching the story progress
             //and load scene accroding to the version
-
-            //SaveInkState();
 
             if (story.variablesState["UIVersion"] != null)
             {
@@ -370,20 +357,25 @@ public class DialogueManager : MonoBehaviour
         switch (GameState.uiVersion)
         {
             case 1:
-                Debug.Log("UIVersion 1 → Interface1");
-                SceneManager.LoadScene("Interface1");
+                Debug.Log("UIVersion 1 → Version1");
+                SceneManager.LoadScene("Version1");
                 break;
             case 2:
-                Debug.Log("UIVersion 2 → Interface2");
-                SceneManager.LoadScene("Interface2");
+                Debug.Log("UIVersion 2 → Version2");
+                GameState.returnPoint = "ROUND_2";
+                SceneManager.LoadScene("Version2");
+                
                 break;
             case 3:
-                Debug.Log("UIVersion 3 → Interface3");
-                SceneManager.LoadScene("Interface3");
+                Debug.Log("UIVersion 3 → Version3");
+                GameState.returnPoint = "ROUND_3";
+                SceneManager.LoadScene("Version3");
+               
                 break;
             case 4:
-                Debug.Log("UIVersion 4 → Interface4");
-                SceneManager.LoadScene("Interface4");
+                Debug.Log("UIVersion 4 → Version4");
+                GameState.returnPoint = "SPLIT_ENDING";
+                SceneManager.LoadScene("Version4");
                 break;
             default:
                 Debug.LogWarning("Unknown UI Version");
