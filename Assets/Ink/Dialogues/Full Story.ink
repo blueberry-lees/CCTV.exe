@@ -99,7 +99,7 @@ LIST ending = (none), A, B, C, D
 #background: ElevatorOpen #SFX: Ding  #speaker: Narrator #speed: 0.1
 The elevator dings. 
 
-
+~ UIVersion = 2
 #speed: 0.05
 You step in. The classic elevator music plays in the background.
 

@@ -148,7 +148,14 @@ public class DialogueManager : MonoBehaviour
 
         if (story.canContinue)
         {
-            SaveInkState();
+            if (story.variablesState["UIVersion"] != null)
+            {
+                int uiV = (int)story.variablesState["UIVersion"];
+
+                Debug.Log("hey we got the version from ink, it's : " + uiV.ToString());
+
+            }
+                SaveInkState();
             string line = story.Continue().Trim();
             List<string> tags = story.currentTags;
 
@@ -164,24 +171,23 @@ public class DialogueManager : MonoBehaviour
             //check what version to load to by fetching the story progress
             //and load scene accroding to the version
 
-            SaveInkState();
-            if (story.variablesState["progress"] != null)
-            {
-                string progress = story.variablesState["progress"].ToString();
+            //SaveInkState();
 
-                if (progress == "Round_1_End")
-                {
-                    GameState.returnPoint = "ROUND_2";
-                    GameState.uiVersion = 2;
+            if (story.variablesState["UIVersion"] != null)
+            {
+                int uiV = (int)story.variablesState["UIVersion"];
+
+                    
+                    GameState.uiVersion = uiV;
                     GameState.ResetStoryData();
                     GameState.SaveAll();
                     SwitchInterfaceVersion();
                     
-                }
+               
             }
             else
             {
-                Debug.LogWarning("This is the problem");
+                Debug.LogWarning("can't fetch UIVersion");
             }
 
                 Debug.Log("Story can not continue, returning to interface");
