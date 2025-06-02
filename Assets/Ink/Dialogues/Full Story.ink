@@ -99,7 +99,6 @@ LIST ending = (none), A, B, C, D
 #background: ElevatorOpen #SFX: Ding  #speaker: Narrator #speed: 0.1
 The elevator dings. 
 
-~ UIVersion = 2
 #speed: 0.05
 You step in. The classic elevator music plays in the background.
 
@@ -348,6 +347,7 @@ The doors open with a quiet sigh. #speaker: Narrator
 He steps out. For a moment, he turns to glance back—not intensely. Just a polite look-over-the-shoulder.
 
 And he smiles.
+~ UIVersion = 2
 
 Just that.
 
@@ -356,7 +356,7 @@ No wink. No stare. Just a smile.
 You're alone again.
 
 And for the first time in a while...
-~ UIVersion = 2
+
 
 You feel completely still.
 

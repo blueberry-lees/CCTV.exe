@@ -10,9 +10,6 @@ using Ink.Runtime;
 public class DialogueManager : MonoBehaviour
 {
 
-    [Header("Save State")]
-    [TextArea(3, 10)] public string savedInkStateJSON;
-
     [Header("Script References")]
     private VisualManager visualManager;
     private DialogueChoice choiceUI;
@@ -69,9 +66,7 @@ public class DialogueManager : MonoBehaviour
 
     void Update()
     {
-
-        savedInkStateJSON = PlayerPrefs.GetString("InkState", "");
-
+      
         if (isTyping)
         {
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
@@ -89,6 +84,12 @@ public class DialogueManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
             ContinueStory();
+
+        if (Input.GetKeyDown(KeyCode.Keypad2))
+            SceneManager.LoadScene("Interface2");
+
+        if (Input.GetKeyDown(KeyCode.Keypad1))
+            SceneManager.LoadScene("Interface1");
     }
 
     public void LoadStory()
@@ -148,13 +149,13 @@ public class DialogueManager : MonoBehaviour
 
         if (story.canContinue)
         {
-            if (story.variablesState["UIVersion"] != null)
-            {
-                int uiV = (int)story.variablesState["UIVersion"];
+            //if (story.variablesState["UIVersion"] != null)
+            //{
+            //    int uiV = (int)story.variablesState["UIVersion"];
 
-                Debug.Log("hey we got the version from ink, it's : " + uiV.ToString());
+            //    Debug.Log("hey we got the version from ink, it's : " + uiV.ToString());
 
-            }
+            //}
                 SaveInkState();
             string line = story.Continue().Trim();
             List<string> tags = story.currentTags;
@@ -162,7 +163,6 @@ public class DialogueManager : MonoBehaviour
             HandleTags(tags);
             StartCoroutine(TypeText(line));
 
-            Debug.Log("Ink progress value: " + story.variablesState["progress"]);
             return;
         }
         else if (!story.canContinue)
@@ -177,13 +177,14 @@ public class DialogueManager : MonoBehaviour
             {
                 int uiV = (int)story.variablesState["UIVersion"];
 
-                    
+                Debug.Log("hey we got the version from ink, it's : " + uiV.ToString());
+
+
                     GameState.uiVersion = uiV;
                     GameState.ResetStoryData();
                     GameState.SaveAll();
-                    SwitchInterfaceVersion();
-                    
-               
+                    LoadInterfaceScene();
+
             }
             else
             {
@@ -341,8 +342,6 @@ public class DialogueManager : MonoBehaviour
             GameState.lastSpeaker = lastSpeakerTag;
 
             GameState.SaveAll(); // Assuming this commits to disk or serialization
-
-            Debug.Log("Saved Ink JSON length: " + GameState.inkStateJSON.Length);
         }
     }
 
@@ -365,7 +364,8 @@ public class DialogueManager : MonoBehaviour
     }
 
 
-    public void SwitchInterfaceVersion()
+    [Tooltip("Loads the Interface scene based on the GameState.uiVersion value")]
+    public void LoadInterfaceScene()
     {
         switch (GameState.uiVersion)
         {
