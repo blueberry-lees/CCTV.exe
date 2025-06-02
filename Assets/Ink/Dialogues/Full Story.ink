@@ -100,8 +100,8 @@ The elevator dings.
 #speed: 0.05
 You step in. The classic elevator music plays in the background.
 
-
-The air’s a bit cold. Too much AC, maybe.
+#SFX:CartoonWind
+The air’s a bit cold. Too much AC, perhaps.
 
 The doors begin to close. But right before they shut—
 
@@ -183,37 +183,41 @@ You hesitate. Something about the quiet caught you off guard.
     ~ raise(trust)
 -
 
-#speaker: Male
-"Guess so."  #character: Killer #expression:SmileLookAway   
-"These things always feel like a pause button, don’t they?"#character: Killer #expression:SmilePointUp  
+#speaker: Male #character: Killer #expression:SmileLookAway   
+"Guess so."  
+
+#character: Killer #expression:SmilePointUp  
+"These things always feel like a pause button, don’t they?"
 "Like time slows down in here."
 
+#speaker:Narrator 
+Almost like he’s thinking out loud.
 
-Almost like he’s thinking out loud.#speaker:Narrator 
+ #character: Killer #expression:ChuckleLookAway 
+He chuckles softly. 
 
-He chuckles softly.  #character: Killer #expression:ChuckleLookAway 
+#character: Killer #expression:HappyLook
+He catches your glance and raises an eyebrow.
 
+#speaker: Female
 
-He catches your glance and raises an eyebrow.#character: Killer #expression:HappyLook
-
-
-
-*   {confidence == 2 or confidence == 0}[awkward laugh]  "Yeah... elevators are weird."#speaker: Female
+*   {confidence == 2 or confidence == 0}[awkward laugh]  "Yeah... elevators are weird."
     ~ mid(trust)   
 
-*   {confidence <= 1}[honest]  "Yeah. It’s like everything else shuts off."#speaker: Female
+*   {confidence <= 1}[honest]  "Yeah. It’s like everything else shuts off."
     ~ raise(trust)
 
-*   {confidence >= 1}[light joke]  "Kinda eerie. Like a breakroom without the coffee."#speaker: Female
+*   {confidence >= 1}[light joke]  "Kinda eerie. Like a breakroom without the coffee."
     ~ mid(trust)
 -
 
-He chuckles lightly.#speaker: Male #character: Killer #expression:SoftChuckle
-
+#speaker: Narrator #character: Killer #expression:SoftChuckle
+He chuckles lightly.
+#speaker: Male 
 "I like the quiet. Gives you space to think."
 
-
-There’s something easy about his voice. Calm. Relaxed.#speaker: Narrator #speed: 0.07
+#speaker: Narrator #speed: 0.07
+There’s something easy about his voice. Calm. Relaxed.
 
 You exhale. Maybe you were just on edge.
 
@@ -221,9 +225,9 @@ You exhale. Maybe you were just on edge.
 
 
 === chapter_3
-//delusion_hint 
 
-You glance at the elevator mirror. A faint double of the two of you stands there—clear, still, ordinary.#speaker:Narrator #speed: 0.06
+#speaker:Narrator #speed: 0.06
+You glance at the elevator mirror. A faint double of the two of you stands there—clear, still, ordinary.
 
 You blink. Something about the angle makes it look like his reflection is a second behind.
 
@@ -241,26 +245,34 @@ Nope—normal. Just your mind playing tricks.
     ~ mid(delusion)
 -
 
-"You alright?"#speaker: Male #character: Killer #expression:NeutralLook  
+#speaker: Male #character: Killer #expression:NeutralLookT  
+"You alright?"
 
 
+#character: Killer #expression:NeutralLook
+#speaker: Female
 
-*   [nod] "Yeah. Just a long day."#speaker: Female
+*   [nod] "Yeah. Just a long day."
+#speaker: Male #character: Killer #expression:SmilePointUp
     ~ mid(trust)
 
-*   [shrug] "Zoning out, I guess."#speaker: Female
+*   [shrug] "Zoning out, I guess."
+#speaker: Male #character: Killer #expression:OneEyeCloseLaugh
     ~ raise(trust) 
 
-*   [smile] "Fine. Mirrors just mess with me sometimes."#speaker: Female
+*   [smile] "Fine. Mirrors just mess with me sometimes."
+#speaker: Male #character: Killer #expression:CloseEyeLaugh
     ~ mid(trust)
-    ~ raise(delusion) // Accepting strangeness
+    ~ raise(delusion) 
 -
 
-"I get that. Elevators can feel a bit... floaty."#speaker: Male #character: Killer #expression:Smile1
 
+"I get that. Elevators can feel a bit... floaty."
 
-You smile faintly. He seems normal. Friendly, even.#speaker: Narrator
+#speaker: Narrator 
+You smile faintly. He seems normal. Friendly, even.
 
+#character: Killer #expression:SmileLookAway
 It’s quiet again, but it doesn’t feel heavy.
 
 Just two people. Sharing space. Going down.
@@ -270,7 +282,6 @@ Just two people. Sharing space. Going down.
 
 === chapter_4
 //voice_in_head — now toned down
-
 
 Your thoughts drift. Maybe it’s the hum of the elevator, or the stillness of the moment—but something tugs at your attention.#show_expression("neutral") #speaker: Narrator #speed: 0.06
 
