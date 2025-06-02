@@ -70,6 +70,8 @@ VAR delay = 0.1
 
 VAR progress = ""
 
+VAR UIVersion = 1
+
 VAR trust = INITIAL_SWING
 VAR delusion = INITIAL_SWING
 VAR guilt = INITIAL_SWING
@@ -91,6 +93,7 @@ LIST ending = (none), A, B, C, D
 // Content
 //
 === Round_1
+~ UIVersion = 1
 
 //elevator_intro 
 #background: ElevatorOpen #SFX: Ding  #speaker: Narrator #speed: 0.1
@@ -356,11 +359,9 @@ And for the first time in a while...
 
 You feel completely still.
 
-#add a CCTV angle here if you want to hint at observation—but don’t make it eerie yet
-//~OnRoundEnd(1)
-
+~ UIVersion = 2
 ~ progress = "Round_1_End"
--> ROUND_2
+-> END
 
 
 // === ROUND 2 START ===

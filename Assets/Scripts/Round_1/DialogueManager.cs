@@ -147,34 +147,42 @@ public class DialogueManager : MonoBehaviour
     {
         if (!story.canContinue)
         {
+
+            //check what version to load to by fetching the story progress
+            //and load scene accroding to the version
+
             SaveInkState();
-            Debug.LogWarning("Story can not continue, return to interface1");
-            SceneManager.LoadScene("Interface1");
+            if (story.variablesState["progress"] != null)
+            {
+                string progress = story.variablesState["progress"].ToString();
+
+                if (progress == "Round_1_End")
+                {
+                    GameState.returnPoint = "ROUND_2";
+                    GameState.uiVersion = 2;
+                    GameState.ResetStoryData();
+                    GameState.SaveAll();
+                    CheckInterfaceVersion();
+                    return;
+                }
+            }
+
+            Debug.Log("Story can not continue, returning to interface");
             return;
         }
-
-        SaveInkState();
-        string line = story.Continue().Trim();
-        if (story.variablesState["progress"] != null)
+        else if (story.canContinue)
         {
-            string progress = story.variablesState["progress"].ToString();
+            SaveInkState();
+            string line = story.Continue().Trim();
+            List<string> tags = story.currentTags;
 
-            if (progress == "Round_1_End")
-            {
-                GameState.returnPoint = "Round_2";
-                GameState.uiVersion = 2;
-                GameState.SaveAll();
-                CheckInterfaceVersion();
-                return;
-            }
+            HandleTags(tags);
+            StartCoroutine(TypeText(line));
+
+            Debug.Log("Ink progress value: " + story.variablesState["progress"]);
+            return;
         }
-
-        List<string> tags = story.currentTags;
-
-        HandleTags(tags);
-        StartCoroutine(TypeText(line));
-
-        Debug.Log("Ink progress value: " + story.variablesState["progress"]);
+ 
     }
 
     IEnumerator TypeText(string text)

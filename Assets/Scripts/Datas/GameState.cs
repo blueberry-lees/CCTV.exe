@@ -57,4 +57,26 @@ public static class GameState
         PlayerPrefs.Save();
         Debug.Log("GameState reset.");
     }
+
+
+    [Tooltip("This is just to remove the previous tags/sprites used")]
+    public static void ResetStoryData()
+    {
+        PlayerPrefs.SetString("InkState", "");
+        PlayerPrefs.SetString("LastBackground", "");
+        PlayerPrefs.SetString("LastCharacter", "");
+        PlayerPrefs.SetString("LastExpression", "");
+        PlayerPrefs.SetString("LastSpeaker", "");
+    }
+
+    [Tooltip("This is just to remove the previous tags/sprites used")]
+    public static void ResetStoryData2()
+    {
+
+        PlayerPrefs.DeleteKey("InkState");
+        PlayerPrefs.DeleteKey("LastBackground");
+        PlayerPrefs.DeleteKey("LastCharacter");
+        PlayerPrefs.DeleteKey("LastExpression");
+        PlayerPrefs.DeleteKey("LastSpeaker");
+    }
 }
