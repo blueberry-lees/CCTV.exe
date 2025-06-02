@@ -25,6 +25,8 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Settings")]
     public float typeSpeed = 0.05f;
+    private float tagTypingSpeed = -1f;
+    private float tagDelay = 0f;
 
     [Header("Audio")]
     public AudioSource typingAudio;
@@ -152,6 +154,7 @@ public class DialogueManager : MonoBehaviour
 
         SaveInkState();
         string line = story.Continue().Trim();
+
         if (story.variablesState["progress"] != null)
         {
             string progress = story.variablesState["progress"].ToString();
@@ -168,20 +171,20 @@ public class DialogueManager : MonoBehaviour
 
         List<string> tags = story.currentTags;
 
-        HandleTags(tags);
-        StartCoroutine(TypeText(line));
+        // 🔁 Delay tag handling until after typing is complete
+        StartCoroutine(TypeText(line, tags));
 
         Debug.Log("Ink progress value: " + story.variablesState["progress"]);
     }
 
-    IEnumerator TypeText(string text)
+    IEnumerator TypeText(string text, List<string> tags)
     {
         isTyping = true;
         dialogueText.text = "";
         skipTyping = false;
 
-        float speed = GetFloatFromInk("speed", typeSpeed);
-        float delay = GetFloatFromInk("delay", 0f);
+        float speed = tagTypingSpeed > 0 ? tagTypingSpeed : typeSpeed;
+        float delay = tagDelay > 0 ? tagDelay : 0f;
         yield return new WaitForSeconds(delay);
 
         string colorHex = speakerColors.ContainsKey(currentSpeaker) ? speakerColors[currentSpeaker] : "#FFFFFF";
@@ -220,21 +223,17 @@ public class DialogueManager : MonoBehaviour
 
         isTyping = false;
 
+        // ✅ Handle tags after dialogue is fully typed
+        HandleTags(tags);
+
         if (story.currentChoices.Count > 0)
             choiceUI.DisplayChoices();
+
+        tagTypingSpeed = -1f;
+        tagDelay = 0f;
     }
 
-    float GetFloatFromInk(string varName, float defaultValue)
-    {
-        var val = story.variablesState[varName];
-        return val switch
-        {
-            int i => i,
-            float f => f,
-            double d => (float)d,
-            _ => defaultValue
-        };
-    }
+
 
     void LoadTypingSounds()
     {
@@ -261,28 +260,33 @@ public class DialogueManager : MonoBehaviour
                     lastSpeakerTag = val;
                     speakerText.text = val;
                     currentSpeaker = val;
-
                     break;
 
                 case "character":
-                    lastCharacter = val; // Save current character
+                    lastCharacter = val;
                     currentCharacter = val;
-
                     break;
 
                 case "expression":
-                    lastExpressionTag = val; // Save current expression
+                    lastExpressionTag = val;
                     ChangeCharacterExpression(currentCharacter, val);
-
                     break;
 
                 case "background":
-                    lastBackgroundTag = val; // Save current background
+                    lastBackgroundTag = val;
                     ChangeEnvironmentBackground(val);
                     break;
 
                 case "sfx":
                     PlaySFX(val);
+                    break;
+
+                case "speed":
+                    if (float.TryParse(val, out float s)) tagTypingSpeed = s;
+                    break;
+
+                case "delay":
+                    if (float.TryParse(val, out float d)) tagDelay = d;
                     break;
             }
         }

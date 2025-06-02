@@ -58,7 +58,7 @@ CONST INITIAL_SWING = 1001
     // Because "up is false and down is false"
     ~ return (not up(x) && not down(x))
 
-
+-
 /* ---------------------------------
 
    Global Variables
@@ -72,11 +72,13 @@ VAR progress = ""
 
 VAR trust = INITIAL_SWING
 VAR delusion = INITIAL_SWING
+VAR guilt = INITIAL_SWING
 
 //var for choices
 
-VAR stabbed = false
 VAR refuseToStab = false
+
+VAR stabbed_status = ""
 
 //EXTERNAL OnRoundEnd(roundNumber)
 //EXTERNAL OnRoundStart(roundNumber)
@@ -87,652 +89,957 @@ LIST ending = (none), A, B, C, D
 //
 // Content
 //
-
- === Round_1
+=== Round_1
 
 //elevator_intro 
-#SFX: Ding
-#background: ElevatorOpen
-#speaker:Narrator
-~ speed = 0.1
-~ delay = 0.5
-The elevator dings.
-#pause(1.0)
-~ speed = 0.05
-~ delay = 0
-You step into the elevator, the soft hum of machinery buzzing faintly beneath your feet. 
-#pause(1.0)
 
-It's cold. Sterile. Like the air is waiting for something to happen.
+The elevator dings. #background: ElevatorOpen #SFX: Ding  #speaker: Narrator #speed: 0.1
 
-#pause(1.0)
 
-The doors begin to close. But just before they shut—
 
-#Background: HandOnDoor
-~ speed = 0.01
-~ delay = 1
-A hand stops them.
+You step in. The classic elevator music plays in the background.#speed: 0.05
 
-#pause(0.5)
-#walk sound
-#background man foot walk in
-#background: ElevatorOpen
-~ speed = 0.05
-~ delay = 0
-And a man steps in.
 
- ->chapter_1
- === chapter_1
+The air’s a bit cold. Too much AC, maybe.
+
+The doors begin to close. But right before they shut—
+
+
+A hand stops them.#Background: HandOnDoor #speed: 0.07
+
+
+
+A man steps in, nodding politely. #background: ElevatorOpen #character: Killer #expression: NeutralLook #speed: 0.08 #delay: 0.4
+
+-> chapter_1
+
+
+=== chapter_1
 ~ temp confidence = 0
-//describe_man 
-//~ OnRoundEnd(1)
-#background: Elevator
-The door closed, and you managed to take a glance from the corner of your view. 
-#character: Killer
-#expression: NeutralLookAway
-#background look man down to shoulder and stop
-The man's average. Tallish. Pale. Clean suit. Polished shoes.
-#character: Killer
-#expression: NeutralLookAway
-~ speed = 0.25
-~ delay = 0.5
-But 
-#character: Killer
-#expression: NeutralLookAway
-~ speed = 0.1
-~ delay = 0.5
-there’s something...
 
-#character: Killer
-#expression: NeutralLookAway
-~ delay = 0.5
-off.
+The doors close. You glance at the man out of the corner of your eye. #background: Elevator #character: Killer #expression: NeutralLookAway #speed: 0.07 #delay: 0.4
 
-~ speed = 0.05 
-~ delay = 0
+He’s tallish, maybe late 20s. Clean-cut suit. Polished shoes. Smells faintly like aftershave.
 
+He seems… normal.
 
-*   [look away] You keep your gaze on the floor. The fluorescent lights reflect in the polished steel.
+*   [look away] You shift your gaze to the floor. Elevator lighting flickers a bit on the steel. #background look feet
     ~ confidence = 0
+    ~ lower(trust)
 
-    
-*   [stare at him] You meet his eyes. His eyes don’t quite match his smile. 
-    Something sharp glints in them. Not metal. Something worse.
+*   [stare at him] You meet his eyes. #character: Killer #expression: NeutralLook
+
+He smiles—casual, not forced.  #character: Killer #expression: SmileLook
+    Still, there’s something unreadable there. 
     ~ confidence = 1
-
-  
+    ~ raise(trust)
 -
 
 
+-> chapter_2
 
- ->chapter_2
- === chapter_2
+
+=== chapter_2
 ~ temp confidence = 0
 
-//small_talk_start 
+#character: Killer #expression: NeutralLookAway
 
+The elevator hums gently as it begins to descend.#speaker: Narrator #speed: 0.07 #delay: 0.4
 
-#speaker: Narrator
-The elevator begins its slow descent.
-The silence stretches.
-Too long.
-He finally speaks.
+The silence lingers—not uncomfortable, just... there.
+
+Eventually, he speaks. #character: Killer #expression: NeutralLookAway
 
 #speaker: Male
-#character: Killer
-#expression:Smile1
-"Going down?"
+"Going down?"  #character: Killer #expression:SmileLookT #speed: 0.08 #delay: 0.3
 
-#speaker: Narrator
-You didn’t answer right away. Something in your throat locks.
- #speaker:Female
 
-*   {confidence <= 0}[nervous smile] "Y-yeah. Just... just heading down."
+You hesitate. Something about the quiet caught you off guard.#speaker: Narrator #speed: 0.06 #delay: 0.2
+
+
+#speaker: Female
+*   {confidence <= 0}[nervous smile] "Y-yeah. Just... heading down."
     ~ confidence = 0 
+    ~ lower(trust)  
 
 *   {confidence >= 0}[bluntly]  "Yes."
     ~ confidence = 1
-    
+
 *   {confidence > 0}[make a joke]  "Only way to go from the top, right?"
     ~ confidence = 2
- 
-
-
--
-#speaker: Male
-#character: Killer
-#expression:SmileLookAway 
-"Suppose so."  
-"Funny thing, these little boxes."
-"Tiny worlds. No escape. "
-"Just you and... whoever walks in."
-
-#speaker:Narrator
-#character: Killer
-#expression:NeutralLookAway 
-He pauses. Like he’s letting the words hang in the air for too long.
-...
-#expression:NeutralLook 
-Like he's watching them sink into your skin.
-#speaker:Female
-
-*   {confidence == 2 or confidence == 0}[awkward laugh]  "Yeah... elevators are weird."
-
-    
-*   {confidence <= 1}[tense]  "What do you mean by that?"
-    ~lower(trust)
- 
-    
-*   {confidence >= 1}[joking]  "Sounds like a setup for a horror movie."
     ~ raise(trust)
-      
-    
 -
+
 #speaker: Male
-#character: Killer
-#expression:SmileLook
-"Horror... hmm. Maybe."
-"Or just a moment where everything slips."
-"When you realize you were never alone to begin with."
-
-#speaker:Narrator
-You laugh nervously, but it dies in your throat.
+"Guess so."  #character: Killer #expression:SmileLookAway   
+"These things always feel like a pause button, don’t they?"#character: Killer #expression:SmilePointUp  
+"Like time slows down in here."
 
 
- ->chapter_3
- === chapter_3
+Almost like he’s thinking out loud.#speaker:Narrator 
+
+He chuckles softly.  #character: Killer #expression:ChuckleLookAway 
+
+
+He catches your glance and raises an eyebrow.#character: Killer #expression:HappyLook
+
+
+
+*   {confidence == 2 or confidence == 0}[awkward laugh]  "Yeah... elevators are weird."#speaker: Female
+    ~ mid(trust)   
+
+*   {confidence <= 1}[honest]  "Yeah. It’s like everything else shuts off."#speaker: Female
+    ~ raise(trust)
+
+*   {confidence >= 1}[light joke]  "Kinda eerie. Like a breakroom without the coffee."#speaker: Female
+    ~ mid(trust)
+-
+
+He chuckles lightly.#speaker: Male #character: Killer #expression:SoftChuckle
+
+"I like the quiet. Gives you space to think."
+
+
+There’s something easy about his voice. Calm. Relaxed.#speaker: Narrator #speed: 0.07
+
+You exhale. Maybe you were just on edge.
+
+-> chapter_3
+
+
+=== chapter_3
 //delusion_hint 
 
-#speaker:Narrator
+You glance at the elevator mirror. A faint double of the two of you stands there—clear, still, ordinary.#speaker:Narrator #speed: 0.06
 
-There’s something wrong.
+You blink. Something about the angle makes it look like his reflection is a second behind.
 
-His reflection in the elevator mirror behind him—it doesn’t move when he does.
+You look again.
 
-You blink. 
+Nope—normal. Just your mind playing tricks.
 
-Look again.
+*   [rub your eyes] You blink a few more times, letting out a soft sigh. Long day.
+    ~ lower(delusion)
 
-It’s back to normal.
+*   [look again] You squint at the reflection. It stares back, just as expected.
+    ~ raise(delusion)
 
-...Was it?
-
-*   [rub your eyes] You blink a few more times, heart thudding. Maybe you’re tired.
- ~ lower(delusion)
-    
-*   [look again]  You focus on the reflection. It stares back. Eyes too wide.
-~ raise(delusion)
-
-*   [step back slightly]  You shift away, gripping your bag tighter.
-
+*   [step back slightly] You shift to the side, casually adjusting your bag.
+    ~ mid(delusion)
 -
 
-//checking variables
-//(Trust - Up: {upness(trust)}, Down: {downness(trust)})
-//(Delulu - Up: {upness(delusion)}, Down: {downness(delusion)})
+"You alright?"#speaker: Male #character: Killer #expression:NeutralLook  
 
 
- ->chapter_4
- === chapter_4
 
-//voice_in_head 
+*   [nod] "Yeah. Just a long day."#speaker: Female
+    ~ mid(trust)
 
+*   [shrug] "Zoning out, I guess."#speaker: Female
+    ~ raise(trust) 
 
-#show_expression("paranoid")
-#speaker: Narrator
-A whisper curls in your mind. Soft. Familiar.
-
-"He’s not real. He’s not. Not this time."
-
-You shake your head. The whisper is gone.
-
-The man’s still smiling. But his eyes... they flicker for just a moment.  
-Black, like a void.
-
-Then they’re normal again.
-
-#speaker: Male
-#character: Killer
-#expression:NeutralLook  
-"You alright? You look pale."
-
-#speaker: Female
-
-*   [lie]  "Just tired. Didn’t sleep well."
-    ~ lower(trust)
-*   [avoid]  "I’m fine."
-    ~mid(trust)
-*   [truth]  "Do you ever feel like someone’s lying to you? Even if they say all the right things?"
-    ~ raise(trust)
+*   [smile] "Fine. Mirrors just mess with me sometimes."#speaker: Female
+    ~ mid(trust)
+    ~ raise(delusion) // Accepting strangeness
 -
-#speaker: Male
-#character: Killer
-#expression:SmileLook  
 
-#pause(1.0)
-"All the time."
-
-//checking variables
-//(Trust - Up: {upness(trust)}, Down: {downness(trust)})
-///(Delulu - Up: {upness(delusion)}, Down: {downness(delusion)})
+"I get that. Elevators can feel a bit... floaty."#speaker: Male #character: Killer #expression:Smile1
 
 
- ->chapter_5
- === chapter_5
+You smile faintly. He seems normal. Friendly, even.#speaker: Narrator
+
+It’s quiet again, but it doesn’t feel heavy.
+
+Just two people. Sharing space. Going down.
+
+-> chapter_4
+
+
+=== chapter_4
+//voice_in_head — now toned down
+
+
+Your thoughts drift. Maybe it’s the hum of the elevator, or the stillness of the moment—but something tugs at your attention.#show_expression("neutral") #speaker: Narrator #speed: 0.06
+
+A whisper of doubt, like an old memory brushing past.
+
+You shake it off.
+
+The man glances at you briefly.
+
  
-#speaker: Narrator
-The elevator dings.
+"You sure you're alright? You spaced out for a second there."#speaker: Male\ #character: Killer #expression:NeutralLook 
 
-You’re almost at the lobby.
 
-He steps closer. 
-Just slightly. Almost imperceptibly.
+*   [smile]  "Yeah. I do that sometimes." #speaker: Female
+    ~ raise(trust)
 
-But you notice.
+*   [honest]  "Was just thinking about something weird." #speaker: Female
+    ~ mid(trust)
+    ~ raise(delusion)  // Admitting to weirdness
 
-#speaker: Male
-#character: Killer
-#expression:Smile1
-"I think we'll be seeing more of each other."
-
-#speaker: Female
-
-*   {down(trust)} [freeze]  You don't respond. Can't.
-
-*   {down(trust) or mid(trust)}[respond]  "I... hope not."
-
-*   {mid(trust) or up(trust)}[fake a smile] "Looking forward to it."
-    
+*   [deflect]  "Nothing important." #speaker: Female
+    ~ lower(trust)
 -
-#speaker: Narrator
-The elevator doors open.
 
-He steps out, but just before turning the corner, he glances back.
-
-And he *winks*.
-
-#show_expression("disturbed")
-#pause(1.0)
-
-You don’t remember pressing the emergency stop, but the elevator halts again.
-
-You’re alone.
-
-And yet…  
-you still feel watched.
+"Happens to the best of us."#speaker: Male #character: Killer #expression:SmileLook  
 
 
-#add a cctv angle here
-//~OnRoundEnd(1) 
+His tone is casual. Friendly.#speaker: Narrator
+
+The elevator hums beneath your feet like a soft lull.
+
+-> chapter_5
+
+
+=== chapter_5
+
+
+The elevator dings.#SFX: Ding #speaker: Narrator #speed: 0.08
+
+You glance at the screen—ground floor.
+
+He adjusts his collar slightly. Then steps just a bit closer, not in a threatening way—more like he's getting ready to leave.
+
+
+"Well. Guess this is us."#speaker: Male #character: Killer #expression:Smile1
+
+
+
+*   {down(trust)} [softly]  "Yeah." #speaker: Female
+    ~ lower(trust)
+
+*   {mid(trust)} [friendly]  "Nice ride."#speaker: Female
+     ~ mid(trust)
+
+*   {up(trust)} [smile]  "Maybe I'll see you around."#speaker: Female
+     ~ raise(trust)
+-
+
+The doors open with a quiet sigh. #speaker: Narrator
+
+He steps out. For a moment, he turns to glance back—not intensely. Just a polite look-over-the-shoulder.
+
+And he smiles.
+
+Just that.
+
+No wink. No stare. Just a smile.
+
+You're alone again.
+
+And for the first time in a while...
+
+You feel completely still.
+
+#add a CCTV angle here if you want to hint at observation—but don’t make it eerie yet
+//~OnRoundEnd(1)
 
 ~ progress = "Round_1_End"
--> DONE
+-> ROUND_2
 
 
 // === ROUND 2 START ===
 
 
 === ROUND_2 ===
-#pause_scene
-#show_scene("elevator_dim")
-#set_expression("neutral")
 
-You step into the elevator once more. The air feels heavier today, the fluorescent lights casting a sickly hue.
+You step into the elevator again. 
 
-#pause(1.0)
+It feels... familiar. Not comforting—just known.
 
-The doors begin to close, but a familiar hand halts their motion.
+The doors begin to close, but they hesitate—like they're waiting.
 
-#pause(1.0)
+A hand slips in. Fingers, confident. Calm.
 
-He steps in.
+He enters.
+
 
 -> describe_man_round2
 
 = describe_man_round2 
-#show_character("Man", "smile_neutral")
 
-His suit is immaculate, but there's a subtle smear on his cuff. His eyes meet yours, and for a fleeting moment, they seem... hollow.
+His suit is pristine again, but this time, there’s a faint crease at the collar. As if someone grabbed it.
 
-#speaker:Male
-"Back again. Fate has a peculiar sense of humor, doesn't it?"
-#speaker:Female
-*  [forced smile]
-    "Seems like it."
-*   [uneasy]
-    "Do you always ride this elevator?"
-*   [silent]
+His eyes meet yours. Still polite. Still warm. But you think you saw something else—gone now.
+
+
+"Ah. We meet again. Funny how elevators have such good memory."#speaker:Male 
+
+
+*  [smile politely]
+    "Or maybe we're just predictable." #speaker:Female
+        ~ raise(trust)
+*  [nervous chuckle]
+    "I guess it’s that kind of morning." #speaker:Female
+        ~ mid(trust)
+*  [say nothing]
     #speaker:Narrator
-    You nod, avoiding his gaze.
+    You manage a nod. Nothing more.#speaker:Female 
+        ~ lower(trust)  // Withholding interaction this time
 
 -
-#speaker:Male
-"Elevators are like confessionals, don't you think? Small spaces where truths slip out."
+
+"I always liked elevators. They're like a neutral ground. Nowhere to go except where they take you." #speaker:Male
+
 
 -> elevator_ride_round2
 
 = elevator_ride_round2 
-#speaker:Narrator
-The elevator hums as it descends. The floor numbers flicker erratically.
+The elevator hums downward. #speaker:Narrator
 
-#speaker:Male
-"Sometimes, I wonder if we're going down at all. Maybe we're just stuck, reliving the same moments."
-#speaker:Narrator
-You clutch your bag tighter, fingers brushing against something cold and metallic inside.
-#speaker:Female
-*   [inquire] "What do you mean by that?"
+The lights buzz faintly overhead. One of them flickers—not enough to be alarming, just enough to annoy.
 
-*   [defensive] "Are you implying something?"
+"Do you think places remember us?" #speaker:Male
+
+
+*   [curious] "You mean like... emotionally?" #speaker:Female
+     ~ raise(trust)
+*   [guarded] "That’s a strange question." #speaker:Female
     ~lower(trust)
-    
-*   [change subject] "Do you work in this building?"
+*   [soft] "Maybe. Sometimes it feels that way."#speaker:Female
+    ~ raise(trust)
+    ~ raise(delusion)  // Opening up to uncanny ideas
 -
-#speaker:Male
-#(smiling)
-"Work? I suppose you could call it that. I observe, listen, understand."
-#speaker:Narrator
-His gaze intensifies, piercing through you.
 
-#speaker:Male
-"Tell me, do you ever feel like you're being watched?"
-#speaker:Female
-*   [truthful] "Yes... lately, more than ever."
-    ~raise(trust)
-*   [lie] "No, not really."
+"Buildings... routines... people. Maybe they don’t forget as much as we think." #speaker:Male
+
+#speaker:Narrator
+You glance at his reflection in the polished doors. For a second, it lags behind him. 
+
+Your fingers find the edge of your bag.
+
+You weren’t planning on carrying that today. But you are.
+
+
+"You ever notice how time feels strange in here?" #speaker:Male
+
+
+*   [uneasy] "It feels slow." #speaker:Female
+    ~ raise(delusion)
+*   [deflect] "Are you always this philosophical?" #speaker:Female
     ~lower(trust)
-*   [deflect] "That's a strange question."
-    ~mid(trust)
+*   [tense] "Why do you keep asking things like that?" #speaker:Female
+    ~ lower(trust)
+    ~ raise(delusion)  // Combative tone often comes from paranoia
 -
-#speaker:Male
-"Is it? Perhaps we're all just mirrors, reflecting each other's truths and lies."
+
+
+
+(smiling)
+"Just passing the time. Conversations leave imprints too, don’t you think?" #speaker:Male
+
+
 
 -> delusion_build_up
 
 = delusion_build_up 
-#show_expression("disturbed")
-#speaker:Narrator
-The elevator's lights flicker, and for a moment, the man's reflection doesn't match his movements.
+ #speaker:Narrator
+The hum of the elevator deepens, almost like a growl. You blink, and for a heartbeat, the man isn’t in the reflection at all.
 
-A whisper echoes in your mind: "He's not real. End it."
+Just you. Alone.
 
-You shake your head, trying to dispel the voice.
+Then he’s back.
 
-#speaker:Male
-"Are you alright? You seem... tense."
-#speaker:Female
-*   [confront] "Who are you really?"
-    #speaker:Male
-    (chuckles)
-    "Whoever you think I am."
-*   [deflect] "Just tired, that's all."
-    #speaker:Male
-    (chuckles)
-    "Aren't we all?"
-*   [accuse] "You're lying to me."
-    #speaker:Male
-    (chuckles)
-    "Aren't we all?"
+A whisper—not in your ears, but behind your eyes:  
+> "You already know. He doesn’t belong here."
+
+You tighten your grip on the strap of your bag. Your knuckles ache.
+
+
+"You alright? You look a little pale."#speaker:Male
+
+
+*   [try to sound normal] "I'm fine. Just tired." #speaker:Female
+    ~ lower(delusion)
+    
+    (light laugh)
+    "We all are." #speaker:Male
+    
+*   [challenge him] "You always act like you know things." #speaker:Female
+    ~ raise(delusion)
+    ~ lower(trust)
+    
+    
+    (light laugh)
+    "Do I?" #speaker:Male
+    
+*   [direct] "What do you want from me?" #speaker:Female
+    ~ raise(delusion)
+    ~ lower(trust)
+    
+    
+    (light laugh)
+    "Sometimes, wanting isn't part of it." #speaker:Male
 
 -
+#speaker:Narrator
+His smile doesn’t reach his eyes anymore. 
 
+Something inside you feels like it’s tipping.
 
 -> climax_round2
 
 = climax_round2 
+
+
+The elevator shudders. Stops between floors.#speaker:Narrator
+
+Lights dim, shadows stretch across the walls.
+
+You don’t remember making the decision. You just know your hand is already in the bag.
+
+The handle is cold. Familiar.
+
+
+"You've been holding on to that weight for a long time, haven’t you?" #speaker:Male
+
+
 #speaker:Narrator
-...
-The elevator jerks to a halt between floors.
 
-The lights dim.
-
-Your hand moves on its own, reaching into your bag, fingers wrapping around the cold handle of a knife.
-
-#speaker:Male
-"Sometimes, the only way to see the truth is to cut away the lies."
-#speaker:Narrator
-*   [stab]
-    <>Without hesitation, you lunge forward, plunging the knife into his chest.
-*   [hesitate]
-    <>You waver, but the voice in your head screams, and you act.
+*   [act without thinking] You step forward and thrust the blade into him before you can stop yourself. 
+         ~ raise(delusion)
+            ~ lower(trust)
+*   [hesitate, but obey the voice]
+    <>You shake, frozen—but something pushes you, and the knife finds him anyway.
     
+     ~ raise(delusion)
+    ~ mid(trust)
+
 -
 
 #blood splash sound
-Blood splatters across the elevator walls.
+The warmth of blood hits your face.
 
-The man's eyes widen in shock, then fade.
+He stares at you—hurt, yes. But also... calm.
 
-Suddenly, the elevator doors are pried open.
+He sinks to the floor.
 
-Police officers swarm in, weapons drawn.
+Then—
+
+The doors wrench open. Harsh light floods in.
 
 OFFICER:
-"Drop the weapon! Hands where we can see them!"
+"Drop it! Hands up! Now!"
 
-You release the knife, hands trembling.
+Your fingers release the knife. It clangs against the floor.
 
-As you're restrained, you glance at the man's lifeless body, a pool of blood spreading beneath him.
+They pull you down. Restrain you.
 
-#show_expression("shocked")
+You look once more. He’s there, slumped and still.
+
+But for just a moment, you swear—
+
+There’s no blood at all.
+
+#show_expression("blank")
 #pause(2.0)
-...
-#speaker:Female
-"He's...n8T ReAl...?"
-#speaker:Narrator
-The elevator doors close.
 
-Darkness.
+#speaker:Female
+"...He wasn’t—"
+
+#speaker:Narrator
+The doors close. Everything vanishes into black.
+
+-> END
+
+=== Round_2_5
+#speaker:Narrator
+
+You remember the sound of the knife sinking in.
+
+Not the scream. Not even the blood.
+
+Just the dull, wet *resistance*.  
+Like pushing through meat.
+
+...
+
+Then — nothing.
+
+Except...
+
+-> round_2_5_wake
+
+=== round_2_5_wake ===
+You're back in the elevator.
+
+Or maybe you're *still* here.
+
+The man stands beside you again. Same shirt. Same scent. Same stillness.
+
+You try not to look at his side—where the blade should be.
+No blood.
+No wound.
+No anything.
+
+Your hand dips into the bag. You don’t remember deciding to do it. But it’s already happening.
+
+The cold handle.
+
+The weight of something final.
+
+#speaker:Male
+"You're not sure if this is real, are you?"
+
+#speaker:Narrator
+You freeze.
+
+The voice in your head whispers—gentle, persuasive:
+
+> "He's not real. Not anymore."
+
+#speaker:Female
+*   [pull away from the bag]
+    #speaker:Narrator
+    You try. You really try. Your hand won’t let go.
+    
+    > "You’re just delaying the truth."
+    
+    The elevator flickers again. His reflection blinks out.
+
+    #speaker:Male
+    (softly)  
+    "You don’t have to do this."
+
+    But his voice sounds wrong. Too clean. Too rehearsed.
+
+    And something behind his smile is breaking.
+
+    -> forced_action
+*   [drop the knife]
+    #speaker:Narrator
+    You release it. Let it fall.
+
+    But your body stays in motion—shoulders, knees, hands. Acting on some script you never wrote.
+
+    The blade is already in your hand again.
+
+    > "Good girl. You almost forgot."
+
+    -> forced_action
+*   [say “I don’t want this”]
+    #speaker:Narrator
+    Your voice shakes as you whisper it.
+
+    But no one responds—not him, not the elevator, not the world.
+
+    You’re alone with the voice. And it’s already made the decision.
+
+    -> forced_action
+
+= forced_action
+#speaker:Narrator
+
+The metal flashes. His chest rises once, sharply—then not again.
+
+You feel the impact, the resistance, the warmth.
+
+#blood splash sound
+Blood hits the mirror.
+
+#speaker:Male
+(softly)  
+"...I forgive you."
+
+He slumps.
+
+And you’re left holding the knife. Again.
+
+The elevator doors wrench open. Blinding lights. Police shouting.
+
+OFFICER:  
+"Drop it! Hands up! Now!"
+
+You drop the weapon.
+
+They drag you to the floor.
+
+You try to speak—to explain—but you don’t know how.
+
+#pause(2.0)
+
+You glance toward the man.
+
+But the blood’s already gone.
+
+#show_expression("blank")
+
+#speaker:Female
+"...I tried not to."
+
+#speaker:Narrator
+The doors slide shut.
+
+Darkness follows.
 
 -> END
 
 
+
+
+
+=== Round_2_6
+#speaker:Narrator
+You thought it was over.  
+Didn’t you?
+
+But the air smells wrong.
+The light stutters, like a memory buffering.
+
+You're holding the knife again.
+
+He's breathing softly beside you.  
+Does he know what's coming?
+
+-> round_2_6_reentry
+
+=== round_2_6_reentry ===
+You know this part.
+
+You can hear your heartbeat again — the moment before it happens.
+
+Almost like you're trapped *mid-stab*, replaying the hesitation over and over...
+
+Your hand moves without thought, reaching into your bag, fingers curling around cold metal.
+
+#speaker:Male
+"...You're doing it again, aren’t you?"
+
+He doesn’t step back. Doesn’t raise his voice.
+
+#speaker:Narrator
+Your fingers tighten. You try to stop—but the whisper in your mind returns: “End it.”
+
+#speaker:Female
+* [stab]
+    #speaker:Narrator
+    You drive the knife forward.
+
+    He gasps—a soft sound, like surprise, not fear.
+
+#speaker:Male
+"...Still hurts, you know."
+
+#speaker:Narrator
+He looks down at the blade, blood soaking his shirt, his expression oddly calm. Like he remembers this, too.
+
+The doors groan open.
+
+Voices. Flashlights. Hands dragging you down.
+
+#blood splash sound
+
+OFFICER:
+"Drop it! Now!"
+
+#speaker:Narrator
+The blade clatters to the floor. Your hands lift on their own. You're not sure who moved them.
+
+You're pulled out. You glance back—he's slumped against the wall, eyes dull, a smear of red trailing downward.
+
+#pause(2.0)
+
+#speaker:Female
+"He wasn’t supposed to be real…"
+
+Darkness. Again.
+
+-> END
+
 === ROUND_3 ===
+#pause_scene
+#show_scene("elevator_flicker")
+#set_expression("unsteady")
+
 #speaker:Narrator
-The elevator dings open again. Same floor. Same hallway. Same flickering light overhead. But this time, your chest feels tight—too tight.
+The elevator dings open. Same floor. Same light twitching overhead like it’s struggling to stay alive.
 
-Something’s wrong. Again. You remember this. You *REMEMBER* this.
+But this time... something cracks in your chest. Like you're arriving late to something you never left.
 
-You step in. 
-He’s already there this time. 
-Waiting. Smiling.
+#speaker:Narrator
+You step in.
+
+He’s already there. Still. Waiting.
+His eyes meet yours.
+And for a second—just a second—you think you see something crack behind them.
+
+#show_character("Man", "smile_tired")
 
 #speaker:Male
-“Oh. You again.”
+“Oh. You made it.”
+
 #speaker:Narrator
-He tilts his head. That same polite nod. But there’s something behind his eyes this time. Or… maybe you’re finally seeing it.
+Same smile. Same voice. But he looks… worn. The lines around his eyes deeper, the suit less pristine. There’s red dried into the fabric.
+
+#speaker:Narrator
+Your pulse jumps.
+
+-> memory_check
 
 
-You can feel your breathing gets uneven.
+= memory_check
+    *   [I stabbed him.]
+        It comes back in pieces. The weight of the knife. His voice as he fell. 
+        You wrap your arms around yourself. He shouldn’t be standing. But he is.
+        -> man_speaks
 
-        *   [I stabbed him] <>
-            I stabbed him last time. Didn’t I? 
-            You clutch your stomach. You can still feel the resistance of the blade… or is that your imagination?
-           
-            
-        *   [It's not real] <>
-            No. That wasn't real. I wouldn't do that.
-            You shake your head. No blood. No body. It was just in your mind. You never touched him.
-            ~ raise(delusion)
+    *   [It wasn’t real.]
+        It couldn’t be. The blood wasn’t there when they took you. Just... shadows. Tricks.
+        But the scent of copper still clings to your thoughts.
+        ~ raise(delusion)
+        -> man_speaks
 
-        *   [He deserved it.] <>
-             You stare at him, jaw clenched. The memory fuels you, not frightens you.
-           
+    *   [He deserved it.]
+        He remembers. You can tell. And he’s not angry. Just... expectant.
+        -> man_speaks
 
-        *   [I’m not sure what’s real anymore…] 
-        It’s slipping. Your sense of time. Of truth. Of self. You grip the elevator railing just to ground yourself.
+    *   [I’m losing grip…]
+        Time bends here. Like the walls are too close. Your breath fogs. But it’s not cold.
         ~ elevate(delusion)
-            
-         -
-         
--> man_speaks
+        -> man_speaks
 
 
-= man_speaks 
+
+= man_speaks
 #speaker:Male
-“You look pale. Are you alright?”
+“You look pale. Again.”
 
-    *   [Say nothing.]
-        -> stare_silence
-    *   [“I know who you are.”]
-        -> accuse_him
-    *   [“Why do you keep looking at me like that?”]
-        -> confront_paranoia
-
-= stare_silence 
 #speaker:Narrator
-You stay silent. He watches you longer than necessary, then shifts his weight, like a predator getting comfortable.
-    -> floor_counter
+He says it gently. Like someone who's lived this already.
 
-= accuse_him 
+    *   [Say nothing.] -> floor_approach
+    *   [“I know who you are.”] -> accuse_path
+    *   [“Why do you keep looking at me like that?”] -> paranoia_path
+
+
+= accuse_path
 ~ lower(trust)
-#speaker:Narrator
-Your voice is hoarse.
 #speaker:Female
 “I know who you are.”
-“You followed me. In all three rounds. You knew.”
+
+#speaker:Narrator
+Your voice is thin, but it cuts. His smile doesn’t fade, but something behind it stiffens.
 
 #speaker:Male
-"..."
-“I think you’re mistaking me for someone else.”
+"I doubt that. But I know who you think I am."
 
-    *   [“No. I’m not.”]<>
-        -> push_accusation
-    *   [Back off. Stay quiet.]
-        -> stare_silence
+    *   [“Don’t play games with me.”]
+        ~ lower(trust)
+        #speaker:Narrator
+        Your hands shake. You *want* him to be a monster. It makes this easier.
+        -> floor_approach
 
-= push_accusation 
-~ lower(trust)
-#speaker:Female
-“No. I’m not.”
-#speaker:Narrator
-Your hand curls at your side. You *want* to believe he’s lying. Because if he’s not…
-    -> floor_counter
+    *   [Back off.] 
+        -> floor_approach
 
-= confront_paranoia 
+
+
+= paranoia_path
 ~ raise(delusion)
 #speaker:Female
-“Why do you keep watching me like that?”
+"Why do you keep watching me?"
+
 #speaker:Male
- “I’m… not? You’ve looked on edge since you walked in.”
+"Because you always do this. You always start to crack by the fourth floor."
 
-    *   [“You’re lying.”]
-        -> push_accusation
-    *   [“...Sorry. Maybe I’m just tired.”]
-        -> self_doubt
+    *   [“You're lying.”]
+        -> accuse_path
+    *   [“...Maybe I am.”]
+        ~ raise(trust)
+        #speaker:Narrator
+        You press your palms to your temples. Maybe it’s you. Maybe he’s just some guy in the wrong place every time.
+        -> floor_approach
 
-= self_doubt 
+
+
+= floor_approach
+#speaker:Narrator
+Floor 4. Almost there.
+
+Your chest tightens. The metal in your pocket shifts slightly, like it knows too.
+
+    *   [Grip the knife.]     -> knife_choice
+    *   [Keep your hands still.] 
+        ~ refuseToStab = true
+        ~ raise(trust)
+        #speaker:Narrator
+        You keep your fists clenched. But you don’t reach for the knife.
+        -> elevator_exit_peaceful
+
+
+
+= knife_choice
+You touch the knife. Familiar. Cold. Hungry.
+
+    *   [Pull it.] -> knife_drawn
+    *   [Leave it.] 
+        -> choose_not_to_stab
+
+
+
+= knife_drawn
+#speaker:Narrator
+You lunge. Again.
+
+But this time, his hand brushes yours. Late—but not surprised.
+
+#speaker:Male
+“You always come back to this.”
+
+    *   [Finish it.]  
+        ~ stabbed_status = "noHesitate"
+        -> stab_scene
+
+    *   [Hesitate.]
+        ~ stabbed_status = "hesitate"
+        -> stab_struggle
+
+
+
+= stab_scene
+#speaker:Narrator
+You plunge the knife into his side. He gasps—but it’s not shock. It’s something else. Familiarity.
+
+#speaker:Male
+{ stabbed_status:
+  - "hesitate": "...Still not sure if I’m real, huh?"
+  - "noHesitate": "Not even gonna hesitate, I guess."
+}
+
+...Every time.
+    You just keep coming back.
+
+#speaker:Narrator
+You pull away. His body slides down the wall. No resistance.
+
+-> elevator_exit_bloody
+
+
+
+= stab_struggle
+#speaker:Narrator
+You both freeze. The knife falls. Neither of you speak.
+
+You breathe like you ran a mile. He watches you like he's seen this movie before.
+
+-> elevator_exit_peaceful
+
+
+
+= choose_not_to_stab
 ~ raise(trust)
-You feel the heat rising to your face. Maybe it really is you. Maybe you’re just seeing things.
-    -> floor_counter
-
-=== floor_counter ===
 #speaker:Narrator
-The elevator ticks past the 4th floor. You’re close. Again.
-    *   [Grip the knife.] -> knife_decision
-    *   [Keep your hands at your sides.] -> restraint_path
+You release the blade. Meet his gaze. He tilts his head.
 
-
-
-= knife_decision 
-You slide your hand into your pocket. The familiar shape is still there. Cold. Metal.
-    *   [Pull it out. Fast.]  -> prepare_to_stab
-    *   [Don’t move. Not this time.] -> choose_not_to_stab
-
-
-= restraint_path 
-//this path leads to End D Delusion or End A Innocent
-~ refuseToStab = true
-~ raise(trust)
-#speaker:Narrator
-You keep your fists clenched. But you don’t reach for the knife.
-    -> elevator_ends
-    
-
-
-=== prepare_to_stab ===
-//this path leads to End B Justified or End C Monster depending on delusion level
-
-~ stabbed = true
-You lunge. The same blur. The same sound. But this time—he’s ready.
 #speaker:Male
-“You again. You really don’t learn.”
+"...That’s new."
 
-    *   [Finish the stab.] -> stab_scene
-    *   [Hesitate.] -> hesitation
-
-= hesitation 
-//this path leads to  End D Denial or End A Innocent depnding on delusion level
-
-#speaker:Narrator
-Your hand shakes. He grabs your wrist.
-#speaker: Male
-“You don’t have to keep doing this.”
-
-    -> stab_struggle
-
-= stab_scene 
-#speaker:Narrator
-Blood. Again. But this time, it’s more real. You swear it *hurts* you too.
-    -> elevator_ends
-
-= stab_struggle 
-#speaker:Narrator
-You drop the knife. He lets go. You both just stare at each other, breathing hard. No words.
-    -> elevator_ends
-
-=== choose_not_to_stab ===
-//this path is available if the delusion is low
-//this path leads to End B Justified or End A Innocent depending on trust
-
-~ refuseToStab = true
-~raise(trust)
-#speaker:Narrator
-You let go of the knife. You look him in the eye. He tilts his head.
-#speaker:Male
-“...Interesting.”
-
-    *   [Say nothing.]
-        -> elevator_ends
+    *   [Say nothing.] 
+        -> elevator_exit_peaceful
     *   [“You don’t deserve to die. Yet.”]
         ~ raise(delusion)
-        -> elevator_ends
+        -> elevator_exit_peaceful
     *   [“I’m done playing this game.”]
         ~ lower(delusion)
-        -> elevator_ends
+        -> elevator_exit_peaceful
 
 
 
-=== elevator_ends ===
+=== elevator_exit_peaceful ===
+~ refuseToStab = true
 #speaker:Narrator
-The elevator doors open. Same floor. Different you.
+The elevator dings. The doors ease open.
 
-->DONE
+But this time, it doesn't feel like escape. It feels like waking up—too soon or far too late.
+
+#speaker:Narrator
+Warm light spills in. Distant voices hum behind the walls. The world feels real again… but thinner. Like a memory stretched too far.
+
+You hesitate.
+
+He doesn’t move.
+
+TODO: 
+He doesn’t flinch. Doesn’t speak right away.  
+Like he’s counting how many times you’ve done this.
+
+#speaker:Male
+“Until next time.”
+
+#speaker:Narrator
+No threat. No warmth.
+
+Just inevitability. A loop tied tight.
+
+You step out. The cold air bites sharper than before.
+
+Behind you, the doors close. You don’t turn back.
+
+-> DONE
+
+
+=== elevator_exit_bloody ===
+~ refuseToStab = false
+#speaker:Narrator
+The elevator dings. The doors creak open.
+
+But the light outside is wrong. Warped. Like it passed through smoke.
+
+Your hands drip red. So does the floor.
+
+#speaker:Narrator
+You step out anyway. Each footfall smears another piece of him into the world outside.
+
+He slumps in the corner. Eyes wide. Still. But watching.
+
+#speaker:Male
+“...”
+
+TODO:
+He doesn’t flinch. Doesn’t speak right away.  
+Like he’s counting how many times you’ve done this.
+
+#speaker:Narrator
+There’s no scream. No justice. No peace.
+
+Just silence.  
+And the gnawing certainty that next time, he’ll still be there.
+
+-> DONE
 
 
 
 -> SPLIT_ENDING
 
+//so in truth, the man already died in round 2 when the player(woman) first killed him, so when she sees the man again, it has her delusionating his existance. So the elevator turned into a space in her mind, a space created by her. 
+
+//thats why, in end A - The Innocent, she felt so guilty about killing the man that, she imagine herself being killed, so she can be the innocent one.
+
+//That's why, in end B - The Justified, she act as if she's the one in right, made him the villain, to justify her action.
+//That's why, in end C - The Monster, she felt so scared to see him 'alive' that, she think he's back for revenge, and so she's lost it, and became a monster.
+//Tha's why, in end D - The Denial, she wish to escape, to disappear from this world, so she denied her own existance, her mind left in void, forever. 
 
 === SPLIT_ENDING ===
 {
-    - up(trust) && down(delusion):
-        -> END_A_INNOCENT // The Innocent – she was just scared, not wrong
+    - up(trust) && down(delusion)&& refuseToStab == true:
+        -> END_A_INNOCENT // The Innocent – she's got killed by the man. she was just scared, not wrong
         
-    - down(trust) && down(delusion):
-        -> END_B_JUSTIFIED // The Justified – she stopped a killer, but violently
+    - down(trust) && down(delusion) && refuseToStab ==false:
+        -> END_B_JUSTIFIED // The Justified – she stopped a killer, but why did he wants to kill her in the first place?
 
-    - down(trust) && up(delusion):
-        -> END_C_MONSTER // The Monster – she’s mentally unstable and violent
+    - down(trust) && up(delusion) && refuseToStab ==false:
+        -> END_C_MONSTER // The Monster – she’s mentally unstable and violent and killed the man again
 
-    - up(trust) && up(delusion):
-        -> END_D_DENIAL // Denial – she let her delusions lead her to trust evil
+    - up(trust) && up(delusion)&& refuseToStab == true:
+        -> END_D_DENIAL // Denial – 
 
-    - else:
-        -> END_NEUTRAL // Optional fallback ending??
 }
 
 
+//I want to use this at all the begginng of endings, but where should I put this? 
+TODO: He doesn’t flinch. Doesn’t speak right away.
+Like he’s counting how many times you’ve done this.
 
 
 // === ROUND 4 START ===
@@ -742,6 +1049,8 @@ The elevator doors open. Same floor. Different you.
 #show_scene("elevator_bloodstained")
 #set_expression("numb")
 
+
+
 You step into the elevator again.
 
 But this time... something’s wrong.
@@ -750,7 +1059,6 @@ The light flickers red for a split second. Dried blood stains the metal wall beh
 
 Your chest tightens.
 
-#pause(1.2)
 
 The elevator doors begin to close—  
 —but they hesitate. Almost as if the system itself is… unsure.
@@ -886,7 +1194,7 @@ You back up—
 —but the wall meets you. There’s nowhere left.
 
 #speaker:Male
-"You let your gut guide you. But guts lie, don’t they?"
+"You let your instint guide you. But instincts lie, don’t they?"
 
 "They twist fear into truth. And truth into knives."
 
@@ -980,7 +1288,7 @@ MAN: You’re quieter today.
 
 WOMAN: (hesitant) Maybe I’m listening better now.
 
-MAN: (soft chuckle) And what are you listening for?
+MAN: (soft chuckle) And what are you listening to?
 
 WOMAN: (internal) He’s trying to bait me again. That voice—calm, measured, too careful. Like he’s stepping around landmines.
 
@@ -989,7 +1297,7 @@ WOMAN: (internal) He’s trying to bait me again. That voice—calm, measured, t
 = player_choice_listening 
 *   "The lies between your words." 
     -> listening_lies
-*   "My own heartbeat." 
+*   "My heartbeat." 
     -> listening_heartbeat
 *   "The truth I've ignored too long." 
     -> listening_truth
@@ -1004,12 +1312,12 @@ WOMAN: I’ve had four rounds to learn your rhythm. The spaces you leave say mor
 -> continue_end
 
 
-= listening_heartbeat 
-WOMAN: My own heartbeat.
+= listening_heartbeat
+WOMAN: My heartbeats.
 
 MAN: Huh. Introspective today.
 
-WOMAN: I had to learn the hard way. Listening to my thoughts nearly killed me. Now I listen to what’s real.
+WOMAN: I had to learn it the hard way. Listening to my thoughts almost killed me. Now I listen to what’s really there.
 
 -> continue_end
 
@@ -1039,49 +1347,54 @@ He’s waiting. Just like before. But this time...
 You're not frozen.
 
 #speaker:Male
-"You’re looking at me like you know something I don’t."
+"That look... you've caught on to something I missed. What is it?"
 
-No. You're looking at him like you finally know what to believe.
+This is it. 
 
 #speaker:Male
-"Why aren't you answering? What are you- !?"
+"Why aren’t you saying anything? What are you—?!"
+
 
 -> emergency_brake
 
 =emergency_brake 
 
 #speaker:Narrator
-You slammed the emergency brake.
+You grab the emergency brake and yank it down.
 
 # (Loud alarm. Lights flicker. The elevator shakes to a halt.)
 
-#SFX: Emergency sirens blare.
+#SFX: (Alarm blares. Lights flicker. The elevator jerks to a stop.)
 
-He snaps. <>
+He loses it. <>
 #speaker:Male
-"What the hell did you do?!"
+"What the hell did you just do?!"
+
 
 #speaker: Female
-I chose to believe in something real.
+I stopped imagining.
+
 
 # speaker: Narrator
-(Doors are pried open. Blinding flashlights flood in.)
-
+The doors are forced open. Flashlights cut through the dark.
 POLICE OFFICER: Hands where we can see them!
 
-(The man reaches into his coat—pulling something silver—)
+He reaches into his coat—pulls out something silver.
 
 POLICE OFFICER: DROP IT!
 
-(He hesitates… then drops the object. It clatters. A *scalpel*.)
+He hesitates... then lets it fall.
+It hits the ground—sharp. A scalpel.
 
 The sight of it gave you chills.
+It wasn’t just in your head.
 #speaker:Female
 (breathing hard) It was real… all of it.
 
-You helped out. Your legs nearly give. 
-She looks back—
-he stares at her, no longer smiling.
+You try to move. But your legs gave out.
+
+You looked back—
+He stares at you, no longer smiling.
 
 -> aftermath_awake
 

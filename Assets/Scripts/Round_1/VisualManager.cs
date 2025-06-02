@@ -64,6 +64,7 @@ public class VisualManager : MonoBehaviour
         if (bgSprite != null)
         {
             backgroundImage.sprite = bgSprite;
+            backgroundImage.gameObject.SetActive(false);
             backgroundImage.gameObject.SetActive(true);
         }
         else
