@@ -356,11 +356,11 @@ No wink. No stare. Just a smile.
 You're alone again.
 
 And for the first time in a while...
+~ UIVersion = 2
 
 You feel completely still.
 
-~ UIVersion = 2
-~ progress = "Round_1_End"
+
 -> END
 
 

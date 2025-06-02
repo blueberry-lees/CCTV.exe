@@ -145,7 +145,20 @@ public class DialogueManager : MonoBehaviour
 
     public void ContinueStory()
     {
-        if (!story.canContinue)
+
+        if (story.canContinue)
+        {
+            SaveInkState();
+            string line = story.Continue().Trim();
+            List<string> tags = story.currentTags;
+
+            HandleTags(tags);
+            StartCoroutine(TypeText(line));
+
+            Debug.Log("Ink progress value: " + story.variablesState["progress"]);
+            return;
+        }
+        else if (!story.canContinue)
         {
 
             //check what version to load to by fetching the story progress
@@ -162,26 +175,24 @@ public class DialogueManager : MonoBehaviour
                     GameState.uiVersion = 2;
                     GameState.ResetStoryData();
                     GameState.SaveAll();
-                    CheckInterfaceVersion();
-                    return;
+                    SwitchInterfaceVersion();
+                    
                 }
             }
+            else
+            {
+                Debug.LogWarning("This is the problem");
+            }
 
-            Debug.Log("Story can not continue, returning to interface");
+                Debug.Log("Story can not continue, returning to interface");
             return;
         }
-        else if (story.canContinue)
+        else
         {
-            SaveInkState();
-            string line = story.Continue().Trim();
-            List<string> tags = story.currentTags;
-
-            HandleTags(tags);
-            StartCoroutine(TypeText(line));
-
-            Debug.Log("Ink progress value: " + story.variablesState["progress"]);
-            return;
+            Debug.LogWarning("this shit is broken");
+            return; 
         }
+        
  
     }
 
@@ -348,7 +359,7 @@ public class DialogueManager : MonoBehaviour
     }
 
 
-    public void CheckInterfaceVersion()
+    public void SwitchInterfaceVersion()
     {
         switch (GameState.uiVersion)
         {
