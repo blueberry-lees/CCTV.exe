@@ -9,6 +9,7 @@ using Ink.Runtime;
 [RequireComponent(typeof(DialogueChoice))]
 public class DialogueManager : MonoBehaviour
 {
+
     [Header("Save State")]
     [TextArea(3, 10)] public string savedInkStateJSON;
 
@@ -154,7 +155,6 @@ public class DialogueManager : MonoBehaviour
 
         SaveInkState();
         string line = story.Continue().Trim();
-
         if (story.variablesState["progress"] != null)
         {
             string progress = story.variablesState["progress"].ToString();
@@ -171,13 +171,13 @@ public class DialogueManager : MonoBehaviour
 
         List<string> tags = story.currentTags;
 
-        // 🔁 Delay tag handling until after typing is complete
-        StartCoroutine(TypeText(line, tags));
+        HandleTags(tags);
+        StartCoroutine(TypeText(line));
 
         Debug.Log("Ink progress value: " + story.variablesState["progress"]);
     }
 
-    IEnumerator TypeText(string text, List<string> tags)
+    IEnumerator TypeText(string text)
     {
         isTyping = true;
         dialogueText.text = "";
@@ -223,16 +223,12 @@ public class DialogueManager : MonoBehaviour
 
         isTyping = false;
 
-        // ✅ Handle tags after dialogue is fully typed
-        HandleTags(tags);
-
         if (story.currentChoices.Count > 0)
             choiceUI.DisplayChoices();
 
         tagTypingSpeed = -1f;
         tagDelay = 0f;
     }
-
 
 
     void LoadTypingSounds()
@@ -369,5 +365,7 @@ public class DialogueManager : MonoBehaviour
                 break;
         }
     }
+
+
 
 }

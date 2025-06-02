@@ -79,6 +79,7 @@ VAR guilt = INITIAL_SWING
 VAR refuseToStab = false
 
 VAR stabbed_status = ""
+VAR confidence = 0
 
 //EXTERNAL OnRoundEnd(roundNumber)
 //EXTERNAL OnRoundStart(roundNumber)
@@ -92,69 +93,81 @@ LIST ending = (none), A, B, C, D
 === Round_1
 
 //elevator_intro 
+#background: ElevatorOpen #SFX: Ding  #speaker: Narrator #speed: 0.1
+The elevator dings. 
 
-The elevator dings. #background: ElevatorOpen #SFX: Ding  #speaker: Narrator #speed: 0.1
 
-
-
-You step in. The classic elevator music plays in the background.#speed: 0.05
+#speed: 0.05
+You step in. The classic elevator music plays in the background.
 
 
 The air’s a bit cold. Too much AC, maybe.
 
 The doors begin to close. But right before they shut—
 
+#Background: HandOnDoor #speed: 0.07
+A hand stops them.
 
-A hand stops them.#Background: HandOnDoor #speed: 0.07
 
-
-
-A man steps in, nodding politely. #background: ElevatorOpen #character: Killer #expression: NeutralLook #speed: 0.08 #delay: 0.4
+#background: ElevatorOpen #character: Killer #expression: NeutralLook #speed: 0.08 #delay: 0.4
+A man steps in, nodding politely. 
 
 -> chapter_1
 
 
 === chapter_1
-~ temp confidence = 0
-
-The doors close. You glance at the man out of the corner of your eye. #background: Elevator #character: Killer #expression: NeutralLookAway #speed: 0.07 #delay: 0.4
+#background: Elevator #character: Killer #expression: NeutralLookAway #speed: 0.07 #delay: 0.4
+The doors close. You glance at the man out of the corner of your eye. 
 
 He’s tallish, maybe late 20s. Clean-cut suit. Polished shoes. Smells faintly like aftershave.
 
 He seems… normal.
 
-*   [look away] You shift your gaze to the floor. Elevator lighting flickers a bit on the steel. #background look feet
-    ~ confidence = 0
+*   [look away] ->LookAway
+
+*   [stare at him] ->StarAtHim
+
+
+
+=LookAway
+#background look feet
+You shift your gaze to the floor. Elevator lighting flickers a bit on the steel. 
     ~ lower(trust)
-
-*   [stare at him] You meet his eyes. #character: Killer #expression: NeutralLook
-
-He smiles—casual, not forced.  #character: Killer #expression: SmileLook
-    Still, there’s something unreadable there. 
-    ~ confidence = 1
-    ~ raise(trust)
--
-
-
+    ~confidence = 0
 -> chapter_2
 
 
+
+=StarAtHim
+ #character: Killer #expression: NeutralLook
+You meet his eyes.
+
+ #character: Killer #expression: SmileLook
+He smiles—casual, not forced. 
+Still, there’s something unreadable there. 
+~ raise(trust)
+~confidence = 1
+    
+    -> chapter_2
+
+
+
+
 === chapter_2
-~ temp confidence = 0
 
 #character: Killer #expression: NeutralLookAway
-
-The elevator hums gently as it begins to descend.#speaker: Narrator #speed: 0.07 #delay: 0.4
+#speaker: Narrator #speed: 0.07 #delay: 0.4
+The elevator hums gently as it begins to descend.
 
 The silence lingers—not uncomfortable, just... there.
 
-Eventually, he speaks. #character: Killer #expression: NeutralLookAway
+Eventually, he speaks. 
 
-#speaker: Male
-"Going down?"  #character: Killer #expression:SmileLookT #speed: 0.08 #delay: 0.3
+#speaker: Male #character: Killer #expression:SmileLookT #speed: 0.08 #delay: 0.3
+"Going down?"  
 
-
-You hesitate. Something about the quiet caught you off guard.#speaker: Narrator #speed: 0.06 #delay: 0.2
+#speaker: Narrator #speed: 0.06 #delay: 0.2
+You hesitate. Something about the quiet caught you off guard.
 
 
 #speaker: Female
