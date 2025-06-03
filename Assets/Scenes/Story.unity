@@ -263,6 +263,7 @@ MonoBehaviour:
   typeSpeed: 0.05
   typingAudio: {fileID: 305486186}
   sfxAudio: {fileID: 1611546671}
+  exitPanel: {fileID: 7072751597418382664}
   lastCharacter: 
 --- !u!82 &305486186
 AudioSource:
@@ -2309,6 +2310,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2434425529989510587, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
+      propertyPath: isPlayerPrefsCleared
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2434425529989510587, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
       propertyPath: isPlyaerPrefsCleared
       value: 1
       objectReference: {fileID: 0}
@@ -2426,8 +2431,8 @@ MonoBehaviour:
   onSelected:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 603827903}
-        m_TargetAssemblyTypeName: EscapePanel, Assembly-CSharp
+      - m_Target: {fileID: 305486185}
+        m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
         m_MethodName: CloseExitPanel
         m_Mode: 1
         m_Arguments:
@@ -2517,8 +2522,8 @@ MonoBehaviour:
   onSelected:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 603827903}
-        m_TargetAssemblyTypeName: EscapePanel, Assembly-CSharp
+      - m_Target: {fileID: 305486185}
+        m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
         m_MethodName: QuitToInterface
         m_Mode: 1
         m_Arguments:

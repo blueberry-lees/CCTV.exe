@@ -30,6 +30,10 @@ public class DialogueManager : MonoBehaviour
     public AudioSource typingAudio;
     public AudioSource sfxAudio;
 
+    [Header("Exit")]
+    public GameObject exitPanel;
+    bool isExitPanelOpen = false;
+
     private Story story;
     private bool isTyping = false;
     private bool skipTyping = false;
@@ -60,6 +64,8 @@ public class DialogueManager : MonoBehaviour
 
     void Start()
     {
+        isExitPanelOpen = false;
+        exitPanel.SetActive(false);
         LoadStory();
 
     }
@@ -69,7 +75,7 @@ public class DialogueManager : MonoBehaviour
       
         if (isTyping)
         {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetKey(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
                 skipTyping = true;
             return;
         }
@@ -82,16 +88,20 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space)&& !isExitPanelOpen)
             ContinueStory();
 
-
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isExitPanelOpen = true;
+            exitPanel.gameObject.SetActive(true);
+        }
     }
 
     public void LoadStory()
     {
         // Load saved values from PlayerPrefs
-        LoadPlayerPrefs();
+        GameState.LoadAll();
         string savedInkState = PlayerPrefs.GetString("InkState", "");
 
         // Initialize Ink story
@@ -169,7 +179,9 @@ public class DialogueManager : MonoBehaviour
 
                     GameState.uiVersion = uiV;
                     GameState.ResetStoryData();
-                    GameState.SaveAll();
+                    GameState.returnPoint = SetReturnString(uiV);
+                    GameState.SaveVersion();
+                    //GameState.SaveAll();
                     LoadInterfaceScene();
 
             }
@@ -350,6 +362,10 @@ public class DialogueManager : MonoBehaviour
         Debug.Log("PlayerPrefs reset.");
     }
 
+    string SetReturnString(int uiVersion)
+    {
+        return "ROUND_" + uiVersion;
+    }
 
     [Tooltip("Loads the Interface scene based on the GameState.uiVersion value")]
     public void LoadInterfaceScene()
@@ -362,25 +378,40 @@ public class DialogueManager : MonoBehaviour
                 break;
             case 2:
                 Debug.Log("UIVersion 2 → Version2");
-                GameState.returnPoint = "ROUND_2";
                 SceneManager.LoadScene("Version2");
                 
                 break;
             case 3:
                 Debug.Log("UIVersion 3 → Version3");
-                GameState.returnPoint = "ROUND_3";
                 SceneManager.LoadScene("Version3");
                
                 break;
             case 4:
                 Debug.Log("UIVersion 4 → Version4");
-                GameState.returnPoint = "SPLIT_ENDING";
+                GameState.returnPoint = "SPLIT_ENDING"; //rename
                 SceneManager.LoadScene("Version4");
                 break;
             default:
                 Debug.LogWarning("Unknown UI Version");
                 break;
         }
+    }
+
+
+    public void CloseExitPanel()
+    {
+        exitPanel.gameObject.SetActive(false);
+        isExitPanelOpen = false;
+    }
+
+    //quit to interface according to the version recorded in GameState
+    public void QuitToInterface()
+    {
+        isExitPanelOpen = false;
+        int uiVersion = GameState.uiVersion;
+        string nextScene = "Version" + uiVersion;
+
+        SceneManager.LoadScene(nextScene);
     }
 
 

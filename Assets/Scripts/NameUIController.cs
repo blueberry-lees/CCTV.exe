@@ -18,7 +18,7 @@ public class NameUIController : MonoBehaviour
     public GameObject errorMessage;
     void Start()
     {
-        // Find the DateTimeDisplay script in the scene
+     
     
         // Hide everything by default
         nameInputPanel.SetActive(false);
@@ -167,24 +167,24 @@ public class NameUIController : MonoBehaviour
         if (PlayerPrefs.GetInt("UIVersion", 0) <= 1)
         {
             Debug.Log("playerpref UIVerion is 1 THEREFORE VER.1");
-            SceneManager.LoadScene("Interface1");
+            SceneManager.LoadScene("Version1");
         }
         else if (PlayerPrefs.GetInt("UIVersion", 0) == 2)
         {
             Debug.Log("playerpref UIVerion is 2 THEREFORE VER.2");
-            SceneManager.LoadScene("Interface2");
+            SceneManager.LoadScene("Version2");
 
         }
         else if (PlayerPrefs.GetInt("UIVersion", 0) == 3)
         {
             Debug.Log("playerpref UIVerion is 3 THEREFORE VER.3");
-            SceneManager.LoadScene("Interface3");
+            SceneManager.LoadScene("Version3");
 
         }
         else if (PlayerPrefs.GetInt("UIVersion", 0) == 4)
         {
             Debug.Log("playerpref UIVerion is 3 THEREFORE VER.4");
-            SceneManager.LoadScene("Interface4");
+            SceneManager.LoadScene("Version4");
 
         }
         else
