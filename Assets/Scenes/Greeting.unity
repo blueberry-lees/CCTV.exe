@@ -1222,7 +1222,7 @@ MonoBehaviour:
   namePromptText: {fileID: 1378470619}
   nameInputField: {fileID: 423271266}
   introText: {fileID: 1283599252}
-  nextSceneName: Intro
+  nextSceneName: Version1
   confirmPanel: {fileID: 43483279}
   errorMessage: {fileID: 4031952889492849700}
 --- !u!114 &1197493730
@@ -1991,6 +1991,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1317716560314685173, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2434425529989510587, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
+      propertyPath: isPlyaerPrefsCleared
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4264859154819434685, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}

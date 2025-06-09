@@ -36,7 +36,7 @@ public static class GameState
         PlayerPrefs.SetInt("UIVersion", uiVersion);
 
         PlayerPrefs.Save();
-        Debug.Log("GameState saved.");
+        //Debug.Log("GameState saved.");
     }
 
     public static void LoadAll()
@@ -48,7 +48,7 @@ public static class GameState
         lastSpeaker = PlayerPrefs.GetString("LastSpeaker", "");
         returnPoint = PlayerPrefs.GetString("ReturnPoint", "");
         uiVersion = PlayerPrefs.GetInt("UIVersion", 1);
-        Debug.Log("GameState loaded.");
+        //Debug.Log("GameState loaded.");
     }
 
     public static void ResetAll()
@@ -68,6 +68,18 @@ public static class GameState
         PlayerPrefs.SetString("LastExpression", "");
         PlayerPrefs.SetString("LastSpeaker", "");
     }
+
+    public static void SaveVersion()
+    {
+        PlayerPrefs.SetString("ReturnPoint", returnPoint);
+
+        PlayerPrefs.SetInt("UIVersion", uiVersion);
+
+        PlayerPrefs.Save();
+    }
+
+
+
 
     [Tooltip("This is just to remove the previous tags/sprites used")]
     public static void ResetStoryData2()

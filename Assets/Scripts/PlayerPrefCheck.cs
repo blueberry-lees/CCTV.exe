@@ -28,13 +28,12 @@ public class PlayerPrefCheck : MonoBehaviour
     public int uiVersion = 1;
 
     [Header("Reset player prefs on start?")]
-    public bool isPlyaerPrefsCleared = false;
+    public bool isPlayerPrefsCleared = false;
 
 
 
     private void Awake()
     {
-
         //IF AN INSTANCE ALREADY EXIST AND IT'S NOT THIS ONE, DESTORY THIS OBJ
         if(instance != null && instance != this)
         {
@@ -42,19 +41,17 @@ public class PlayerPrefCheck : MonoBehaviour
             return;
         }
 
-
         //SET THE INSTANCE AND MARK AS PERSISTENT
 
         instance = this;
         DontDestroyOnLoad(gameObject);
-        ResetPlayerPrefOnStart();
+
     }
     void Start()
     {
+        ResetPlayerPrefOnStart();
         UpdatePlayerPrefCheck();
     }
-
-
 
     void Update()
     {
@@ -79,15 +76,19 @@ public class PlayerPrefCheck : MonoBehaviour
 
     public void ResetPlayerPrefOnStart()
     {
-
-        if (isPlyaerPrefsCleared)
+        if (isPlayerPrefsCleared)
         {
+            Debug.Log("Clearing PREFS");
             PlayerPrefs.DeleteAll();
             PlayerPrefs.Save();
-            isPlyaerPrefsCleared = false;
-        }
-        else return;
-        
+            isPlayerPrefsCleared = false;
+        }  
+    }
+
+    [ContextMenu("Reset Ink State")]
+    public void ResetInkState()
+    {
+        PlayerPrefs.SetString("InkState", "");
     }
 
 
