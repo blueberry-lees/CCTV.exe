@@ -1,10 +1,9 @@
-﻿using System.Collections;
+﻿using Ink.Runtime;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using TMPro;
-using Ink.Runtime;
 
 [RequireComponent(typeof(DialogueChoice))]
 public class DialogueManager : MonoBehaviour
@@ -39,6 +38,11 @@ public class DialogueManager : MonoBehaviour
     private Story story;
     private bool isTyping = false;
     private bool skipTyping = false;
+    private bool blockNextInput = false;
+
+    private string currentLine = ""; //to deal with pause and resume to typetext
+    private Coroutine typingCoroutine; //to deal with pause and resume to typetext
+
 
     private string currentCharacter = "Narrator";
     private string currentSpeaker = "Narrator";
@@ -74,15 +78,24 @@ public class DialogueManager : MonoBehaviour
 
     void Update()
     {
+        if (blockNextInput)
+        {
+            blockNextInput = false; // Skip one frame of input
+            return;
+        }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            if (isExitPanelOpen)
+                ResumeDialogue();
+            else
+                PauseDialogue();
 
-            isExitPanelOpen = true;
-            exitPanel.gameObject.SetActive(true);
-
-
+            return;
         }
+
+        if (isExitPanelOpen)
+            return;
 
         if (isTyping)
         {
@@ -99,16 +112,10 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        if (!isExitPanelOpen)
-        {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
-                ContinueStory();
-        }
-
-        
-
-        
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+            ContinueStory();
     }
+
 
     public void LoadStory()
     {
@@ -168,11 +175,15 @@ public class DialogueManager : MonoBehaviour
         if (story.canContinue)
         {
             SaveInkState();
-            string line = story.Continue().Trim();
+            currentLine = story.Continue().Trim();
             List<string> tags = story.currentTags;
 
             HandleTags(tags);
-            StartCoroutine(TypeText(line));
+
+            if (typingCoroutine != null)
+                StopCoroutine(typingCoroutine);
+
+            typingCoroutine = StartCoroutine(TypeText(currentLine));
 
             return;
         }
@@ -439,6 +450,42 @@ public class DialogueManager : MonoBehaviour
                 break;
         }
     }
+
+    public void PauseDialogue()
+    {
+        isExitPanelOpen = true;
+        exitPanel.SetActive(true);
+        choiceUI.SetChoicesInteractable(false);
+
+        if (typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
+            typingCoroutine = null;
+            isTyping = false;
+        }
+    }
+
+    public void ResumeDialogue()
+    {
+        isExitPanelOpen = false;
+        exitPanel.SetActive(false);
+        blockNextInput = true;
+
+        if (!string.IsNullOrEmpty(currentLine) && !isTyping)
+        {
+            dialogueText.text = ""; // Clear previous partial line
+            if (typingCoroutine != null)
+                StopCoroutine(typingCoroutine);
+
+            typingCoroutine = StartCoroutine(TypeText(currentLine));
+        }
+        else if (story.currentChoices.Count > 0)
+        {
+            choiceUI.DisplayChoices();
+            choiceUI.SetChoicesInteractable(true);
+        }
+    }
+
 
 
 

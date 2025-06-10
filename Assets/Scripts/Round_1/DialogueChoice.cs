@@ -1,12 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Ink.Runtime;
+using UnityEngine.UI;
 
 public class DialogueChoice : MonoBehaviour
 {
-
     private DialogueManager dialogueManager;
 
     [Header("Choice Panel")]
@@ -20,10 +19,14 @@ public class DialogueChoice : MonoBehaviour
 
     private AudioSource audioSource;
 
-    private List<TMP_Text> currentChoices = new();
+    private List<Button> choiceButtons = new();
     private int selectedChoiceIndex = 0;
     private Story story;
-    public bool HasChoices() => currentChoices.Count > 0;
+    private bool choicesAreInteractable = true;
+
+    private bool shouldRestoreChoices = false;
+
+    public bool HasChoices() => choiceButtons.Count > 0;
 
     void Start()
     {
@@ -31,7 +34,6 @@ public class DialogueChoice : MonoBehaviour
         if (!audioSource)
             Debug.LogWarning("DialogueChoice: No AudioSource found on this GameObject.");
     }
-
 
     public void Init(Story story, DialogueManager manager)
     {
@@ -51,41 +53,91 @@ public class DialogueChoice : MonoBehaviour
 
         foreach (Choice choice in story.currentChoices)
         {
-            var choiceText = Instantiate(choicePrefab, choicesContainer.transform)
-                             .GetComponent<TMP_Text>();
+            GameObject choiceGO = Instantiate(choicePrefab, choicesContainer.transform);
+            Button button = choiceGO.GetComponent<Button>();
+            TMP_Text choiceText = choiceGO.GetComponent<TMP_Text>(); // Same object
+
+            if (button == null || choiceText == null)
+            {
+                Debug.LogError("Choice prefab must have both a Button and TMP_Text on the same GameObject.");
+                continue;
+            }
+
             choiceText.text = choice.text;
-            currentChoices.Add(choiceText);
+            int choiceIndex = choice.index;
+            button.onClick.AddListener(() => {
+                if (choicesAreInteractable)
+                    SelectChoice(choiceIndex);
+            });
+
+            choiceButtons.Add(button);
         }
 
         selectedChoiceIndex = 0;
-        UpdateChoiceColors();
+        UpdateChoiceVisuals();
     }
 
     public void NavigateChoice(int direction)
     {
-        selectedChoiceIndex = (selectedChoiceIndex + direction + currentChoices.Count) % currentChoices.Count;
-        UpdateChoiceColors();
+        if (!choicesAreInteractable || choiceButtons.Count == 0) return;
+
+        selectedChoiceIndex = (selectedChoiceIndex + direction + choiceButtons.Count) % choiceButtons.Count;
+        UpdateChoiceVisuals();
         PlaySound(navigateClip);
     }
 
     public void ChooseSelectedChoice()
     {
-        story.ChooseChoiceIndex(selectedChoiceIndex);
+        if (!choicesAreInteractable || choiceButtons.Count == 0) return;
+
+        int choiceIndex = story.currentChoices[selectedChoiceIndex].index;
+        SelectChoice(choiceIndex);
+    }
+
+    private void SelectChoice(int choiceIndex)
+    {
+        story.ChooseChoiceIndex(choiceIndex);
         ClearChoices();
         dialogueManager.ContinueStory();
     }
 
-    private void UpdateChoiceColors()
+    private void UpdateChoiceVisuals()
     {
-        for (int i = 0; i < currentChoices.Count; i++)
-            currentChoices[i].color = i == selectedChoiceIndex ? selectedChoiceColor : unselectedChoiceColor;
+        for (int i = 0; i < choiceButtons.Count; i++)
+        {
+            TMP_Text text = choiceButtons[i].GetComponent<TMP_Text>(); // Same object
+            if (text != null)
+                text.color = (i == selectedChoiceIndex) ? selectedChoiceColor : unselectedChoiceColor;
+        }
+    }
+
+    public void SetChoicesInteractable(bool state)
+    {
+        choicesAreInteractable = state;
+
+        // Save whether choices were up when disabling them
+        if (!state && HasChoices())
+            shouldRestoreChoices = true;
+
+        foreach (var button in choiceButtons)
+            button.interactable = state;
+    }
+
+    public void RestoreChoicesIfNeeded()
+    {
+        if (shouldRestoreChoices && story != null && story.currentChoices.Count > 0)
+        {
+            DisplayChoices();
+        }
+
+        shouldRestoreChoices = false;
     }
 
     public void ClearChoices()
     {
         foreach (Transform child in choicesContainer.transform)
             Destroy(child.gameObject);
-        currentChoices.Clear();
+        choiceButtons.Clear();
     }
 
     private void PlaySound(AudioClip clip)
