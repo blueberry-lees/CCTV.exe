@@ -26,4 +26,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Story.unity
     guid: 2700bd64483bfd84d8e9ff371e75485c
+  - enabled: 1
+    path: Assets/Scenes/TestSceneTransition.unity
+    guid: 9669a948e71ab4a4ab39b0db62ee91d1
+  - enabled: 1
+    path: Assets/Scenes/Tester.unity
+    guid: e097986da3e536d448d2eef1247200b6
   m_configObjects: {}

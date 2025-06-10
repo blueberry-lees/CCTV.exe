@@ -41,8 +41,9 @@ public class TypewriterText : MonoBehaviour
     private void OnEnable()
     {
         skipTyping = false;
-        fullText = textComponent.text; // this line make sure the refresh the text if the obj is disabled & then enabled
+        
         textComponent.text = "";
+        //fullText = textComponent.text; // this line make sure the refresh the text if the obj is disabled & then enabled
         canvasGroup.alpha = 1f;
         StopAllCoroutines();
         StartCoroutine(DelayedType());
