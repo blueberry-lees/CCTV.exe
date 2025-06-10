@@ -9,6 +9,7 @@ using Ink.Runtime;
 [RequireComponent(typeof(DialogueChoice))]
 public class DialogueManager : MonoBehaviour
 {
+    private PlayerInput inputActions;
 
     [Header("Script References")]
     private VisualManager visualManager;
@@ -39,6 +40,8 @@ public class DialogueManager : MonoBehaviour
     private Story story;
     private bool isTyping = false;
     private bool skipTyping = false;
+    private bool isSkipTypingBlocked = false;
+
 
     private string currentCharacter = "Narrator";
     private string currentSpeaker = "Narrator";
@@ -61,7 +64,14 @@ public class DialogueManager : MonoBehaviour
         choiceUI = GetComponent<DialogueChoice>();
         visualManager = GetComponent<VisualManager>();
 
-        // ResetPlayerPrefs();
+        inputActions = new PlayerInput();
+        inputActions.UIControls.Enable();
+
+        // Hook up the input events
+        inputActions.UIControls.Navigate.performed += ctx => OnNavigate(ctx.ReadValue<Vector2>());
+        inputActions.UIControls.Confirm.performed += ctx => OnConfirm();
+        inputActions.UIControls.Cancel.performed += ctx => OnCancel();
+
     }
 
     void Start()
@@ -70,44 +80,6 @@ public class DialogueManager : MonoBehaviour
         exitPanel.SetActive(false);
         LoadStory();
 
-    }
-
-    void Update()
-    {
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-
-            isExitPanelOpen = true;
-            exitPanel.gameObject.SetActive(true);
-
-
-        }
-
-        if (isTyping)
-        {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
-                skipTyping = true;
-            return;
-        }
-
-        if (choiceUI.HasChoices())
-        {
-            if (Input.GetKeyDown(KeyCode.UpArrow)) choiceUI.NavigateChoice(-1);
-            else if (Input.GetKeyDown(KeyCode.DownArrow)) choiceUI.NavigateChoice(1);
-            else if (Input.GetKeyDown(KeyCode.Return)) choiceUI.ChooseSelectedChoice();
-            return;
-        }
-
-        if (!isExitPanelOpen)
-        {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
-                ContinueStory();
-        }
-
-        
-
-        
     }
 
     public void LoadStory()
@@ -373,6 +345,47 @@ public class DialogueManager : MonoBehaviour
         visualManager.ChangeEnvironmentBackground(backgroundName);
     }
 
+
+
+    private void OnNavigate(Vector2 direction)
+    {
+        if (!choiceUI.HasChoices()) return;
+
+        if (direction.y > 0.5f)
+            choiceUI.NavigateChoice(-1);
+        else if (direction.y < -0.5f)
+            choiceUI.NavigateChoice(1);
+    }
+
+    private void OnConfirm()
+    {
+        if (isTyping)
+        {
+            skipTyping = true;
+            return;
+        }
+
+        if (choiceUI.HasChoices())
+        {
+            isSkipTypingBlocked = true;
+            choiceUI.ChooseSelectedChoice();
+            return;
+        }
+
+        if (!isExitPanelOpen)
+            ContinueStory();
+    }
+
+    private void OnCancel()
+    {
+        if (!isExitPanelOpen)
+        {
+            isExitPanelOpen = true;
+            exitPanel.SetActive(true);
+        }
+    }
+
+
     private void SaveInkState()
     {
         if (story != null)
@@ -437,6 +450,19 @@ public class DialogueManager : MonoBehaviour
             default:
                 Debug.LogWarning("Unknown UI Version");
                 break;
+        }
+    }
+
+
+
+    void OnDestroy()
+    {
+        if (inputActions != null)
+        {
+            inputActions.UIControls.Navigate.performed -= ctx => OnNavigate(ctx.ReadValue<Vector2>());
+            inputActions.UIControls.Confirm.performed -= ctx => OnConfirm();
+            inputActions.UIControls.Cancel.performed -= ctx => OnCancel();
+            inputActions.Dispose();
         }
     }
 

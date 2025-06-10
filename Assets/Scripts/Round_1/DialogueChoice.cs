@@ -3,94 +3,121 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Ink.Runtime;
+using UnityEngine.UI;
 
 public class DialogueChoice : MonoBehaviour
 {
+    public Button choiceButtonPrefab;    // assign your prefab in inspector
+    public Transform choicesContainer;   // parent panel for buttons
 
+    private Story story;
     private DialogueManager dialogueManager;
 
-    [Header("Choice Panel")]
-    public Color selectedChoiceColor = Color.yellow;
-    public Color unselectedChoiceColor = Color.white;
-    public GameObject choicesContainer;
-    public GameObject choicePrefab;
+    private List<Button> choiceButtons = new();
 
-    [Header("Audio")]
-    public AudioClip navigateClip;
-
-    private AudioSource audioSource;
-
-    private List<TMP_Text> currentChoices = new();
     private int selectedChoiceIndex = 0;
-    private Story story;
-    public bool HasChoices() => currentChoices.Count > 0;
 
-    void Start()
+    void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
-        if (!audioSource)
-            Debug.LogWarning("DialogueChoice: No AudioSource found on this GameObject.");
+        dialogueManager = GetComponent<DialogueManager>();
     }
 
-
-    public void Init(Story story, DialogueManager manager)
+    public void Init(Story storyRef, DialogueManager manager)
     {
-        this.story = story;
-        this.dialogueManager = manager;
+        story = storyRef;
+        dialogueManager = manager;
+    }
+
+    public bool HasChoices()
+    {
+        return story != null && story.currentChoices.Count > 0;
     }
 
     public void DisplayChoices()
     {
-        if (story == null)
-        {
-            Debug.LogError("DialogueChoice: Story is null. Did you forget to call Init()?");
-            return;
-        }
-
         ClearChoices();
 
-        foreach (Choice choice in story.currentChoices)
+        List<Choice> choices = story.currentChoices;
+
+        for (int i = 0; i < choices.Count; i++)
         {
-            var choiceText = Instantiate(choicePrefab, choicesContainer.transform)
-                             .GetComponent<TMP_Text>();
-            choiceText.text = choice.text;
-            currentChoices.Add(choiceText);
+            int index = i;  // capture for closure
+            Button btn = Instantiate(choiceButtonPrefab, choicesContainer);
+            btn.gameObject.SetActive(true);
+
+            TMP_Text btnText = btn.GetComponentInChildren<TMP_Text>();
+            if (btnText != null)
+                btnText.text = choices[i].text.Trim();
+
+            btn.onClick.AddListener(() => OnChoiceSelected(index));
+
+            choiceButtons.Add(btn);
         }
 
         selectedChoiceIndex = 0;
-        UpdateChoiceColors();
+        UpdateButtonHighlight();
     }
 
+    public void HideChoices()
+    {
+        ClearChoices();
+    }
+
+    private void ClearChoices()
+    {
+        foreach (var btn in choiceButtons)
+        {
+            btn.onClick.RemoveAllListeners();
+            Destroy(btn.gameObject);
+        }
+        choiceButtons.Clear();
+    }
+
+    private void OnChoiceSelected(int index)
+    {
+        if (story == null) return;
+
+        story.ChooseChoiceIndex(index);
+        HideChoices();
+        dialogueManager.ContinueStory();
+    }
+
+    // Keyboard navigation
     public void NavigateChoice(int direction)
     {
-        selectedChoiceIndex = (selectedChoiceIndex + direction + currentChoices.Count) % currentChoices.Count;
-        UpdateChoiceColors();
-        PlaySound(navigateClip);
+        if (choiceButtons.Count == 0) return;
+
+        selectedChoiceIndex += direction;
+
+        if (selectedChoiceIndex < 0) selectedChoiceIndex = choiceButtons.Count - 1;
+        else if (selectedChoiceIndex >= choiceButtons.Count) selectedChoiceIndex = 0;
+
+        UpdateButtonHighlight();
+    }
+
+    private void UpdateButtonHighlight()
+    {
+        for (int i = 0; i < choiceButtons.Count; i++)
+        {
+            var colors = choiceButtons[i].colors;
+            if (i == selectedChoiceIndex)
+            {
+                colors.normalColor = Color.yellow; // highlight color
+                choiceButtons[i].Select();          // Unity's UI system highlight
+            }
+            else
+            {
+                colors.normalColor = Color.white;  // default color
+            }
+            choiceButtons[i].colors = colors;
+        }
     }
 
     public void ChooseSelectedChoice()
     {
-        story.ChooseChoiceIndex(selectedChoiceIndex);
-        ClearChoices();
-        dialogueManager.ContinueStory();
-    }
-
-    private void UpdateChoiceColors()
-    {
-        for (int i = 0; i < currentChoices.Count; i++)
-            currentChoices[i].color = i == selectedChoiceIndex ? selectedChoiceColor : unselectedChoiceColor;
-    }
-
-    public void ClearChoices()
-    {
-        foreach (Transform child in choicesContainer.transform)
-            Destroy(child.gameObject);
-        currentChoices.Clear();
-    }
-
-    private void PlaySound(AudioClip clip)
-    {
-        if (clip != null && audioSource != null)
-            audioSource.PlayOneShot(clip);
+        if (selectedChoiceIndex >= 0 && selectedChoiceIndex < choiceButtons.Count)
+        {
+            OnChoiceSelected(selectedChoiceIndex);
+        }
     }
 }
