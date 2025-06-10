@@ -72,10 +72,19 @@ public class DialogueManager : MonoBehaviour
 
     void Update()
     {
-      
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+
+            isExitPanelOpen = true;
+            exitPanel.gameObject.SetActive(true);
+
+
+        }
+
         if (isTyping)
         {
-            if (Input.GetKey(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
                 skipTyping = true;
             return;
         }
@@ -88,14 +97,15 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        if (Input.GetKey(KeyCode.Space)&& !isExitPanelOpen)
-            ContinueStory();
-
-        if (Input.GetKeyDown(KeyCode.Escape))
+        while (!isExitPanelOpen)
         {
-            isExitPanelOpen = true;
-            exitPanel.gameObject.SetActive(true);
+            if (Input.GetKey(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+                ContinueStory();
         }
+
+        
+
+        
     }
 
     public void LoadStory()
@@ -395,23 +405,6 @@ public class DialogueManager : MonoBehaviour
                 Debug.LogWarning("Unknown UI Version");
                 break;
         }
-    }
-
-
-    public void CloseExitPanel()
-    {
-        exitPanel.gameObject.SetActive(false);
-        isExitPanelOpen = false;
-    }
-
-    //quit to interface according to the version recorded in GameState
-    public void QuitToInterface()
-    {
-        isExitPanelOpen = false;
-        int uiVersion = GameState.uiVersion;
-        string nextScene = "Version" + uiVersion;
-
-        SceneManager.LoadScene(nextScene);
     }
 
 
