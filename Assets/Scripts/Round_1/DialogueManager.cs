@@ -29,6 +29,8 @@ public class DialogueManager : MonoBehaviour
     [Header("Audio")]
     public AudioSource typingAudio;
     public AudioSource sfxAudio;
+    public AudioSource ambientAudio;
+
 
     [Header("Exit")]
     public GameObject exitPanel;
@@ -97,9 +99,9 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        while (!isExitPanelOpen)
+        if (!isExitPanelOpen)
         {
-            if (Input.GetKey(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
                 ContinueStory();
         }
 
@@ -319,8 +321,39 @@ public class DialogueManager : MonoBehaviour
                 case "delay":
                     if (float.TryParse(val, out float d)) tagDelay = d;
                     break;
+
+                case "ambient":
+                    PlayAmbient(val);
+                    break;
+
             }
         }
+    }
+
+    void PlayAmbient(string clipName)
+    {
+        if (clipName.ToLower() == "stop")
+        {
+            ambientAudio.Stop();
+            ambientAudio.clip = null;
+            return;
+        }
+
+        var clip = Resources.Load<AudioClip>($"Audio/Ambient/{clipName}");
+        if (clip)
+        {
+            if (ambientAudio.clip != clip)
+            {
+                ambientAudio.clip = clip;
+                ambientAudio.loop = true;
+                ambientAudio.Play();
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"Ambient audio not found: {clipName}");
+        }
+
     }
 
     void PlaySFX(string clipName)

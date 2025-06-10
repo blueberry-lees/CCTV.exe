@@ -94,36 +94,41 @@ LIST ending = (none), A, B, C, D
 //
 === Round_1
 ~ UIVersion = 1
+#speaker: Narrator
+Which floor are you heading?
+* [Top F] Don’t want to run into your boss again. At least not today. -> Round_1  
 
-//elevator_intro 
-#background: ElevatorOpen #SFX: Ding  #speaker: Narrator #speed: 0.1
-The elevator dings. 
+* [This F] You’ve *just* finished work—why would you go back? -> Round_1  
 
-#speed: 0.05
-You step in. The classic elevator music plays in the background.
+* [Ground F] As if it’s not the only option.  
+    -
+// elevator_intro  
+#background: ElevatorOpen  #SFX: Ding  #speaker: Narrator  #speed: 0.1  
+The elevator dings.
 
-#SFX:CartoonWind
-The air’s a bit cold. Too much AC, perhaps.
+#ambient: BothersomeLift
+#speed: 0.05  
+You step in. That bothersome music hums in the background.
 
-The doors begin to close. But right before they shut—
+#SFX: CartoonWind  
+The air’s cold—too much AC, maybe.
 
-#Background: HandOnDoor #speed: 0.07
-A hand stops them.
+The doors begin to close. But just before they shut—
 
+#background: HandOnDoor  #speed: 0.07  
+A hand darts in.
 
-#background: ElevatorOpen #character: Killer #expression: NeutralLook #speed: 0.08 #delay: 0.4
-A man steps in, nodding politely. 
+#background: ElevatorOpen  #character: Killer  #expression: NeutralLook  #speed: 0.08  #delay: 0.4  
+Someone steps in, nodding politely.
 
 -> chapter_1
 
 
 === chapter_1
 #background: Elevator #character: Killer #expression: NeutralLookAway #speed: 0.07 #delay: 0.4
-The doors close. You glance at the man out of the corner of your eye. 
+The doors shut. You glance at the figure through the corner of your eye. 
 
-He’s tallish, maybe late 20s. Clean-cut suit. Polished shoes. Smells faintly like aftershave.
-
-He seems… normal.
+He’s tallish, maybe late 20s. Clean-cut suit. Polished shoes. Looks pale. 
 
 *   [look away] ->LookAway
 
@@ -133,8 +138,7 @@ He seems… normal.
 
 =LookAway
 #background look feet
-You shift your gaze to the floor. Elevator lighting flickers a bit on the steel. 
-    ~ lower(trust)
+You shift your gaze to the screen. The elevator begins to descend.
     ~confidence = 0
 -> chapter_2
 
@@ -145,9 +149,7 @@ You shift your gaze to the floor. Elevator lighting flickers a bit on the steel.
 You meet his eyes.
 
  #character: Killer #expression: SmileLook
-He smiles—casual, not forced. 
-Still, there’s something unreadable there. 
-~ raise(trust)
+He smiles casually, not forced. 
 ~confidence = 1
     
     -> chapter_2
@@ -159,69 +161,82 @@ Still, there’s something unreadable there.
 
 #character: Killer #expression: NeutralLookAway
 #speaker: Narrator #speed: 0.07 #delay: 0.4
-The elevator hums gently as it begins to descend.
 
-The silence lingers—not uncomfortable, just... there.
+The silence lingers, slightly awkward...it's always like this with strangers. 
 
-Eventually, he speaks. 
+But suddenly, he speaks. 
 
 #speaker: Male #character: Killer #expression:SmileLookT #speed: 0.08 #delay: 0.3
 "Going down?"  
 
-#speaker: Narrator #speed: 0.06 #delay: 0.2
-You hesitate. Something about the quiet caught you off guard.
-
 
 #speaker: Female
-*   {confidence <= 0}[nervous smile] "Y-yeah. Just... heading down."
+*   {confidence <= 0}[awkward] "Yeah... just heading home."
     ~ confidence = 0 
-    ~ lower(trust)  
+    ~ raise(trust)  
+    #speaker: Male
+    "Home, huh? Must be nice."
+    **[Wdym?] "What's that suposed to mean?"
+    **[Hby?] "Where’re you off to then?"
+    -- 
+    #Speaker:Male
+    "Ha... They roped me into delivering a few forms."
+    
+    #Speaker: Female
+    "Oh..."
 
-*   {confidence >= 0}[bluntly]  "Yes."
+*   {confidence >= 0}[bluntly]  "Only way to get out of this hell."
     ~ confidence = 1
+    #speaker: Male
+    [light chuckle] "True. So, what made you choose this job?"
+    #speaker:Female
+    "Only one that pays, really."
+    #speaker:Male
+    "Pfft. Guess there wasn’t much choice, was there?"
+    #speaker:Female
+    **[sarcastic]"Sounds like you had plenty of choices."
+    **[curious] "What about you?"
+    --
+    #speaker:Male
+    "Choosing this job? No chance."
+    
+    
 
-*   {confidence > 0}[make a joke]  "Only way to go from the top, right?"
+*   {confidence > 0}[sarcastic] "What a thoughtful question."
     ~ confidence = 2
-    ~ raise(trust)
+    ~ lower(trust)
+    #speaker: Male
+    [chuckles] "Sharp tongue. Let’s hope it doesn’t get you into trouble."
+    #speaker:Female
+    **[sarcastic] Oh, yeah, I'm so scared.
+    #speaker:Male
+    "..."
+    #speaker:Female
+    Sorry, rough day.
+    #speaker:Male
+    [chuckles] "Haven't we all?"
+    
+    **[apologies] Sorry, rough day.
+    #speaker:Male
+    [chuckles] "Haven't we all?"
+    --
+    
+    
 -
-
-#speaker: Male #character: Killer #expression:SmileLookAway   
-"Guess so."  
-
-#character: Killer #expression:SmilePointUp  
-"These things always feel like a pause button, don’t they?"
-"Like time slows down in here."
-
-#speaker:Narrator 
-Almost like he’s thinking out loud.
-
- #character: Killer #expression:ChuckleLookAway 
-He chuckles softly. 
-
-#character: Killer #expression:HappyLook
-He catches your glance and raises an eyebrow.
-
 #speaker: Female
+"..."
+#speaker: Male
+"..."
+#speaker: Male
+#character: Killer #expression:SmilePointUp  
+"...Hey, don’t you think this elevator—"
 
-*   {confidence == 2 or confidence == 0}[awkward laugh]  "Yeah... elevators are weird."
-    ~ mid(trust)   
+#Killer #expression:SmileLookAway   
+"...never mind."
 
-*   {confidence <= 1}[honest]  "Yeah. It’s like everything else shuts off."
-    ~ raise(trust)
+#speaker: Narrator
+Perhaps he was about to say something important, but in the end, you don't really care enough to ask.
 
-*   {confidence >= 1}[light joke]  "Kinda eerie. Like a breakroom without the coffee."
-    ~ mid(trust)
--
-
-#speaker: Narrator #character: Killer #expression:SoftChuckle
-He chuckles lightly.
-#speaker: Male 
-"I like the quiet. Gives you space to think."
-
-#speaker: Narrator #speed: 0.07
-There’s something easy about his voice. Calm. Relaxed.
-
-You exhale. Maybe you were just on edge.
 
 -> chapter_3
 
@@ -229,22 +244,21 @@ You exhale. Maybe you were just on edge.
 === chapter_3
 
 #speaker:Narrator #speed: 0.06
-You glance at the elevator mirror. A faint double of the two of you stands there—clear, still, ordinary.
+You glance at the elevator mirror. The two of you stood there.
 
-You blink. Something about the angle makes it look like his reflection is a second behind.
+You blink. 
+#ambient: stop
+Then—his reflection is staring at you.
 
-You look again.
 
-Nope—normal. Just your mind playing tricks.
+*   [blink] You blink a few more times. It’s gone again. 
+    ~ mid(delusion)
 
-*   [rub your eyes] You blink a few more times, letting out a soft sigh. Long day.
-    ~ lower(delusion)
-
-*   [look again] You squint at the reflection. It stares back, just as expected.
+*   [look closer] You squint at the reflection. It smiles at you.
     ~ raise(delusion)
 
-*   [step back slightly] You shift to the side, casually adjusting your bag.
-    ~ mid(delusion)
+*   [ignore] You step back, casually adjusting your bag.
+    ~ lower(delusion)
 -
 
 #speaker: Male #character: Killer #expression:NeutralLookT  
@@ -254,7 +268,7 @@ Nope—normal. Just your mind playing tricks.
 #character: Killer #expression:NeutralLook
 #speaker: Female
 
-*   [nod] "Yeah. Just a long day."
+*   [nod] "Yeah. Just tired."
 #speaker: Male #character: Killer #expression:SmilePointUp
     ~ mid(trust)
 
@@ -262,7 +276,7 @@ Nope—normal. Just your mind playing tricks.
 #speaker: Male #character: Killer #expression:OneEyeCloseLaugh
     ~ raise(trust) 
 
-*   [smile] "Fine. Mirrors just mess with me sometimes."
+*   [I'm fine] "Fine. Mirrors just mess with me sometimes."
 #speaker: Male #character: Killer #expression:CloseEyeLaugh
     ~ mid(trust)
     ~ raise(delusion) 
@@ -275,90 +289,43 @@ Nope—normal. Just your mind playing tricks.
 You smile faintly. He seems normal. Friendly, even.
 
 #character: Killer #expression:SmileLookAway
-It’s quiet again, but it doesn’t feel heavy.
+It’s quiet again, but it doesn’t feel too awkward.
 
-Just two people. Sharing space. Going down.
+Just two people. 
+Sharing space. 
+Going down.
 
 -> chapter_4
 
-
 === chapter_4
-//voice_in_head — now toned down
 
-Your thoughts drift. Maybe it’s the hum of the elevator, or the stillness of the moment—but something tugs at your attention.#show_expression("neutral") #speaker: Narrator #speed: 0.06
+The elevator dings again.#SFX: Ding #speaker: Narrator #speed: 0.08
 
-A whisper of doubt, like an old memory brushing past.
+You glance at the screen—third floor.
 
-You shake it off.
-
-The man glances at you briefly.
-
- 
-"You sure you're alright? You spaced out for a second there."#speaker: Male\ #character: Killer #expression:NeutralLook 
+"Well. Fun talk."#speaker: Male #character: Killer #expression:Smile1
 
 
-*   [smile]  "Yeah. I do that sometimes." #speaker: Female
-    ~ raise(trust)
+* {down(trust)} [quietly] "Mm." #speaker: Female  
+    ~ lower(trust)
 
-*   [honest]  "Was just thinking about something weird." #speaker: Female
+* {mid(trust)} [neutral] "Take care." #speaker: Female  
     ~ mid(trust)
-    ~ raise(delusion)  // Admitting to weirdness
 
-*   [deflect]  "Nothing important." #speaker: Female
-    ~ lower(trust)
+* {up(trust)} [polite] "See you around." #speaker: Female  
+    ~ raise(trust)
 -
 
-"Happens to the best of us."#speaker: Male #character: Killer #expression:SmileLook  
+#speaker: Narrator
+The doors open with a quiet sigh. 
 
-
-His tone is casual. Friendly.#speaker: Narrator
-
-The elevator hums beneath your feet like a soft lull.
-
--> chapter_5
-
-
-=== chapter_5
-
-
-The elevator dings.#SFX: Ding #speaker: Narrator #speed: 0.08
-
-You glance at the screen—ground floor.
-
-He adjusts his collar slightly. Then steps just a bit closer, not in a threatening way—more like he's getting ready to leave.
-
-
-"Well. Guess this is us."#speaker: Male #character: Killer #expression:Smile1
-
-
-
-*   {down(trust)} [softly]  "Yeah." #speaker: Female
-    ~ lower(trust)
-
-*   {mid(trust)} [friendly]  "Nice ride."#speaker: Female
-     ~ mid(trust)
-
-*   {up(trust)} [smile]  "Maybe I'll see you around."#speaker: Female
-     ~ raise(trust)
--
-
-The doors open with a quiet sigh. #speaker: Narrator
-
-He steps out. For a moment, he turns to glance back—not intensely. Just a polite look-over-the-shoulder.
-
-And he smiles.
+He steps out. For a moment, he turns to glance back.
 ~ UIVersion = 2
+And he smiles.
 
 Just that.
 
-No wink. No stare. Just a smile.
-
 You're alone again.
-
-And for the first time in a while...
-
-
-You feel completely still.
 
 
 -> END

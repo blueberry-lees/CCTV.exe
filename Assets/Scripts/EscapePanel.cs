@@ -20,7 +20,7 @@ public class EscapePanel : MonoBehaviour
     public void QuitToInterface()
     {
         int uiVersion = GameState.uiVersion; 
-        string nextScene = "Interface" + uiVersion;
+        string nextScene = "Version" + uiVersion;
 
         SceneManager.LoadScene(nextScene);
     }
