@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Ink.Runtime;
@@ -9,10 +9,8 @@ public class DialogueChoice : MonoBehaviour
     private DialogueManager dialogueManager;
 
     [Header("Choice Panel")]
-    public Color selectedChoiceColor = Color.black;
+    public Color selectedChoiceColor = Color.yellow;
     public Color unselectedChoiceColor = Color.white;
-    public Color selectedBackgroundColor = Color.white;
-    public Color unselectedBackgroundColor = Color.black;
     public GameObject choicesContainer;
     public GameObject choicePrefab;
 
@@ -25,6 +23,7 @@ public class DialogueChoice : MonoBehaviour
     private int selectedChoiceIndex = 0;
     private Story story;
     private bool choicesAreInteractable = true;
+
     private bool shouldRestoreChoices = false;
 
     public bool HasChoices() => choiceButtons.Count > 0;
@@ -56,11 +55,11 @@ public class DialogueChoice : MonoBehaviour
         {
             GameObject choiceGO = Instantiate(choicePrefab, choicesContainer.transform);
             Button button = choiceGO.GetComponent<Button>();
-            TMP_Text choiceText = choiceGO.GetComponentInChildren<TMP_Text>(); // ✅ FIXED
+            TMP_Text choiceText = choiceGO.GetComponent<TMP_Text>(); // Same object
 
             if (button == null || choiceText == null)
             {
-                Debug.LogError("Choice prefab must have a Button on parent and TMP_Text on child.");
+                Debug.LogError("Choice prefab must have both a Button and TMP_Text on the same GameObject.");
                 continue;
             }
 
@@ -106,17 +105,9 @@ public class DialogueChoice : MonoBehaviour
     {
         for (int i = 0; i < choiceButtons.Count; i++)
         {
-            Button button = choiceButtons[i];
-            TMP_Text text = button.GetComponentInChildren<TMP_Text>();
-            Image image = button.GetComponent<Image>();
-
-            bool isSelected = i == selectedChoiceIndex;
-
+            TMP_Text text = choiceButtons[i].GetComponent<TMP_Text>(); // Same object
             if (text != null)
-                text.color = isSelected ? selectedChoiceColor : unselectedChoiceColor;
-
-            if (image != null)
-                image.color = isSelected ? selectedBackgroundColor : unselectedBackgroundColor;
+                text.color = (i == selectedChoiceIndex) ? selectedChoiceColor : unselectedChoiceColor;
         }
     }
 
@@ -124,6 +115,7 @@ public class DialogueChoice : MonoBehaviour
     {
         choicesAreInteractable = state;
 
+        // Save whether choices were up when disabling them
         if (!state && HasChoices())
             shouldRestoreChoices = true;
 

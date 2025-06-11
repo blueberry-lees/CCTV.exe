@@ -95,14 +95,12 @@ LIST ending = (none), A, B, C, D
 === Round_1
 ~ UIVersion = 1
 #speaker: Narrator
-Which direction are you heading?
-* [Up] Don’t want to run into your boss again. At least not today. 
--> Round_1  
+Which floor are you heading?
+* [Top F] Don’t want to run into your boss again. At least not today. -> Round_1  
 
-* [Down] As if it’s not the only option.  
+* [This F] You’ve *just* finished work—why would you go back? -> Round_1  
 
-* [Stay] You’ve *just* finished work—why would you want to stay? 
--> Round_1  
+* [Ground F] As if it’s not the only option.  
     -
 // elevator_intro  
 #background: ElevatorOpen  #SFX: Ding  #speaker: Narrator  #speed: 0.1  
@@ -113,7 +111,7 @@ The elevator dings.
 You step in. That bothersome music hums in the background.
 
 #SFX: CartoonWind  
-The air’s cold—too much AC.
+The air’s cold—too much AC, maybe.
 
 The doors begin to close. But just before they shut—
 
@@ -151,7 +149,7 @@ You shift your gaze to the screen. The elevator begins to descend.
 You meet his eyes.
 
  #character: Killer #expression: SmileLook
-He smiles casually.
+He smiles casually, not forced. 
 ~confidence = 1
     
     -> chapter_2
