@@ -94,7 +94,7 @@ public class ScrollBarTypeWriter : MonoBehaviour
 
         if (typeSound != null)
             typeSound.Stop(); // 🛑 Stop typing audio
-        Debug.Log("sound should finish here");
+   
 
         if (enableShake)
             shakeCoroutine = StartCoroutine(ShakeText());
