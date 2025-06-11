@@ -2,19 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-
-
 
 [RequireComponent(typeof(DialogueChoice))]
 public class DialogueManager : MonoBehaviour
 {
-
-    private PlayerInput inputActions;
-
 
     [Header("Script References")]
     private VisualManager visualManager;
@@ -72,15 +65,7 @@ public class DialogueManager : MonoBehaviour
         choiceUI = GetComponent<DialogueChoice>();
         visualManager = GetComponent<VisualManager>();
 
-        inputActions = new PlayerInput(); 
-        inputActions.Story.Enable();
-
-        // Hook up the input eventsAdd commentMore actions
-        inputActions.Story.Navigation.performed += ctx => OnNavigate(ctx.ReadValue<Vector2>());
-        inputActions.Story.Confirm.performed += ctx => OnConfirm();
-        inputActions.Story.Cancel.performed += ctx => OnCancel();
-        inputActions.Story.Skip.performed += ctx => OnSkip();
-
+        // ResetPlayerPrefs();
     }
 
     void Start()
@@ -91,45 +76,45 @@ public class DialogueManager : MonoBehaviour
 
     }
 
-    //void Update()
-    //{
-    //    if (blockNextInput)
-    //    {
-    //        blockNextInput = false; // Skip one frame of input
-    //        return;
-    //    }
+    void Update()
+    {
+        if (blockNextInput)
+        {
+            blockNextInput = false; // Skip one frame of input
+            return;
+        }
 
-    //    if (Input.GetKeyDown(KeyCode.Escape))
-    //    {
-    //        if (isExitPanelOpen)
-    //            ResumeDialogue();
-    //        else
-    //            PauseDialogue();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isExitPanelOpen)
+                ResumeDialogue();
+            else
+                PauseDialogue();
 
-    //        return;
-    //    }
+            return;
+        }
 
-    //    if (isExitPanelOpen)
-    //        return;
+        if (isExitPanelOpen)
+            return;
 
-    //    if (isTyping)
-    //    {
-    //        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
-    //            skipTyping = true;
-    //        return;
-    //    }
+        if (isTyping)
+        {
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+                skipTyping = true;
+            return;
+        }
 
-    //    if (choiceUI.HasChoices())
-    //    {
-    //        if (Input.GetKeyDown(KeyCode.UpArrow)) choiceUI.NavigateChoice(-1);
-    //        else if (Input.GetKeyDown(KeyCode.DownArrow)) choiceUI.NavigateChoice(1);
-    //        else if (Input.GetKeyDown(KeyCode.Return)) choiceUI.ChooseSelectedChoice();
-    //        return;
-    //    }
+        if (choiceUI.HasChoices())
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow)) choiceUI.NavigateChoice(-1);
+            else if (Input.GetKeyDown(KeyCode.DownArrow)) choiceUI.NavigateChoice(1);
+            else if (Input.GetKeyDown(KeyCode.Return)) choiceUI.ChooseSelectedChoice();
+            return;
+        }
 
-    //    if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
-    //        ContinueStory();
-    //}
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+            ContinueStory();
+    }
 
 
     public void LoadStory()
@@ -503,88 +488,6 @@ public class DialogueManager : MonoBehaviour
     }
 
 
-    private void OnNavigate(Vector2 direction)
-    {
-        if (blockNextInput)
-        {
-            blockNextInput = false; // Skip one frame of input
-            
-        }
-
-        //handles all types of directional buttons
-        if (!choiceUI.HasChoices()) return;
-
-        if (direction.y > 0.5f)
-            choiceUI.NavigateChoice(-1);
-        else if (direction.y < -0.5f)
-            choiceUI.NavigateChoice(1);
-    }
-    private void OnConfirm()
-    {
-        if (blockNextInput)
-        {
-            blockNextInput = false; // Skip one frame of input
-            
-        }
-
-        //enter, z key, gamepad south
-
-        if (!isExitPanelOpen)
-        ContinueStory();
-
-        
-        if (choiceUI.HasChoices())
-        {
-            choiceUI.ChooseSelectedChoice();
-           
-        }
-    }
-    private void OnSkip()
-    {
-        //if (blockNextInput)
-        //{
-        //    blockNextInput = false; // Skip one frame of input
-        //    return;
-        //}
-
-        //Space key, z key, enter key, left mouse button, game pad south
-        if (isTyping)
-        {
-            skipTyping = true;
-            
-        }
-    
-        if (!isExitPanelOpen)
-        ContinueStory();
-    }
 
 
-    private void OnCancel()
-    {
-        if (blockNextInput)
-        {
-            blockNextInput = false; // Skip one frame of input
-           
-        }
-
-        // escape key, z key, mouse left click
-        if (!isExitPanelOpen)
-        {
-            isExitPanelOpen = true;
-            exitPanel.SetActive(true);
-        }
-    }
-
-
-    //fall back method
-    //void OnDestroy()
-    //{
-    //    if (inputActions != null)
-    //    {
-    //        inputActions.Story.Navigation.performed -= ctx => OnNavigate(ctx.ReadValue<Vector2>());
-    //inputActions.Story.Confirm.performed -= ctx => OnConfirm();
-    //inputActions.Story.Cancel.performed -= ctx => OnCancel();
-    //inputActions.Dispose();
-    //    }
-    //}
 }
