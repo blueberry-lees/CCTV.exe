@@ -479,7 +479,8 @@ public class DialogueManager : MonoBehaviour
 
             typingCoroutine = StartCoroutine(TypeText(currentLine));
         }
-        else if (story.currentChoices.Count > 0)
+        
+        if (story.currentChoices.Count > 0)
         {
             choiceUI.DisplayChoices();
             choiceUI.SetChoicesInteractable(true);
