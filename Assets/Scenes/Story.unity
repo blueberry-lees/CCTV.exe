@@ -671,6 +671,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedChoiceColor: {r: 0, g: 0, b: 0, a: 1}
   unselectedChoiceColor: {r: 1, g: 1, b: 1, a: 1}
+  selectedBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  unselectedBackgroundColor: {r: 0, g: 0, b: 0, a: 0}
   choicesContainer: {fileID: 44693403}
   choicePrefab: {fileID: 3678080162618335057, guid: 22665e33339b4dc4fa99ad8c2ca47413, type: 3}
   navigateClip: {fileID: 8300000, guid: b507d0f5c49e49b44afe0d85918910f2, type: 3}
@@ -860,6 +862,7 @@ GameObject:
   - component: {fileID: 435236542}
   - component: {fileID: 435236541}
   - component: {fileID: 435236540}
+  - component: {fileID: 435236544}
   m_Layer: 5
   m_Name: No
   m_TagString: Untagged
@@ -996,6 +999,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 435236538}
   m_CullTransparentMesh: 1
+--- !u!114 &435236544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435236538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &500653885
 GameObject:
   m_ObjectHideFlags: 0
@@ -2312,7 +2328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 435236538}
+  m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &1415542115

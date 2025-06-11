@@ -9,6 +9,10 @@ public class DialogueChoice : MonoBehaviour
     private DialogueManager dialogueManager;
 
     [Header("Choice Panel")]
+    public Color selectedChoiceColor = Color.black;
+    public Color unselectedChoiceColor = Color.white;
+    public Color selectedBackgroundColor = Color.white;
+    public Color unselectedBackgroundColor = Color.black;
     public GameObject choicesContainer;
     public GameObject choicePrefab;
 
@@ -21,7 +25,6 @@ public class DialogueChoice : MonoBehaviour
     private int selectedChoiceIndex = 0;
     private Story story;
     private bool choicesAreInteractable = true;
-
     private bool shouldRestoreChoices = false;
 
     public bool HasChoices() => choiceButtons.Count > 0;
@@ -53,11 +56,11 @@ public class DialogueChoice : MonoBehaviour
         {
             GameObject choiceGO = Instantiate(choicePrefab, choicesContainer.transform);
             Button button = choiceGO.GetComponent<Button>();
-            TMP_Text choiceText = choiceGO.GetComponent<TMP_Text>(); // Same object
+            TMP_Text choiceText = choiceGO.GetComponentInChildren<TMP_Text>(); // ✅ FIXED
 
             if (button == null || choiceText == null)
             {
-                Debug.LogError("Choice prefab must have both a Button and TMP_Text on the same GameObject.");
+                Debug.LogError("Choice prefab must have a Button on parent and TMP_Text on child.");
                 continue;
             }
 
@@ -72,6 +75,7 @@ public class DialogueChoice : MonoBehaviour
         }
 
         selectedChoiceIndex = 0;
+        UpdateChoiceVisuals();
     }
 
     public void NavigateChoice(int direction)
@@ -79,6 +83,7 @@ public class DialogueChoice : MonoBehaviour
         if (!choicesAreInteractable || choiceButtons.Count == 0) return;
 
         selectedChoiceIndex = (selectedChoiceIndex + direction + choiceButtons.Count) % choiceButtons.Count;
+        UpdateChoiceVisuals();
         PlaySound(navigateClip);
     }
 
@@ -97,11 +102,28 @@ public class DialogueChoice : MonoBehaviour
         dialogueManager.ContinueStory();
     }
 
+    private void UpdateChoiceVisuals()
+    {
+        for (int i = 0; i < choiceButtons.Count; i++)
+        {
+            Button button = choiceButtons[i];
+            TMP_Text text = button.GetComponentInChildren<TMP_Text>();
+            Image image = button.GetComponent<Image>();
+
+            bool isSelected = i == selectedChoiceIndex;
+
+            if (text != null)
+                text.color = isSelected ? selectedChoiceColor : unselectedChoiceColor;
+
+            if (image != null)
+                image.color = isSelected ? selectedBackgroundColor : unselectedBackgroundColor;
+        }
+    }
+
     public void SetChoicesInteractable(bool state)
     {
         choicesAreInteractable = state;
 
-        // Save whether choices were up when disabling them
         if (!state && HasChoices())
             shouldRestoreChoices = true;
 
