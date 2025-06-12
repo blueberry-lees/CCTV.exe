@@ -1708,8 +1708,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1283850732}
         m_TargetAssemblyTypeName: LoadScene, Assembly-CSharp
-        m_MethodName: LoadTheScene
-        m_Mode: 5
+        m_MethodName: LoadInterfaceScene
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3357,7 +3357,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 4288b3bcad4c1ed488f4bb250880b617, type: 2}
     - target: {fileID: 2434425529989510587, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
       propertyPath: isPlayerPrefsCleared
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2434425529989510587, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
       propertyPath: isPlyaerPrefsCleared
