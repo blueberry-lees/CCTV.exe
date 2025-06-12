@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Greeting.unity
     guid: 6740fa6bc09601a478fa4ab93c684c38
   - enabled: 1
-    path: Assets/Scenes/Version1.unity
+    path: Assets/Scenes/oldVersion1.unity
     guid: 9ee790dd4eb7192498176c7547f95db2
   - enabled: 1
     path: Assets/Scenes/Version2.unity
@@ -36,7 +36,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Interface.unity
     guid: 70e8652d26915e043bf632936f2f3061
   - enabled: 0
-    path: Assets/Scenes/Tester 1.unity
+    path: Assets/Scenes/SampleVersion.unity
     guid: eb8717817d9ab364aa0816ec720aab1e
   - enabled: 1
     path: Assets/Scenes/Version1 1.unity

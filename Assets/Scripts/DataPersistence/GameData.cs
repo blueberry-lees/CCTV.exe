@@ -17,7 +17,7 @@ public class GameData
     //the game starts with when there's no data to load
     public GameData()
     {
-      this.currentRound = Rounds.Round1;
+        this.currentRound = Rounds.Round1;
         this.storyProgress = 0;
     }
 }

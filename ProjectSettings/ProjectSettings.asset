@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: DefaultCompany
   productName: CCTV.exe
-  defaultCursor: {fileID: 2800000, guid: 4aa6f547cdbb6bc4cb66d7f71c110738, type: 3}
+  defaultCursor: {fileID: 2800000, guid: bd718bf6445da0f4bb512a26f193e27a, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1
