@@ -12,7 +12,14 @@ public class DisplayPlayerName : MonoBehaviour
     private void Awake()
     {
         playerNameDisplay = GetComponent<TMP_Text>();
-         playerName = PlayerPrefs.GetString("playerName", "");
-        playerNameDisplay.text = playerName;
+
+
+        if (!string.IsNullOrEmpty(PlayerPrefs.GetString("playerName", "")))
+        {
+            playerName = PlayerPrefs.GetString("playerName", "");
+        }
+        else playerName = "\"Nobody\"";
+
+            playerNameDisplay.text = playerName;
     }
 }

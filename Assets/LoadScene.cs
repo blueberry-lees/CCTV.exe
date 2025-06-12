@@ -5,20 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class LoadScene : MonoBehaviour
 {
-    public string sceneName;
     
-    public void LoadTheScene()
+    
+    public void LoadTheScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
     }
 
-    public void LoadTheSceneAsync()
+    public void LoadTheSceneAsync(string sceneName)
     {
         SceneManager.LoadSceneAsync(sceneName);
     }
 
 
-    public void LoadTheSceneAdditive()
+    public void LoadTheSceneAdditive(string sceneName)
     {
         SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
     }
