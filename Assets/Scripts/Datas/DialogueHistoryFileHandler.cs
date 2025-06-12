@@ -22,7 +22,7 @@ public static class DialogueHistoryFileHandler
         try
         {
             File.WriteAllText(path, content);
-            Debug.Log($"Dialogue history saved to {path}");
+            //Debug.Log($"Dialogue history saved to {path}");
         }
         catch (System.Exception e)
         {

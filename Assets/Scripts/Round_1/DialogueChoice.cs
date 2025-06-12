@@ -72,7 +72,7 @@ public class DialogueChoice : MonoBehaviour
             button.onClick.AddListener(() => {
                 if (choicesAreInteractable)
                 {
-                    Debug.Log("Logging choice: " + displayedChoiceText); // Debug here
+                    //Debug.Log("Logging choice: " + displayedChoiceText); // Debug here
                     GameState.AddLine("You", displayedChoiceText);
                     GameState.SaveDialogueHistory();  // "You" is the #speaker in ink  // Log the chosen text when mouse clicked on choice
                     SelectChoice(choiceIndex);
