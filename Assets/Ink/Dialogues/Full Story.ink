@@ -13,51 +13,56 @@
    Functions
 
  ----------------------------------*/
-CONST INITIAL_SWING = 1001
+CONST INITIAL_SWING = 5
 
 === function swing_count(x) 
     ~ return (upness(x) + downness(x)) - 2
+
 === function swing_ready(x) 
     ~ return swing_count(x) >= 2
+
 === function raise(ref x)
-	~ x = x + 1000
+    ~ x = x + 10
+
 === function elevate(ref x)
     ~ raise(x)
     ~ raise(x)
     ~ raise(x)
+
 === function lower(ref x)
-	~ x = x + 1 
-== function ditch (ref x) 
+    ~ x = x + 1 
+
+=== function ditch(ref x) 
     ~ lower(x) 
     ~ lower(x) 
     ~ lower(x)
+
 === function demolish(ref x)
-    ~ x = x + 20
+    ~ x = x + 2
+
 === function escalate(ref x)
-    ~ x = x + (20 * 1000)
+    ~ x = x + (2 * 100)
+
 === function upness(x)
-	~ return x / 1000
+    ~ return x / 10
 
 === function downness(x)
-	~ return x % 1000
+    ~ return x % 10
 
 === function high(x)
     ~ return (1 * upness(x) >= downness(x) * 9)
 
 === function up(x)
-	~ return swing_ready(x) && (4 * upness(x) >= downness(x) * 6)
+    ~ return swing_ready(x) && (4 * upness(x) >= downness(x) * 6)
 
 === function down(x)
-	~ return swing_ready(x) && (6 * upness(x) <= downness(x) * 4)
-	
-=== function low(x)
-	~ return swing_ready(x) && (9 * upness(x) <= downness(x) * 1)
-	
-=== function mid(x)
-    // If the swing isn't ready this returns true 
-    // Because "up is false and down is false"
-    ~ return (not up(x) && not down(x))
+    ~ return swing_ready(x) && (6 * upness(x) <= downness(x) * 4)
 
+=== function low(x)
+    ~ return swing_ready(x) && (9 * upness(x) <= downness(x) * 1)
+
+=== function mid(x)
+    ~ return (not up(x) && not down(x))
 -
 /* ---------------------------------
 
@@ -74,7 +79,7 @@ VAR UIVersion = 1
 
 VAR trust = INITIAL_SWING
 VAR delusion = INITIAL_SWING
-VAR guilt = INITIAL_SWING
+//VAR guilt = INITIAL_SWING
 
 //var for choices
 
@@ -95,6 +100,7 @@ LIST ending = (none), A, B, C, D
 === Round_1
 ~ UIVersion = 1
 #speaker: Narrator
+#background: AllBlack
 Which direction are you heading?
 * [Up] Don’t want to run into your boss again. At least not today. 
 -> Round_1  
@@ -117,7 +123,7 @@ The air’s cold—too much AC.
 
 The doors begin to close. But just before they shut—
 
-#background: HandOnDoor  #speed: 0.07  
+#background: pixelHand  #speed: 0.07  
 A hand darts in.
 
 #background: ElevatorOpen  #character: Killer  #expression: NeutralLook  #speed: 0.08  #delay: 0.4  
@@ -134,13 +140,16 @@ He’s tallish, maybe late 20s. Clean-cut suit. Polished shoes. Looks pale.
 
 *   [look away] ->LookAway
 
-*   [stare at him] ->StarAtHim
+*   [stare at him] 
+->StarAtHim
 
 
 
 =LookAway
 #background look feet
+#character:off
 You shift your gaze to the screen. The elevator begins to descend.
+~lower(trust)
     ~confidence = 0
 -> chapter_2
 
@@ -152,6 +161,7 @@ You meet his eyes.
 
  #character: Killer #expression: SmileLook
 He smiles casually.
+~raise(trust)
 ~confidence = 1
     
     -> chapter_2
@@ -177,38 +187,45 @@ But suddenly, he speaks.
     ~ confidence = 0 
     ~ raise(trust)  
     #speaker: Male
+    #character: Killer  #expression:  NeutralLookAwayT
     "Home, huh? Must be nice."
     **[Wdym?] "What's that suposed to mean?"
     **[Hby?] "Where’re you off to then?"
     -- 
     #Speaker:Male
+    #character: Killer  #expression: Awkward
     "Ha... They roped me into delivering a few forms."
     
     #Speaker: Female
     "Oh..."
 
-*   {confidence >= 0}[bluntly]  "Only way to get out of this hell."
+*   {confidence >= 0}[blunt]  "Only way to get out of this hell."
     ~ confidence = 1
+    ~raise(delusion)
     #speaker: Male
-    [light chuckle] "True. So, what made you choose this job?"
+    #character: Killer  #expression:  OneEyeCloseLaugh
+    "True. So, what made you choose this job?"
     #speaker:Female
     "Only one that pays, really."
     #speaker:Male
+    #character: Killer  #expression:  CloseEyeLaugh
     "Pfft. Guess there wasn’t much choice, was there?"
     #speaker:Female
-    **[sarcastic]"Sounds like you had plenty of choices."
-    **[curious] "What about you?"
+    **[good 4 u]"Sounds like you had plenty of choices."
+    **[and you?] "And you?"
     --
     #speaker:Male
+    #character: Killer  #expression: Awkward
     "Choosing this job? No chance."
     
     
 
-*   {confidence > 0}[sarcastic] "What a thoughtful question."
+*   {confidence > 0}[rude] "What a stupid question."
     ~ confidence = 2
     ~ lower(trust)
     #speaker: Male
-    [chuckles] "Sharp tongue. Let’s hope it doesn’t get you into trouble."
+    #character: Killer  #expression: Speechless
+    "HA. Sharp tongue. Let’s hope it doesn’t get you into trouble."
     #speaker:Female
     **[sarcastic] Oh, yeah, I'm so scared.
     #speaker:Male
@@ -216,24 +233,30 @@ But suddenly, he speaks.
     #speaker:Female
     Sorry, rough day.
     #speaker:Male
-    [chuckles] "Haven't we all?"
+    #character: Killer  #expression: Awkward
+    "Haven't we all?"
     
     **[apologies] Sorry, rough day.
     #speaker:Male
-    [chuckles] "Haven't we all?"
+    #character: Killer  #expression: Awkward
+    "Haven't we all?"
     --
     
     
 -
+#character: Killer  #expression: SmileLookAway
 #speaker: Female
 "..."
+#character: Killer  #expression: NeutralLookAway
 #speaker: Male
 "..."
 #speaker: Male
-#character: Killer #expression:SmilePointUp  
+#character: Killer #expression:Doubt
 "...Hey, don’t you think this elevator—"
+"..."
+"..."
 
-#Killer #expression:SmileLookAway   
+#character: Killer  #expression: SmileLookAway   
 "...never mind."
 
 #speaker: Narrator
@@ -245,52 +268,61 @@ Perhaps he was about to say something important, but in the end, you don't reall
 
 === chapter_3
 
+#character:off
+#background: CheckMirror
 #speaker:Narrator #speed: 0.06
 You glance at the elevator mirror. The two of you stood there.
-
+#background: AllBlack
 You blink. 
 #ambient: stop
+#background: ReflectionStared
 Then—his reflection is staring at you.
 
 
-*   [blink] You blink a few more times. It’s gone again. 
-    ~ mid(delusion)
-
-*   [look closer] You squint at the reflection. It smiles at you.
-    ~ raise(delusion)
-
-*   [ignore] You step back, casually adjusting your bag.
+*   [blink]#background: ReflectionStared #background: LookCloser #background: IsGoneAgain
     ~ lower(delusion)
+You blink a few more times. It’s gone again. 
+   
+
+*   [look closer] #background: LookCloser
+    ~ up(delusion)
+You squint at the reflection. It smiles at you.
+   
+
+*   [ignore] 
+#background: Elevator2
+   
+You step back, casually adjusting your bag.
+  ~ down(delusion)  
 -
 
-#speaker: Male #character: Killer #expression:NeutralLookT  
+TODO: 
+#ambient: BothersomeLift
+#background: Elevator
+#speaker: Male #character: Killer #expression:Concern
 "You alright?"
 
-
-#character: Killer #expression:NeutralLook
 #speaker: Female
 
 *   [nod] "Yeah. Just tired."
-#speaker: Male #character: Killer #expression:SmilePointUp
-    ~ mid(trust)
+    ~ up(trust)
 
 *   [shrug] "Zoning out, I guess."
-#speaker: Male #character: Killer #expression:OneEyeCloseLaugh
     ~ raise(trust) 
+     ~ raise(delusion)
 
 *   [I'm fine] "Fine. Mirrors just mess with me sometimes."
-#speaker: Male #character: Killer #expression:CloseEyeLaugh
-    ~ mid(trust)
+    ~ down(trust)
     ~ raise(delusion) 
 -
 
-
+#speaker: Male #character: Killer #expression:SmilePointUp
 "I get that. Elevators can feel a bit... floaty."
 
 #speaker: Narrator 
 You smile faintly. He seems normal. Friendly, even.
 
-#character: Killer #expression:SmileLookAway
+#character: Killer #expression:HappyLookAway
 It’s quiet again, but it doesn’t feel too awkward.
 
 Just two people. 
@@ -302,31 +334,54 @@ Going down.
 === chapter_4
 
 The elevator dings again.#SFX: Ding #speaker: Narrator #speed: 0.08
-
+#Background: ElevatorThirdFloor
+#character:off
 You glance at the screen—third floor.
 
-"Well. Fun talk."#speaker: Male #character: Killer #expression:Smile1
-
-
-* {down(trust)} [quietly] "Mm." #speaker: Female  
+#speaker: Male #character: Killer #expression:SmileFist
+"Well. Fun talk."
+#speaker: Female  
+* {(delusion > trust)} [quietly] "Mm." //{down(trust)} 
     ~ lower(trust)
 
-* {mid(trust)} [neutral] "Take care." #speaker: Female  
+* [neutral] "Take care." //{mid(trust)} 
     ~ mid(trust)
 
-* {up(trust)} [polite] "See you around." #speaker: Female  
+*  {(delusion < trust)}[polite] "See you around." //{up(trust)}
     ~ raise(trust)
 -
 
+#character: Killer #expression:HappyLookAway
+
+#Background: ElevatorThirdFloorOpen
 #speaker: Narrator
 The doors open with a quiet sigh. 
 
-He steps out. For a moment, he turns to glance back.
+#speed: 0.1  #delay:1
+#Background:HeSmiled1
+#character: off
+#ambient:stop
+He steps out. 
+
+->hesmiled2
+=hesmiled2
+#Background:HeSmiled2
+For a moment, he turns to glance back.
 ~ UIVersion = 2
-And he smiles.
 
+
+#Background:HeSmiled3
+And he smiled.
+
+#Background:HeSmiled4
+...
+#Background:HeSmiled5
+...
+#Background:HeSmiled6
+...
+#Background:HeSmiled7
 Just that.
-
+#Background:AllBlack
 You're alone again.
 
 
@@ -340,25 +395,23 @@ You're alone again.
 
 You step into the elevator again. 
 
-It feels... familiar. Not comforting—just known.
+It feels... familiar.
 
 The doors begin to close, but they hesitate—like they're waiting.
 
-A hand slips in. Fingers, confident. Calm.
+A hand darts in. 
 
 He enters.
 
 
--> describe_man_round2
-
-= describe_man_round2 
-
-His suit is pristine again, but this time, there’s a faint crease at the collar. As if someone grabbed it.
+Everything'd the same.
+Except.
+You noticed there’s a faint crease at the collar. As if someone grabbed it.
 
 His eyes meet yours. Still polite. Still warm. But you think you saw something else—gone now.
 
-
-"Ah. We meet again. Funny how elevators have such good memory."#speaker:Male 
+#speaker:Male 
+"Ah. We meet again. Funny how elevators have such good memory."
 
 
 *  [smile politely]

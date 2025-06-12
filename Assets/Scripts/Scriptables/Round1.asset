@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Round1
   m_EditorClassIdentifier: 
   spotlightIntensity: 1
-  spotlightColor: {r: 1, g: 1, b: 1, a: 1}
-  spotlightOuterAngle: 45
-  spotlightInnerAngle: 25
-  globalLightIntensity: 1
-  globalLightColor: {r: 1, g: 1, b: 1, a: 1}
+  spotlightColor: {r: 1, g: 0.81568635, b: 0.56078434, a: 1}
+  spotlightOuterAngle: 205
+  spotlightInnerAngle: 70
+  globalLightIntensity: 0.5
+  globalLightColor: {r: 1, g: 0.81568635, b: 0.56078434, a: 1}
   globalVolume: {fileID: 0}
-  volumeProfile: {fileID: 11400000, guid: 4e7cb9c6b8f072540b0eef48fab312df, type: 2}
+  volumeProfile: {fileID: 11400000, guid: 90e45dc5f36d180489c6b62ab607c4fd, type: 2}

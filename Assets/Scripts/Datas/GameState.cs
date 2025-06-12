@@ -63,10 +63,13 @@ public static class GameState
     [Header("What version should the Interface be?")]
     public static int uiVersion = 1;
 
+    public static int trust;
+    public static int delusion;
 
 
     public static void SaveAll()
     {
+       
         PlayerPrefs.SetString("InkState", inkStateJSON);
 
         PlayerPrefs.SetString("LastBackground", lastBackground);
@@ -78,6 +81,10 @@ public static class GameState
         PlayerPrefs.SetString("ReturnPoint", returnPoint);
 
         PlayerPrefs.SetInt("UIVersion", uiVersion);
+
+
+        PlayerPrefs.SetInt("Trust", trust);
+        PlayerPrefs.SetInt("Delusion", delusion);
 
         PlayerPrefs.Save();
         //Debug.Log("GameState saved.");
@@ -92,6 +99,10 @@ public static class GameState
         lastSpeaker = PlayerPrefs.GetString("LastSpeaker", "");
         returnPoint = PlayerPrefs.GetString("ReturnPoint", "");
         uiVersion = PlayerPrefs.GetInt("UIVersion", 1);
+
+
+        trust = PlayerPrefs.GetInt("Trust", 5);      // fallback to INITIAL_SWING
+        delusion = PlayerPrefs.GetInt("Delusion", 5);
         //Debug.Log("GameState loaded.");
     }
 

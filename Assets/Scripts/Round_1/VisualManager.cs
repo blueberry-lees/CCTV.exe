@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class VisualManager : MonoBehaviour
 {
+
     [Header("Portraits")]
     public Image femalePortraitImage;
     public Image malePortraitImage;
@@ -12,20 +13,21 @@ public class VisualManager : MonoBehaviour
     [Header("Background")]
     public Image backgroundImage;
 
+    private string lastCharacter = "";
 
     private void Start()
     {
         femalePortraitImage.gameObject.SetActive(false);
         malePortraitImage.gameObject.SetActive(false);
     }
+
     public void ChangeCharacterExpression(string character, string expression)
     {
-        //if (character == "Narrator")
-        //{
-        //    femalePortraitImage.gameObject.SetActive(false);
-        //    malePortraitImage.gameObject.SetActive(false);
-        //    return;
-        //}
+        if (character.ToLower() == "off")
+        {
+            HideCharacter();
+            return;
+        }
 
         string path = $"Portraits/{character}/{expression}";
         Sprite portrait = Resources.Load<Sprite>(path);
@@ -43,19 +45,30 @@ public class VisualManager : MonoBehaviour
             case "You":
                 femalePortraitImage.sprite = portrait;
                 femalePortraitImage.gameObject.SetActive(true);
+                lastCharacter = character;
                 break;
 
             case "Killer":
                 malePortraitImage.sprite = portrait;
                 malePortraitImage.gameObject.SetActive(true);
+                lastCharacter = character;
                 break;
 
             default:
                 Debug.Log($"Unknown character: {character}");
                 break;
         }
-        
+    }
 
+    public void HideCharacter()
+    {
+        femalePortraitImage.gameObject.SetActive(false);
+        malePortraitImage.gameObject.SetActive(false);
+    }
+
+    public void ShowCharacter()
+    {
+        malePortraitImage.gameObject.SetActive(true);
     }
 
     public void ChangeEnvironmentBackground(string backgroundName)

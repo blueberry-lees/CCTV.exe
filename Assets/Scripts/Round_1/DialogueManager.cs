@@ -1,6 +1,7 @@
 ﻿using Ink.Runtime;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -35,7 +36,7 @@ public class DialogueManager : MonoBehaviour
     public GameObject exitPanel;
     bool isExitPanelOpen = false;
 
-    private Story story;
+    private Story inkStory;
     private bool isTyping = false;
     private bool skipTyping = false;
     private bool blockNextInput = false;
@@ -124,7 +125,7 @@ public class DialogueManager : MonoBehaviour
         string savedInkState = PlayerPrefs.GetString("InkState", "");
 
         // Initialize Ink story
-        story = new Story(currentInkJSON.text);
+        inkStory = new Story(currentInkJSON.text);
 
         //check if there's any return point/knot to go back to 
         CheckReturnPoint();
@@ -132,7 +133,7 @@ public class DialogueManager : MonoBehaviour
         // Load previous state if available
         if (!string.IsNullOrEmpty(savedInkState))
         {
-            story.state.LoadJson(savedInkState);
+            inkStory.state.LoadJson(savedInkState);
             Debug.Log("Restored story from saved state.");
 
             if (!string.IsNullOrEmpty(lastBackgroundTag))
@@ -146,17 +147,19 @@ public class DialogueManager : MonoBehaviour
         }
 
         // Init UI & story
-        choiceUI.Init(story, this);
+        choiceUI.Init(inkStory, this);
         LoadTypingSounds();
 
-        if (story.canContinue)
+        // ✅ Inject saved variables from GameState
+        inkStory.variablesState["trust"] = GameState.trust;
+        inkStory.variablesState["delusion"] = GameState.delusion;
+       
+
+        if (inkStory.canContinue)
         {
             ContinueStory();
         }
-        else
-        {
-            Debug.LogWarning("Ink story cannot continue from this point.");
-        }
+        
     }
 
     public void CheckReturnPoint()
@@ -165,21 +168,21 @@ public class DialogueManager : MonoBehaviour
         if (!string.IsNullOrEmpty(returnPoint))
         {
             Debug.Log("Jumping to knot: " + returnPoint);
-            story.ChoosePathString(returnPoint);
+            inkStory.ChoosePathString(returnPoint);
         }
     }
 
     public void ContinueStory()
     {
 
-        if (story.canContinue)
+        if (inkStory.canContinue)
         {
             SaveInkState();
-            currentLine = story.Continue().Trim();
+            currentLine = inkStory.Continue().Trim();
             GameState.AddLine(currentSpeaker ?? "Narrator", currentLine);
             GameState.SaveDialogueHistory(); //record this to dialogue history
 
-            List<string> tags = story.currentTags;
+            List<string> tags = inkStory.currentTags;
 
             HandleTags(tags);
 
@@ -190,15 +193,15 @@ public class DialogueManager : MonoBehaviour
 
             return;
         }
-        else if (!story.canContinue)
+        else if (!inkStory.canContinue)
         {
 
             //check what version to load to by fetching the story progress
             //and load scene accroding to the version
 
-            if (story.variablesState["UIVersion"] != null)
+            if (inkStory.variablesState["UIVersion"] != null)
             {
-                int uiV = (int)story.variablesState["UIVersion"];
+                int uiV = (int)inkStory.variablesState["UIVersion"];
 
                 Debug.Log("hey we got the version from ink, it's : " + uiV.ToString());
 
@@ -274,7 +277,7 @@ public class DialogueManager : MonoBehaviour
 
         isTyping = false;
 
-        if (story.currentChoices.Count > 0)
+        if (inkStory.currentChoices.Count > 0)
             choiceUI.DisplayChoices();
 
         tagTypingSpeed = -1f;
@@ -310,8 +313,19 @@ public class DialogueManager : MonoBehaviour
                     break;
 
                 case "character":
-                    lastCharacter = val;
-                    currentCharacter = val;
+                    if (val.ToLower() == "off")
+                    {
+                        lastCharacter = "off";
+                        currentCharacter = "off";
+                        visualManager.HideCharacter();
+                    }
+                    else
+                    {
+                        lastCharacter = val;
+                        currentCharacter = val;
+                        visualManager.ShowCharacter(); // Shows character sprite
+
+                    }
                     break;
 
                 case "expression":
@@ -389,35 +403,27 @@ public class DialogueManager : MonoBehaviour
 
     private void SaveInkState()
     {
-        if (story != null)
+        if (inkStory != null)
         {
-            GameState.inkStateJSON = story.state.ToJson();
+            GameState.inkStateJSON = inkStory.state.ToJson();
             GameState.lastBackground = lastBackgroundTag;
             GameState.lastCharacter = lastCharacter;
             GameState.lastExpression = lastExpressionTag;
             GameState.lastSpeaker = lastSpeakerTag;
+
+
+            // ✅ SAVE VARIABLES FROM INK
+            if (inkStory.variablesState.Contains("trust"))
+                GameState.trust = (int)inkStory.variablesState["trust"];
+            if (inkStory.variablesState.Contains("delusion"))
+                GameState.delusion = (int)inkStory.variablesState["delusion"];
+
 
             GameState.SaveAll(); // Assuming this commits to disk or serialization
         }
     }
 
 
-    void LoadPlayerPrefs()
-    {
-        //load saved values from player prefs in GameState
-        lastBackgroundTag = GameState.lastBackground;
-        lastCharacter = GameState.lastCharacter;
-        lastExpressionTag = GameState.lastExpression;
-        lastSpeakerTag = GameState.lastSpeaker;
-    }
-
-
-    void ResetPlayerPrefs()
-    {
-        PlayerPrefs.DeleteAll();
-        PlayerPrefs.Save();
-        Debug.Log("PlayerPrefs reset.");
-    }
 
     string SetReturnString(int uiVersion)
     {
@@ -483,7 +489,7 @@ public class DialogueManager : MonoBehaviour
             typingCoroutine = StartCoroutine(TypeText(currentLine));
         }
         
-        if (story.currentChoices.Count > 0)
+        if (inkStory.currentChoices.Count > 0)
         {
             choiceUI.DisplayChoices();
             choiceUI.SetChoicesInteractable(true);

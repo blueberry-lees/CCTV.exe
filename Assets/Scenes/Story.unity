@@ -1312,7 +1312,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7a9dcd7cc9fb1324aaf648eb098a1bae, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6dc8aa24819cf1c40ae9321cec3f80ef, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2048,9 +2048,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.49019608}
-  m_EffectDistance: {x: 10, y: 10}
-  m_UseGraphicAlpha: 1
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.6431373}
+  m_EffectDistance: {x: 5, y: 5}
+  m_UseGraphicAlpha: 0
 --- !u!1 &999504955
 GameObject:
   m_ObjectHideFlags: 0
@@ -2346,7 +2346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settingsList:
   - returnPointName: 
-    settingsAsset: {fileID: 11400000, guid: 47929143527836142bddb5e5850734da, type: 2}
+    settingsAsset: {fileID: 11400000, guid: 502029e7c95a7764f8276ae58dc8a36b, type: 2}
   - returnPointName: ROUND_2
     settingsAsset: {fileID: 11400000, guid: 5bcecad672a6a534e8bbe8bd14a54972, type: 2}
   spotlight: {fileID: 999504956}
@@ -3352,16 +3352,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2434425529989510587, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
+      propertyPath: dev_returnPoint
+      value: ROUND_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2434425529989510587, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
       propertyPath: dialogueHistory
       value: 
       objectReference: {fileID: 11400000, guid: 4288b3bcad4c1ed488f4bb250880b617, type: 2}
     - target: {fileID: 2434425529989510587, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
       propertyPath: isPlayerPrefsCleared
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2434425529989510587, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
       propertyPath: isPlyaerPrefsCleared
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2434425529989510587, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
+      propertyPath: overwritePrefsOnStart
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4264859154819434685, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
       propertyPath: m_Name
