@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class DialogueHistoryFileHandler
 {
-    private static string fileName = "DialogueHistory.txt";
+    private static string fileName = "Stenograph.txt";
 
     // Get the full file path for saving/loading
     private static string GetFilePath()
