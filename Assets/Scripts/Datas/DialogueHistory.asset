@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5ebf60d4fa8e174b9cf0fced3b0397e, type: 3}
   m_Name: DialogueHistory
   m_EditorClassIdentifier: 
-  dialogueLog: []
+  dialogueLines: []

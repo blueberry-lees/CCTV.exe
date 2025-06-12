@@ -5,7 +5,9 @@ using UnityEngine;
 public static class GameState
 {
     public static string inkStateJSON = "";
-    public static DialogueHistorySO dialogueHistory;//tester
+
+    public static List<DialogueLine> dialogueHistory = new();
+
 
     [Header("Last tags in ink")]
     public static string lastBackground = "";
@@ -54,7 +56,7 @@ public static class GameState
     public static void ResetAll()
     {
         PlayerPrefs.DeleteAll();
-        dialogueHistory.ClearLog();
+        //dialogueHistory.ClearLog();
         PlayerPrefs.Save();
         Debug.Log("GameState reset.");
     }
@@ -79,7 +81,18 @@ public static class GameState
         PlayerPrefs.Save();
     }
 
+    public static string GetDialogueHistoryAsText()
+    {
+        Debug.Log("Dialogue history count: " + dialogueHistory.Count); // <== test this
 
+        System.Text.StringBuilder sb = new();
+        foreach (var entry in dialogueHistory)
+        {
+            sb.AppendLine($"[{entry.timestamp}] {entry.speaker}: {entry.line}");
+        }
+        Debug.Log("what about here: " + dialogueHistory.Count); // <== test this
+        return sb.ToString();
+    }
 
 
     [Tooltip("This is just to remove the previous tags/sprites used")]

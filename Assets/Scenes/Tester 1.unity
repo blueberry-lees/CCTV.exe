@@ -1469,7 +1469,7 @@ GameObject:
   - component: {fileID: 269601013}
   - component: {fileID: 269601012}
   m_Layer: 5
-  m_Name: Profile text
+  m_Name: DialogueHistoryText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3307,6 +3307,7 @@ GameObject:
   - component: {fileID: 671007412}
   - component: {fileID: 671007411}
   - component: {fileID: 671007410}
+  - component: {fileID: 671007413}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -3331,7 +3332,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 50, y: 0}
-  m_SizeDelta: {x: -89.87, y: 126.48}
+  m_SizeDelta: {x: -89.87, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &671007410
 MonoBehaviour:
@@ -3353,9 +3354,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "===================\n||  [ CCTV.exe ] [v1.1]  ||\n===================\n\n>
-    Status:Recovered\n\r\n> Source: unknown\n\r\n> Integrity: Compromised\n\r\n>
-    Last Access: \u2588\u2593/\u2592\u2591/25\n\n\r"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 94798ddcff9d97e41b123d13306aafbd, type: 2}
   m_sharedMaterial: {fileID: -1542897710341055589, guid: 94798ddcff9d97e41b123d13306aafbd, type: 2}
@@ -3431,7 +3430,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 671007408}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
@@ -3446,6 +3445,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 671007408}
   m_CullTransparentMesh: 1
+--- !u!114 &671007413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 671007408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab4ce4a04d9ea6f4aba88b1fd0ff6714, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueHistory: {fileID: 11400000, guid: 4288b3bcad4c1ed488f4bb250880b617, type: 2}
+  historyText: {fileID: 671007410}
 --- !u!1 &681808300
 GameObject:
   m_ObjectHideFlags: 0
@@ -8713,8 +8726,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 470277901}
   m_HandleRect: {fileID: 470277900}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.6809926
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

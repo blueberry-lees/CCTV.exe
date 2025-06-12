@@ -180,7 +180,7 @@ public class DialogueManager : MonoBehaviour
         {
             SaveInkState();
             currentLine = story.Continue().Trim();
-            dialogueHistory.AddLine(currentLine); //record this to dialogue history
+            dialogueHistory.AddLine(currentSpeaker ?? "Narrator", currentLine); //record this to dialogue history
 
             List<string> tags = story.currentTags;
 

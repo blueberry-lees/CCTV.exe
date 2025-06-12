@@ -74,7 +74,7 @@ public class DialogueChoice : MonoBehaviour
                 if (choicesAreInteractable)
                 {
                     Debug.Log("Logging choice: " + displayedChoiceText); // Debug here
-                    dialogueHistory.AddLine(">> " + displayedChoiceText); // Log the chosen text when mouse clicked on choice
+                    dialogueHistory.AddLine("You", displayedChoiceText); // "You" is the #speaker in ink  // Log the chosen text when mouse clicked on choice
                     SelectChoice(choiceIndex);
                 }
                     
@@ -103,7 +103,8 @@ public class DialogueChoice : MonoBehaviour
         int choiceIndex = _inkStory.currentChoices[selectedChoiceIndex].index;
 
         string choiceText = _inkStory.currentChoices[selectedChoiceIndex].text;
-        dialogueHistory.AddLine(">> " + choiceText); // keybaord input to log history
+
+        dialogueHistory.AddLine("You", choiceText); // keybaord input to log history
 
         SelectChoice(choiceIndex);
     }

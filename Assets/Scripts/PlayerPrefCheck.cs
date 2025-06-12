@@ -81,7 +81,7 @@ public class PlayerPrefCheck : MonoBehaviour
         {
             Debug.Log("Clearing PREFS");
             PlayerPrefs.DeleteAll();
-            dialogueHistory.ClearLog(); //clear dialogue history
+            //dialogueHistory.ClearLog(); //clear dialogue history
             PlayerPrefs.Save();
             isPlayerPrefsCleared = false;
         }  

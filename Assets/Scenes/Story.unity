@@ -522,6 +522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec9bb238fb423084295fa371dae27063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogueHistory: {fileID: 11400000, guid: 4288b3bcad4c1ed488f4bb250880b617, type: 2}
   speakerText: {fileID: 703291666}
   dialogueText: {fileID: 1681324135}
   currentInkJSON: {fileID: 4900000, guid: 7ab8d1fbd2130624b883038326903890, type: 3}
@@ -669,6 +670,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8569e091708740942907538e1647c689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogueHistory: {fileID: 11400000, guid: 4288b3bcad4c1ed488f4bb250880b617, type: 2}
   selectedChoiceColor: {r: 0, g: 0, b: 0, a: 1}
   unselectedChoiceColor: {r: 1, g: 1, b: 1, a: 1}
   selectedBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
@@ -3311,8 +3313,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2434425529989510587, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
+      propertyPath: dialogueHistory
+      value: 
+      objectReference: {fileID: 11400000, guid: 4288b3bcad4c1ed488f4bb250880b617, type: 2}
+    - target: {fileID: 2434425529989510587, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
       propertyPath: isPlayerPrefsCleared
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2434425529989510587, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
       propertyPath: isPlyaerPrefsCleared

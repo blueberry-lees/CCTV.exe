@@ -7,12 +7,13 @@ public class DialogueHistoryViewer : MonoBehaviour
 {
 
     [SerializeField] private DialogueHistorySO dialogueHistory;
-    [HideInInspector][SerializeField] private TMP_Text historyText;
+    [SerializeField] private TMP_Text historyText;
 
 
     private void Awake()
     {
         historyText = GetComponent<TMP_Text>();
+        ShowHistory();
     }
     private void OnEnable()
     {
@@ -21,7 +22,8 @@ public class DialogueHistoryViewer : MonoBehaviour
 
     public void ShowHistory()
     {
-        historyText.text = dialogueHistory.GetLog();
+
+        historyText.text = GameState.GetDialogueHistoryAsText();
     }
 
     public void ClearHistory()
@@ -30,8 +32,5 @@ public class DialogueHistoryViewer : MonoBehaviour
         historyText.text = "";
     }
 
-    private void OnDisable()
-    {
-        ClearHistory();
-    }
+  
 }
