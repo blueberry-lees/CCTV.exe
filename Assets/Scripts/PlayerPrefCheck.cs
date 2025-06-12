@@ -7,6 +7,7 @@ public class PlayerPrefCheck : MonoBehaviour
 
     public static PlayerPrefCheck instance;
 
+    [SerializeField] private DialogueHistorySO dialogueHistory;
 
     [Header("Inspect only")]
 
@@ -80,6 +81,7 @@ public class PlayerPrefCheck : MonoBehaviour
         {
             Debug.Log("Clearing PREFS");
             PlayerPrefs.DeleteAll();
+            dialogueHistory.ClearLog(); //clear dialogue history
             PlayerPrefs.Save();
             isPlayerPrefsCleared = false;
         }  

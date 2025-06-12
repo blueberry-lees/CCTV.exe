@@ -5,7 +5,7 @@ using UnityEngine;
 public static class GameState
 {
     public static string inkStateJSON = "";
-
+    public static DialogueHistorySO dialogueHistory;//tester
 
     [Header("Last tags in ink")]
     public static string lastBackground = "";
@@ -54,6 +54,7 @@ public static class GameState
     public static void ResetAll()
     {
         PlayerPrefs.DeleteAll();
+        dialogueHistory.ClearLog();
         PlayerPrefs.Save();
         Debug.Log("GameState reset.");
     }

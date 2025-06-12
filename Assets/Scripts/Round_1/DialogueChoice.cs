@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class DialogueChoice : MonoBehaviour
 {
     private DialogueManager dialogueManager;
+    //dialogue history scriptable
+    [SerializeField] private DialogueHistorySO dialogueHistory;
 
     [Header("Choice Panel")]
     public Color selectedChoiceColor = Color.black;
@@ -23,7 +25,7 @@ public class DialogueChoice : MonoBehaviour
 
     private List<Button> choiceButtons = new();
     private int selectedChoiceIndex = 0;
-    private Story story;
+    private Story _inkStory;
     private bool choicesAreInteractable = true;
     private bool shouldRestoreChoices = false;
 
@@ -38,13 +40,13 @@ public class DialogueChoice : MonoBehaviour
 
     public void Init(Story story, DialogueManager manager)
     {
-        this.story = story;
+        this._inkStory = story;
         this.dialogueManager = manager;
     }
 
     public void DisplayChoices()
     {
-        if (story == null)
+        if (_inkStory == null)
         {
             Debug.LogError("DialogueChoice: Story is null. Did you forget to call Init()?");
             return;
@@ -52,11 +54,11 @@ public class DialogueChoice : MonoBehaviour
 
         ClearChoices();
 
-        foreach (Choice choice in story.currentChoices)
+        foreach (Choice choice in _inkStory.currentChoices)
         {
             GameObject choiceGO = Instantiate(choicePrefab, choicesContainer.transform);
             Button button = choiceGO.GetComponent<Button>();
-            TMP_Text choiceText = choiceGO.GetComponentInChildren<TMP_Text>(); // ✅ FIXED
+            TMP_Text choiceText = choiceGO.GetComponentInChildren<TMP_Text>(); // prefab must have text conponent in children
 
             if (button == null || choiceText == null)
             {
@@ -65,10 +67,17 @@ public class DialogueChoice : MonoBehaviour
             }
 
             choiceText.text = choice.text;
+            string displayedChoiceText = choice.text; // capture to avoid closure issue for dialogue history
             int choiceIndex = choice.index;
+
             button.onClick.AddListener(() => {
                 if (choicesAreInteractable)
+                {
+                    Debug.Log("Logging choice: " + displayedChoiceText); // Debug here
+                    dialogueHistory.AddLine(">> " + displayedChoiceText); // Log the chosen text when mouse clicked on choice
                     SelectChoice(choiceIndex);
+                }
+                    
             });
 
             choiceButtons.Add(button);
@@ -91,13 +100,17 @@ public class DialogueChoice : MonoBehaviour
     {
         if (!choicesAreInteractable || choiceButtons.Count == 0) return;
 
-        int choiceIndex = story.currentChoices[selectedChoiceIndex].index;
+        int choiceIndex = _inkStory.currentChoices[selectedChoiceIndex].index;
+
+        string choiceText = _inkStory.currentChoices[selectedChoiceIndex].text;
+        dialogueHistory.AddLine(">> " + choiceText); // keybaord input to log history
+
         SelectChoice(choiceIndex);
     }
 
     private void SelectChoice(int choiceIndex)
     {
-        story.ChooseChoiceIndex(choiceIndex);
+        _inkStory.ChooseChoiceIndex(choiceIndex);
         ClearChoices();
         dialogueManager.ContinueStory();
     }
@@ -133,7 +146,7 @@ public class DialogueChoice : MonoBehaviour
 
     public void RestoreChoicesIfNeeded()
     {
-        if (shouldRestoreChoices && story != null && story.currentChoices.Count > 0)
+        if (shouldRestoreChoices && _inkStory != null && _inkStory.currentChoices.Count > 0)
         {
             DisplayChoices();
         }
