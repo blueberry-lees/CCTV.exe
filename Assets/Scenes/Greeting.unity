@@ -1222,7 +1222,7 @@ MonoBehaviour:
   namePromptText: {fileID: 1378470619}
   nameInputField: {fileID: 423271266}
   introText: {fileID: 1283599252}
-  nextSceneName: Version1
+  nextSceneName: 
   confirmPanel: {fileID: 43483279}
   errorMessage: {fileID: 4031952889492849700}
 --- !u!114 &1197493730
@@ -1237,7 +1237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fec3456d5e72a5428d9c94b302903a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableResetKey: 1
+  enableResetKey: 0
   resetKey: 114
 --- !u!114 &1197493731
 MonoBehaviour:

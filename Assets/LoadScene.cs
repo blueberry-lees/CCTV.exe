@@ -10,6 +10,7 @@ public class LoadScene : MonoBehaviour
     public void LoadTheScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+        
     }
 
     public void LoadTheSceneAsync(string sceneName)
@@ -21,5 +22,14 @@ public class LoadScene : MonoBehaviour
     public void LoadTheSceneAdditive(string sceneName)
     {
         SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+    }
+
+    public void EmptyDialogueHistory(bool clear)
+    {
+        if (clear)
+        {
+            GameState.ClearDialogueHistory();
+        }
+        else return;
     }
 }

@@ -79,7 +79,7 @@ public class PlayerPrefCheck : MonoBehaviour
         {
             Debug.Log("Clearing PREFS");
             PlayerPrefs.DeleteAll();
-            //dialogueHistory.ClearLog(); //clear dialogue history
+            GameState.ClearDialogueHistory(); //clear dialogue history
             PlayerPrefs.Save();
             isPlayerPrefsCleared = false;
         }  

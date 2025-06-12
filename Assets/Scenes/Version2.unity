@@ -313,6 +313,18 @@ MonoBehaviour:
           m_StringArgument: Story
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1563680849}
+        m_TargetAssemblyTypeName: LoadScene, Assembly-CSharp
+        m_MethodName: EmptyDialogueHistory
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &42119853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2601,6 +2613,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: Story
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1563680849}
+        m_TargetAssemblyTypeName: LoadScene, Assembly-CSharp
+        m_MethodName: EmptyDialogueHistory
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &566308597
 MonoBehaviour:
@@ -5317,6 +5341,18 @@ MonoBehaviour:
           m_StringArgument: Story
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1563680849}
+        m_TargetAssemblyTypeName: LoadScene, Assembly-CSharp
+        m_MethodName: EmptyDialogueHistory
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &994039040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5639,6 +5675,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: Story
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1563680849}
+        m_TargetAssemblyTypeName: LoadScene, Assembly-CSharp
+        m_MethodName: EmptyDialogueHistory
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1041485555
 MonoBehaviour:
@@ -6329,6 +6377,18 @@ MonoBehaviour:
           m_StringArgument: Story
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1563680849}
+        m_TargetAssemblyTypeName: LoadScene, Assembly-CSharp
+        m_MethodName: EmptyDialogueHistory
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1180247157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6596,7 +6656,7 @@ GameObject:
   - component: {fileID: 1320594123}
   - component: {fileID: 1320594122}
   m_Layer: 5
-  m_Name: Button1
+  m_Name: ExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6664,7 +6724,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1320594123}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1563680849}
+        m_TargetAssemblyTypeName: LoadScene, Assembly-CSharp
+        m_MethodName: LoadTheScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: MainMenu
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1320594123
 MonoBehaviour:
   m_ObjectHideFlags: 0

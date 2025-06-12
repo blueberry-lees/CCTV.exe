@@ -123,13 +123,13 @@ public class NameUIController : MonoBehaviour
 
         // Display the real-time DateTime in the intro
         yield return StartCoroutine(TypeWriterEffect(dateTime + " ACCESSING MEMORY.LOG...\n", 0.03f));
-        yield return WaitForKeyPress(KeyCode.Space);
+        yield return WaitForAnyKeyOrLeftClick();
 
         yield return StartCoroutine(TypeWriterEffect(dateTime + " WELCOME, " + name + "\n", 0.03f));
-        yield return WaitForKeyPress(KeyCode.Space);
+        yield return WaitForAnyKeyOrLeftClick();
 
         yield return StartCoroutine(TypeWriterEffect(dateTime + " OBSERVATION BEGINS.", 0.03f));
-        yield return WaitForKeyPress(KeyCode.Space);
+        yield return WaitForAnyKeyOrLeftClick();
 
         // Save that player has now played
         PlayerPrefs.SetInt("hasPlayedBefore", 1);
@@ -144,11 +144,13 @@ public class NameUIController : MonoBehaviour
         string dateTime = DateTime.Now.ToString("[hh:mm tt]");
 
         yield return StartCoroutine(TypeWriterEffect(dateTime + " ACCESSING MEMORY.LOG...\n", 0.03f));
-        yield return WaitForKeyPress(KeyCode.Space);
+        yield return WaitForAnyKeyOrLeftClick();
+
         yield return StartCoroutine(TypeWriterEffect(dateTime + " WELCOME BACK, " + "<color=#FF0000>" + name + "</color>" + "\n", 0.03f));
-        yield return WaitForKeyPress(KeyCode.Space);
+        yield return WaitForAnyKeyOrLeftClick();
+
         yield return StartCoroutine(TypeWriterEffect(dateTime + " OBSERVATION RESUMED.", 0.03f));
-        yield return WaitForKeyPress(KeyCode.Space);
+        yield return WaitForAnyKeyOrLeftClick();
 
         LoadNextScene();
     }
@@ -164,6 +166,10 @@ public class NameUIController : MonoBehaviour
 
     void LoadNextScene()
     {
+        int uiVersion = PlayerPrefs.GetInt("UIVersion", 0);
+        Debug.Log("Loading next scene based on UIVersion: " + uiVersion);
+
+
         if (PlayerPrefs.GetInt("UIVersion", 0) <= 1)
         {
             Debug.Log("playerpref UIVerion is 1 THEREFORE VER.1");
@@ -192,5 +198,13 @@ public class NameUIController : MonoBehaviour
             Debug.LogWarning("Version not found");
         }
 
+    }
+
+
+    IEnumerator WaitForAnyKeyOrLeftClick()
+    {
+        yield return new WaitUntil(() =>
+            Input.anyKeyDown || Input.GetMouseButtonDown(0)
+        );
     }
 }

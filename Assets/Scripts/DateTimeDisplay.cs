@@ -21,6 +21,11 @@ public class DateTimeDisplay : MonoBehaviour
     public TimeFormat selectedFormat = TimeFormat.FullDateTime;
     public string customFormat = "yyyy/MM/dd HH:mm"; // Used when "Custom" is selected
 
+    private void Awake()
+    {
+        dateTimeText = GetComponent<TextMeshProUGUI>();
+    }
+
     void Update()
     {
         string format = GetFormat();
