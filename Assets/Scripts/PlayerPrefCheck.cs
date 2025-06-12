@@ -18,6 +18,7 @@ public class PlayerPrefCheck : MonoBehaviour
 
     public string returnPoint = "";
     public int uiVersion = 1;
+    public int fileConfirmed = 0;
 
     public int trust = 5;
     public int delusion = 5; ////////////////////////////
@@ -75,6 +76,8 @@ public class PlayerPrefCheck : MonoBehaviour
         returnPoint = PlayerPrefs.GetString("ReturnPoint", "");
         uiVersion = PlayerPrefs.GetInt("UIVersion", 1);
 
+
+        fileConfirmed = PlayerPrefs.GetInt("fileConfirmed", 0);
 
         trust = PlayerPrefs.GetInt("Trust", 5);      // fallback to INITIAL_SWING
         delusion = PlayerPrefs.GetInt("Delusion", 5);

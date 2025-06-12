@@ -7,27 +7,52 @@ using UnityEngine;
 
 public class CreepyTextInteraction : MonoBehaviour
 {
-    public GameObject proceedButton; // Assign in inspector
+    public GameObject creepyInteractionGroup; // Assign in inspector
+    public GameObject menuGroup;
+    public GameObject letsBegin;
+    public GameObject check;
+    public GameObject readMe;
     public TMP_Text responseText;    // Creepy message text UI (TMP)
 
     string fileName = "readme.txt";
     string filePath;
 
     string creepyPrompt =
-@"There are rules.
+        @"There are rules.
 
-Type OK anywhere and as much as you want to play the game.
+        Type OK anywhere to play the game.
 
-If you don't... well,
-you wouldn't like the alternative.
+        If you don't... well,
+        you wouldn't like the alternative.
 
-This file will remember.
-Remember to save this file when you're done. ";
+        This file will remember.
+        Save this file when you're done. ";
 
     void Start()
     {
+
+        StartCoroutine(WaitTime(2f));
+
+            if (PlayerPrefs.GetInt("fileConfirmed", 0) == 0)
+            {
+                creepyInteractionGroup.SetActive(true);
+                menuGroup.SetActive(false);
+                check.SetActive(false);
+        }
+            else
+            {
+                menuGroup.SetActive(true);
+                creepyInteractionGroup.SetActive(false);
+            }
+       
+
+
         // Use persistentDataPath instead of dataPath
         filePath = Path.Combine(Application.persistentDataPath, fileName);
+        if (!File.Exists(filePath))
+        {
+            check.gameObject.SetActive(false);
+        }
 
         // Log path so you can find the file
         UnityEngine.Debug.Log("Creepy text file path: " + filePath);
@@ -38,6 +63,7 @@ Remember to save this file when you're done. ";
         if (!File.Exists(filePath))
         {
             File.WriteAllText(filePath, creepyPrompt);
+            check.gameObject.SetActive(true);
         }
 
         Process.Start(new ProcessStartInfo()
@@ -54,8 +80,8 @@ Remember to save this file when you're done. ";
     {
         if (!File.Exists(filePath))
         {
-            responseText.text = "The file is missing.\nThat’s worse.";
-            return;
+            responseText.text = "The file is missing.\nYOU DELETED IT DIDN'T YOU. HERE. DO IT AGAIN.";
+            CreateAndOpenTextFile();
         }
 
         string fullContent = File.ReadAllText(filePath);
@@ -77,12 +103,17 @@ Remember to save this file when you're done. ";
         if (okCount >= 2)
         {
             PlayerPrefs.SetInt("fileConfirmed", 1);
-            proceedButton.SetActive(true);
+           
 
             responseText.text =
                 $"I saw it.\n{okCount} times.\n\n" +
                 "That’s... enthusiastic.\n" +
                 "Fine. We begin.";
+            
+
+            check.SetActive(false);
+            readMe.SetActive(false);
+            letsBegin.SetActive(true);
         }
         else
         {
@@ -93,4 +124,16 @@ Remember to save this file when you're done. ";
     }
 
 
+
+    public void LetsBegin()
+    {
+        menuGroup.SetActive(true);
+        creepyInteractionGroup.SetActive(false);
+    }
+
+
+    public IEnumerator WaitTime(float s)
+    {
+        yield return new WaitForSeconds(s); 
+    }
 }
