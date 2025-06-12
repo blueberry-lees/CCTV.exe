@@ -7,8 +7,7 @@ using UnityEngine.UI;
 public class DialogueChoice : MonoBehaviour
 {
     private DialogueManager dialogueManager;
-    //dialogue history scriptable
-    [SerializeField] private DialogueHistorySO dialogueHistory;
+
 
     [Header("Choice Panel")]
     public Color selectedChoiceColor = Color.black;
@@ -74,7 +73,8 @@ public class DialogueChoice : MonoBehaviour
                 if (choicesAreInteractable)
                 {
                     Debug.Log("Logging choice: " + displayedChoiceText); // Debug here
-                    dialogueHistory.AddLine("You", displayedChoiceText); // "You" is the #speaker in ink  // Log the chosen text when mouse clicked on choice
+                    GameState.AddLine("You", displayedChoiceText);
+                    GameState.SaveDialogueHistory();  // "You" is the #speaker in ink  // Log the chosen text when mouse clicked on choice
                     SelectChoice(choiceIndex);
                 }
                     
@@ -104,7 +104,8 @@ public class DialogueChoice : MonoBehaviour
 
         string choiceText = _inkStory.currentChoices[selectedChoiceIndex].text;
 
-        dialogueHistory.AddLine("You", choiceText); // keybaord input to log history
+        GameState.AddLine("You", choiceText);
+        GameState.SaveDialogueHistory(); // keybaord input to log history
 
         SelectChoice(choiceIndex);
     }

@@ -9,10 +9,6 @@ using UnityEngine.SceneManagement;
 public class DialogueManager : MonoBehaviour
 {
 
-    //dialogue history scriptable
-    [SerializeField] private DialogueHistorySO dialogueHistory;
-
-
     [Header("Script References")]
     private VisualManager visualManager;
     private DialogueChoice choiceUI;
@@ -180,7 +176,8 @@ public class DialogueManager : MonoBehaviour
         {
             SaveInkState();
             currentLine = story.Continue().Trim();
-            dialogueHistory.AddLine(currentSpeaker ?? "Narrator", currentLine); //record this to dialogue history
+            GameState.AddLine(currentSpeaker ?? "Narrator", currentLine);
+            GameState.SaveDialogueHistory(); //record this to dialogue history
 
             List<string> tags = story.currentTags;
 

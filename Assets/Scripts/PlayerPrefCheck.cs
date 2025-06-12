@@ -7,8 +7,6 @@ public class PlayerPrefCheck : MonoBehaviour
 
     public static PlayerPrefCheck instance;
 
-    [SerializeField] private DialogueHistorySO dialogueHistory;
-
     [Header("Inspect only")]
 
     public string playerName;
