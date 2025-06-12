@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InvertTextColorOnSelect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
+public class InvertTextColorOnSelect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler, IUpdateSelectedHandler
 {
     public TextMeshProUGUI targetText;
 
@@ -17,6 +17,11 @@ public class InvertTextColorOnSelect : MonoBehaviour, IPointerEnterHandler, IPoi
 
     public void OnSelect(BaseEventData eventData) => targetText.color = highlightedColor;
     public void OnDeselect(BaseEventData eventData) => targetText.color = normalColor;
+
+    public void OnUpdateSelected(BaseEventData eventData)
+    {
+        targetText.color = highlightedColor;
+    }
 
     public void ChangeTextToBlack()
     {
