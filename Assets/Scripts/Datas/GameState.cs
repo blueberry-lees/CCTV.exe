@@ -62,7 +62,7 @@ public static class GameState
 
     [Header("What version should the Interface be?")]
     public static int uiVersion = 1;
-    public static int fileConfirmed = 0;
+    //public static int fileConfirmed = 0;
 
     public static int trust;
     public static int delusion;
@@ -84,7 +84,7 @@ public static class GameState
 
         PlayerPrefs.SetInt("UIVersion", uiVersion);
 
-        PlayerPrefs.SetInt("fileConfirmed", 0);
+        //PlayerPrefs.SetInt("fileConfirmed", 0);
         PlayerPrefs.SetInt("Trust", trust);
         PlayerPrefs.SetInt("Delusion", delusion);
 
@@ -102,7 +102,7 @@ public static class GameState
         returnPoint = PlayerPrefs.GetString("ReturnPoint", "");
         uiVersion = PlayerPrefs.GetInt("UIVersion", 1);
 
-        fileConfirmed = PlayerPrefs.GetInt("fileConfirmed", 0);
+        //fileConfirmed = PlayerPrefs.GetInt("fileConfirmed", 0);
         trust = PlayerPrefs.GetInt("Trust", 5);      // fallback to INITIAL_SWING
         delusion = PlayerPrefs.GetInt("Delusion", 5);
         //Debug.Log("GameState loaded.");

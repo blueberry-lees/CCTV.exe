@@ -1820,11 +1820,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 1
-  m_ReferencePixelsPerUnit: 0
+  m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1080, y: 1080}
-  m_ScreenMatchMode: 1
-  m_MatchWidthOrHeight: 0
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -2242,8 +2242,8 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: 90e45dc5f36d180489c6b62ab607c4fd, type: 2}
+  weight: 0.358
+  sharedProfile: {fileID: 11400000, guid: 0852accb2eaf36a408457b8a8f17fdf8, type: 2}
 --- !u!4 &1171150909
 Transform:
   m_ObjectHideFlags: 0
@@ -3352,6 +3352,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2434425529989510587, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
+      propertyPath: returnPoint
+      value: ROUND_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2434425529989510587, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
       propertyPath: dev_returnPoint
       value: ROUND_2
       objectReference: {fileID: 0}
@@ -3361,7 +3365,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 4288b3bcad4c1ed488f4bb250880b617, type: 2}
     - target: {fileID: 2434425529989510587, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
       propertyPath: isPlayerPrefsCleared
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2434425529989510587, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
       propertyPath: isPlyaerPrefsCleared

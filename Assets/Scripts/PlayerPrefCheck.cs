@@ -62,6 +62,8 @@ public class PlayerPrefCheck : MonoBehaviour
     void Update()
     {
         UpdatePlayerPrefCheck();
+        UnityEngine.Debug.Log("Has played before: " + PlayerPrefs.GetInt("hasPlayedBefore", 0));
+        UnityEngine.Debug.Log("File confirmed: " + PlayerPrefs.GetInt("fileConfirmed", 0));
     }
 
     public void UpdatePlayerPrefCheck()

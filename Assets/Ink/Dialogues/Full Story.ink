@@ -245,7 +245,7 @@ But suddenly, he speaks.
     
 -
 #character: Killer  #expression: SmileLookAway
-#speaker: Female
+#speaker: Female 
 "..."
 #character: Killer  #expression: NeutralLookAway
 #speaker: Male
@@ -255,6 +255,7 @@ But suddenly, he speaks.
 "...Hey, don’t you think this elevator—"
 "..."
 "..."
+
 
 #character: Killer  #expression: SmileLookAway   
 "...never mind."
@@ -296,7 +297,6 @@ You step back, casually adjusting your bag.
   ~ down(delusion)  
 -
 
-TODO: 
 #ambient: BothersomeLift
 #background: Elevator
 #speaker: Male #character: Killer #expression:Concern
@@ -338,7 +338,7 @@ The elevator dings again.#SFX: Ding #speaker: Narrator #speed: 0.08
 #character:off
 You glance at the screen—third floor.
 
-#speaker: Male #character: Killer #expression:SmileFist
+#speaker: Male #character: Killer #expression:SmileFists
 "Well. Fun talk."
 #speaker: Female  
 * {(delusion > trust)} [quietly] "Mm." //{down(trust)} 
@@ -392,15 +392,23 @@ You're alone again.
 
 
 === ROUND_2 ===
-
+#charcter:off
+#background: AllBlack
+#ambient:OUOLoop
+<<<ENTERING UNFINISHED AREA, CONTINUE?
+*[YEY]
+*[NAY]
+-
+#background: ElevatorOpen2
 You step into the elevator again. 
 
 It feels... familiar.
 
 The doors begin to close, but they hesitate—like they're waiting.
 
+#background: HandOnDoorR3
 A hand darts in. 
-
+#background: AllBlack
 He enters.
 
 

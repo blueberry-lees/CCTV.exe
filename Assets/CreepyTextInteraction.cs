@@ -12,51 +12,81 @@ public class CreepyTextInteraction : MonoBehaviour
     public GameObject letsBegin;
     public GameObject check;
     public GameObject readMe;
+    public GameObject continueButton;
+
     public TMP_Text responseText;    // Creepy message text UI (TMP)
 
     string fileName = "readme.txt";
     string filePath;
 
     string creepyPrompt =
-        @"There are rules.
+@"There are rules.
 
-        Type OK anywhere to play the game.
+Type 'EMILY' AFTER these texts to play the game.
 
-        If you don't... well,
-        you wouldn't like the alternative.
+If you don't... well,
+    you wouldn't like the alternative.
 
-        This file will remember.
-        Save this file when you're done. ";
+This file will remember.
+    Save this file when you're done. ";
 
     void Start()
     {
+        // Save in the build folder (same as .exe)
+        filePath = Path.Combine(Path.GetDirectoryName(Application.dataPath), fileName);
+        UnityEngine.Debug.Log("Creepy text file path: " + filePath);
 
-        StartCoroutine(WaitTime(2f));
+        bool fileConfirmed = false;
 
-            if (PlayerPrefs.GetInt("fileConfirmed", 0) == 0)
+        if (File.Exists(filePath))
+        {
+            string fullContent = File.ReadAllText(filePath).ToLower();
+            int okCount = 0;
+            int index = 0;
+
+            while ((index = fullContent.IndexOf("emily", index)) != -1)
             {
-                creepyInteractionGroup.SetActive(true);
-                menuGroup.SetActive(false);
-                check.SetActive(false);
-        }
-            else
-            {
-                menuGroup.SetActive(true);
-                creepyInteractionGroup.SetActive(false);
+                okCount++;
+                index += 2;
             }
-       
 
+            if (okCount >= 2)
+            {
+                fileConfirmed = true;
+            }
+        }
 
-        // Use persistentDataPath instead of dataPath
-        filePath = Path.Combine(Application.persistentDataPath, fileName);
+        PlayerPrefs.SetInt("fileConfirmed", fileConfirmed ? 1 : 0);
+        PlayerPrefs.Save();
+
+        UnityEngine.Debug.Log("Has played before: " + PlayerPrefs.GetInt("hasPlayedBefore", 0));
+        UnityEngine.Debug.Log("File confirmed: " + PlayerPrefs.GetInt("fileConfirmed", 0));
+
+        if (!fileConfirmed)
+        {
+            StartCoroutine(WaitTime(2f));
+            creepyInteractionGroup.SetActive(true);
+            menuGroup.SetActive(false);
+            check.SetActive(false);
+        }
+        else
+        {
+            StartCoroutine(WaitTime(2f));
+            menuGroup.SetActive(true);
+            creepyInteractionGroup.SetActive(false);
+            continueButton.SetActive(PlayerPrefs.GetInt("hasPlayedBefore", 0) != 0);
+        }
+
         if (!File.Exists(filePath))
         {
             check.gameObject.SetActive(false);
         }
-
-        // Log path so you can find the file
-        UnityEngine.Debug.Log("Creepy text file path: " + filePath);
     }
+
+
+
+
+
 
     public void CreateAndOpenTextFile()
     {
@@ -94,7 +124,7 @@ public class CreepyTextInteraction : MonoBehaviour
         int okCount = 0;
         int index = 0;
 
-        while ((index = playerInput.IndexOf("ok", index)) != -1)
+        while ((index = playerInput.IndexOf("emily", index)) != -1)
         {
             okCount++;
             index += 2;
@@ -103,11 +133,12 @@ public class CreepyTextInteraction : MonoBehaviour
         if (okCount >= 2)
         {
             PlayerPrefs.SetInt("fileConfirmed", 1);
-           
+            PlayerPrefs.Save();
+
 
             responseText.text =
-                $"I saw it.\n{okCount} times.\n\n" +
-                "That’s... enthusiastic.\n" +
+                $"I saw it. You've typed them\n{okCount} times.\n\n" +
+                "Emily...\n" +
                 "Fine. We begin.";
             
 
@@ -118,8 +149,8 @@ public class CreepyTextInteraction : MonoBehaviour
         else
         {
             responseText.text =
-                $"You only wrote it {okCount} time(s)...\n" +
-                "One is not enough.\nTry again.";
+                $"You only wrote it {okCount} time...\n" +
+                "That's not enough.\nTry again.";
         }
     }
 
@@ -127,6 +158,14 @@ public class CreepyTextInteraction : MonoBehaviour
 
     public void LetsBegin()
     {
+        if (PlayerPrefs.GetInt("hasPlayedBefore", 0) != 0)
+        {
+            continueButton.SetActive(true);
+        }
+        else
+        {
+            continueButton.SetActive(false);
+        }
         menuGroup.SetActive(true);
         creepyInteractionGroup.SetActive(false);
     }
