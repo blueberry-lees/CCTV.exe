@@ -51,7 +51,7 @@ public class LightApplier2D : MonoBehaviour
 
     void Start()
     {
-        string returnPoint = PlayerPrefs.GetString("ReturnPoint", "");
+        string returnPoint = GameState.returnPoint;
 
         lightSettings = null;
         LightSettings2D defaultSettings = null;

@@ -1,11 +1,12 @@
 ﻿using Ink.Runtime;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.IO;
+using static VersionLogic;
 
 [RequireComponent(typeof(DialogueChoice))]
 public class DialogueManager : MonoBehaviour
@@ -198,6 +199,7 @@ public class DialogueManager : MonoBehaviour
     public void CheckReturnPoint()
     {
         string returnPoint = SaveSystem.LoadGame().returnPoint;
+        
         if (!string.IsNullOrEmpty(returnPoint))
         {
             Debug.Log("Jumping to knot: " + returnPoint);
@@ -205,63 +207,35 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+
     public void ContinueStory()
     {
-
         if (inkStory.canContinue)
         {
-            
             currentLine = inkStory.Continue().Trim();
             DialogueHistoryStatic.AddLine(currentSpeaker ?? "Narrator", currentLine);
-            DialogueHistoryStatic.SaveDialogueHistory(); //record this to dialogue history
+            DialogueHistoryStatic.SaveDialogueHistory();
 
             List<string> tags = inkStory.currentTags;
 
             HandleTags(tags);
-            SaveInkState();
+            SaveInkState(); // <-- Still needed here if story continues
 
             if (typingCoroutine != null)
                 StopCoroutine(typingCoroutine);
 
             typingCoroutine = StartCoroutine(TypeText(currentLine));
-
-            return;
         }
-        else if (!inkStory.canContinue)
+        else // End of story
         {
+            // Process UIVersion from Ink and update GameState
+            ProcessUIVersionFromInk();
 
-            //check what version to load to by fetching the story progress
-            //and load scene accroding to the version
+            // Clear old Ink state to prepare for new round
+            GameState.ResetStoryState();
 
-            if (inkStory.variablesState["UIVersion"] != null)
-            {
-                int uiV = (int)inkStory.variablesState["UIVersion"];
-
-                Debug.Log("hey we got the version from ink, it's : " + uiV.ToString());
-
-
-                SaveData data = SaveSystem.LoadGame();
-                data.uiVersion = uiV;
-                data.returnPoint = SetReturnString(uiV);
-                SaveSystem.SaveGame(data);
-                LoadInterfaceScene();
-
-            }
-            else
-            {
-                Debug.LogWarning("can't fetch UIVersion");
-            }
-
-                Debug.Log("Story can not continue, returning to interface");
-            return;
+            // Don't call SaveInkState here — story has ended, so we don’t want to save old ink JSON
         }
-        else
-        {
-            Debug.LogWarning("this shit is broken");
-            return; 
-        }
-        
- 
     }
 
     IEnumerator TypeText(string text)
@@ -461,43 +435,7 @@ public class DialogueManager : MonoBehaviour
         SaveSystem.SaveGame(data);
     }
 
-
-
-    string SetReturnString(int uiVersion)
-    {
-        return "ROUND_" + uiVersion;
-    }
-
-    [Tooltip("Loads the Interface scene based on the GameState.uiVersion value")]
-    public void LoadInterfaceScene()
-    {
-        switch (GameState.uiVersion)
-        {
-            case 1:
-                Debug.Log("UIVersion 1 → Version1");
-                SceneManager.LoadScene("Version1");
-                break;
-            case 2:
-                Debug.Log("UIVersion 2 → Version2");
-                SceneManager.LoadScene("Version2");
-                
-                break;
-            case 3:
-                Debug.Log("UIVersion 3 → Version3");
-                SceneManager.LoadScene("Version3");
-               
-                break;
-            case 4:
-                Debug.Log("UIVersion 4 → Version4");
-                GameState.returnPoint = "SPLIT_ENDING"; //rename
-                SceneManager.LoadScene("Version4");
-                break;
-            default:
-                Debug.LogWarning("Unknown UI Version");
-                break;
-        }
-    }
-
+    
     public void PauseDialogue()
     {
         isExitPanelOpen = true;
@@ -534,7 +472,34 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    public void ProcessUIVersionFromInk()
+    {
+        if (inkStory == null || inkStory.variablesState["UIVersion"] == null)
+        {
+            Debug.LogWarning("UIVersion not found in Ink.");
+            return;
+        }
 
+        int uiVersion = (int)inkStory.variablesState["UIVersion"];
+
+        if (!interfaceVersions.TryGetValue(uiVersion, out InterfaceVersionData versionData))
+        {
+            Debug.LogWarning($"Unknown UI version: {uiVersion}");
+            return;
+        }
+
+        // Save return point and version
+        SaveData data = SaveSystem.LoadGame() ?? new SaveData();
+        data.uiVersion = uiVersion;
+        data.returnPoint = versionData.returnPoint;
+        SaveSystem.SaveGame(data);
+
+        Debug.Log($"Processed UIVersion {uiVersion} → {versionData.sceneName}");
+        GameState.uiVersion = uiVersion;
+        GameState.returnPoint = versionData.returnPoint;
+
+        SceneManager.LoadScene(versionData.sceneName);
+    }
 
 
 }

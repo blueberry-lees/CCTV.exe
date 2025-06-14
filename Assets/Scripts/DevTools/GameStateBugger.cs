@@ -47,7 +47,7 @@ public class GameStateDebugger : MonoBehaviour
 
         if (resetSaveFile)
         {
-            GameState.ResetAll();
+            GameState.DebugReset();
             resetSaveFile = false;
         }
     }

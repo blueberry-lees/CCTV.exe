@@ -16,25 +16,29 @@ public static class GameState
     public static int trust = 5; //prob dont need this since is saved through ink BUT I'm not sure if having muiltiple return point will affect that so lets check this later
     public static int delusion = 5;//prob dont need this since is saved through ink BUT I'm not sure if having muiltiple return point will affect that so lets check this later
 
-    
+    public static bool hasStartedDialogue = false;
+    public static string lastLine = "";
 
     public static void SaveAll()
     {
         SaveData data = new SaveData()
         {
-            //strings
+            // strings
             inkStateJSON = inkStateJSON,
             playerName = playerName,
             returnPoint = returnPoint,
+            lastLine = lastLine,
 
-            //class
+            // class
             presentation = presentation,
 
-            //ints
+            // ints
             uiVersion = uiVersion,
             trust = trust,
             delusion = delusion,
 
+            // bool
+            hasStartedDialogue = hasStartedDialogue,
         };
 
         SaveSystem.SaveGame(data);
@@ -45,19 +49,53 @@ public static class GameState
         SaveData data = SaveSystem.LoadGame();
         if (data == null) return;
 
-        //strings
+        // strings
         inkStateJSON = data.inkStateJSON;
         returnPoint = data.returnPoint;
         playerName = data.playerName;
+        lastLine = data.lastLine;
 
-        //class
-        presentation = data.presentation ?? new GamePresentationData(); // fallback just in case
+        // class
+        presentation = data.presentation ?? new GamePresentationData();
 
-        //ints
+        // ints
         uiVersion = data.uiVersion;
         trust = data.trust;
         delusion = data.delusion;
-       
+
+        // bool
+        hasStartedDialogue = data.hasStartedDialogue;
+    }
+
+
+    public static void ResetStoryState()
+    {
+        inkStateJSON = "";
+        presentation = new GamePresentationData();
+        hasStartedDialogue = false;
+        lastLine = "";
+        SaveAll(); // Saves the cleared story state while keeping uiVersion, trust, etc.
+
+
+    }
+
+    public static void DebugReset()
+    {
+        inkStateJSON = "";
+        returnPoint = "";
+        playerName = "";
+
+        GamePresentationData presentation = new GamePresentationData();
+
+        uiVersion = 1;
+        trust = 5; //prob dont need this since is saved through ink BUT I'm not sure if having muiltiple return point will affect that so lets check this later
+        delusion = 5;//prob dont need this since is saved through ink BUT I'm not sure if having muiltiple return point will affect that so lets check this later
+
+        hasStartedDialogue = false;
+        lastLine = "";
+        SaveAll(); // Saves the cleared story state while keeping uiVersion, trust, etc.
+
+
     }
 
     public static void ResetAll()
