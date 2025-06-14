@@ -16,7 +16,7 @@ public class CreepyTextInteraction : MonoBehaviour
 
     public TMP_Text responseText;    // Creepy message text UI (TMP)
 
-    string fileName = "readme.txt";
+    string fileName = "passcode.txt";
     string filePath;
 
     string creepyPrompt =

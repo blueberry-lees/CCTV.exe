@@ -5,6 +5,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 [RequireComponent(typeof(DialogueChoice))]
 public class DialogueManager : MonoBehaviour
@@ -48,10 +49,14 @@ public class DialogueManager : MonoBehaviour
     private string currentCharacter = "Narrator";
     private string currentSpeaker = "Narrator";
 
-    private string lastBackgroundTag = "";
-    private string lastExpressionTag = "";
-    [HideInInspector] public string lastCharacter = "";
-    private string lastSpeakerTag = "";
+    
+    //private string lastAmbientTag = "";
+    //private string lastBackgroundTag = "";
+    //private string lastExpressionTag = "";
+
+    //public string lastCharacter = "";
+    //private string lastSpeakerTag = "";
+    [HideInInspector] public GamePresentationData presentationState = new GamePresentationData();
 
     private Dictionary<string, AudioClip> speakerTypingSounds = new();
     private Dictionary<string, string> speakerColors = new()
@@ -120,51 +125,79 @@ public class DialogueManager : MonoBehaviour
 
     public void LoadStory()
     {
-        // Load saved values from PlayerPrefs
-        GameState.LoadAll();
-        string savedInkState = PlayerPrefs.GetString("InkState", "");
+        SaveData data = SaveSystem.LoadGame();
+        if (data == null)
+        {
+            Debug.LogWarning("No save data found.");
+            return;
+        }
+
+        string savedInkState = data.inkStateJSON;
+
+        // ✅ FIX: assign the loaded presentation state here
+        presentationState = data.presentation ?? new GamePresentationData();
 
         // Initialize Ink story
         inkStory = new Story(currentInkJSON.text);
 
-        //check if there's any return point/knot to go back to 
+        // Return point logic
         CheckReturnPoint();
 
-        // Load previous state if available
+        // Load previous Ink state
         if (!string.IsNullOrEmpty(savedInkState))
         {
             inkStory.state.LoadJson(savedInkState);
             Debug.Log("Restored story from saved state.");
+            LoadVisuals();
 
-            if (!string.IsNullOrEmpty(lastBackgroundTag))
-                ChangeEnvironmentBackground(lastBackgroundTag);
-
-            if (!string.IsNullOrEmpty(lastSpeakerTag))
-                currentSpeaker = lastSpeakerTag; // FIXED
-
-            if (!string.IsNullOrEmpty(lastCharacter) && !string.IsNullOrEmpty(lastExpressionTag))
-                ChangeCharacterExpression(lastCharacter, lastExpressionTag);
         }
 
-        // Init UI & story
+        // Init UI and sounds
         choiceUI.Init(inkStory, this);
         LoadTypingSounds();
 
-        // ✅ Inject saved variables from GameState
-        inkStory.variablesState["trust"] = GameState.trust;
-        inkStory.variablesState["delusion"] = GameState.delusion;
-       
+        // Inject tracked variables
+        inkStory.variablesState["trust"] = data.trust;
+        inkStory.variablesState["delusion"] = data.delusion;
 
-        if (inkStory.canContinue)
+        //if (inkStory.canContinue)
+        //{
+        //    ContinueStory();
+        //}
+
+        // Restore last displayed line
+        if (!data.hasStartedDialogue || string.IsNullOrEmpty(data.lastLine))
         {
+            // Fresh game start — begin from the top
             ContinueStory();
         }
-        
+        else
+        {
+            // Returning to saved state — show the last line
+            currentLine = data.lastLine;
+            typingCoroutine = StartCoroutine(TypeText(currentLine));
+
+        }
+    }
+
+
+
+    public void LoadVisuals()
+    {
+        // Load visual/audio state
+        var p = presentationState;
+
+        if (!string.IsNullOrEmpty(p.lastAmbient)) PlayAmbient(p.lastAmbient);
+        if (!string.IsNullOrEmpty(p.lastBackground)) ChangeEnvironmentBackground(p.lastBackground);
+        if (!string.IsNullOrEmpty(p.lastSpeaker)) currentSpeaker = p.lastSpeaker;
+        if (!string.IsNullOrEmpty(p.lastCharacter) && !string.IsNullOrEmpty(p.lastExpression))
+            ChangeCharacterExpression(p.lastCharacter, p.lastExpression);
+
     }
 
     public void CheckReturnPoint()
     {
-        string returnPoint = GameState.returnPoint;
+        string returnPoint = SaveSystem.LoadGame().returnPoint;
         if (!string.IsNullOrEmpty(returnPoint))
         {
             Debug.Log("Jumping to knot: " + returnPoint);
@@ -177,14 +210,15 @@ public class DialogueManager : MonoBehaviour
 
         if (inkStory.canContinue)
         {
-            SaveInkState();
+            
             currentLine = inkStory.Continue().Trim();
-            GameState.AddLine(currentSpeaker ?? "Narrator", currentLine);
-            GameState.SaveDialogueHistory(); //record this to dialogue history
+            DialogueHistoryStatic.AddLine(currentSpeaker ?? "Narrator", currentLine);
+            DialogueHistoryStatic.SaveDialogueHistory(); //record this to dialogue history
 
             List<string> tags = inkStory.currentTags;
 
             HandleTags(tags);
+            SaveInkState();
 
             if (typingCoroutine != null)
                 StopCoroutine(typingCoroutine);
@@ -206,12 +240,11 @@ public class DialogueManager : MonoBehaviour
                 Debug.Log("hey we got the version from ink, it's : " + uiV.ToString());
 
 
-                    GameState.uiVersion = uiV;
-                    GameState.ResetStoryData();
-                    GameState.returnPoint = SetReturnString(uiV);
-                    GameState.SaveVersion();
-                    //GameState.SaveAll();
-                    LoadInterfaceScene();
+                SaveData data = SaveSystem.LoadGame();
+                data.uiVersion = uiV;
+                data.returnPoint = SetReturnString(uiV);
+                SaveSystem.SaveGame(data);
+                LoadInterfaceScene();
 
             }
             else
@@ -307,7 +340,7 @@ public class DialogueManager : MonoBehaviour
             switch (key)
             {
                 case "speaker":
-                    lastSpeakerTag = val;
+                    presentationState.lastCharacter = val;
                     speakerText.text = val;
                     currentSpeaker = val;
                     break;
@@ -315,13 +348,13 @@ public class DialogueManager : MonoBehaviour
                 case "character":
                     if (val.ToLower() == "off")
                     {
-                        lastCharacter = "off";
+                        presentationState.lastCharacter = "off";
                         currentCharacter = "off";
                         visualManager.HideCharacter();
                     }
                     else
                     {
-                        lastCharacter = val;
+                        presentationState.lastCharacter = val;
                         currentCharacter = val;
                         visualManager.ShowCharacter(); // Shows character sprite
 
@@ -329,12 +362,12 @@ public class DialogueManager : MonoBehaviour
                     break;
 
                 case "expression":
-                    lastExpressionTag = val;
+                    presentationState.lastExpression = val;
                     ChangeCharacterExpression(currentCharacter, val);
                     break;
 
                 case "background":
-                    lastBackgroundTag = val;
+                    presentationState.lastBackground = val;
                     ChangeEnvironmentBackground(val);
                     break;
 
@@ -364,6 +397,7 @@ public class DialogueManager : MonoBehaviour
         {
             ambientAudio.Stop();
             ambientAudio.clip = null;
+            presentationState.lastAmbient = ""; // clear lastAmbient if stopped
             return;
         }
 
@@ -375,14 +409,15 @@ public class DialogueManager : MonoBehaviour
                 ambientAudio.clip = clip;
                 ambientAudio.loop = true;
                 ambientAudio.Play();
+                presentationState.lastAmbient = clipName; // Track last ambient played
             }
         }
         else
         {
             Debug.LogWarning($"Ambient audio not found: {clipName}");
         }
-
     }
+
 
     void PlaySFX(string clipName)
     {
@@ -403,24 +438,27 @@ public class DialogueManager : MonoBehaviour
 
     private void SaveInkState()
     {
-        if (inkStory != null)
-        {
-            GameState.inkStateJSON = inkStory.state.ToJson();
-            GameState.lastBackground = lastBackgroundTag;
-            GameState.lastCharacter = lastCharacter;
-            GameState.lastExpression = lastExpressionTag;
-            GameState.lastSpeaker = lastSpeakerTag;
+        if (inkStory == null) return;
 
+        SaveData data = SaveSystem.LoadGame();
+        if (data == null)
+            data = new SaveData(); // fallback if no previous save
 
-            // ✅ SAVE VARIABLES FROM INK
-            if (inkStory.variablesState.Contains("trust"))
-                GameState.trust = (int)inkStory.variablesState["trust"];
-            if (inkStory.variablesState.Contains("delusion"))
-                GameState.delusion = (int)inkStory.variablesState["delusion"];
+        data.inkStateJSON = inkStory.state.ToJson();
 
+        // Store presentation data
+        data.presentation = presentationState;
+        data.lastLine = currentLine;
+        // Save Ink variables
+        if (inkStory.variablesState.Contains("trust"))
+            data.trust = (int)inkStory.variablesState["trust"];
 
-            GameState.SaveAll(); // Assuming this commits to disk or serialization
-        }
+        if (inkStory.variablesState.Contains("delusion"))
+            data.delusion = (int)inkStory.variablesState["delusion"];
+
+        data.hasStartedDialogue = true;
+
+        SaveSystem.SaveGame(data);
     }
 
 

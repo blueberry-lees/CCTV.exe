@@ -563,7 +563,12 @@ MonoBehaviour:
   sfxAudio: {fileID: 1611546671}
   ambientAudio: {fileID: 1549010797}
   exitPanel: {fileID: 7072751597418382664}
-  lastCharacter: 
+  presentationState:
+    lastBackground: 
+    lastCharacter: 
+    lastExpression: 
+    lastSpeaker: 
+    lastAmbient: 
 --- !u!82 &305486186
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1111,8 +1116,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4286282619
+  m_fontColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1312,7 +1317,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6dc8aa24819cf1c40ae9321cec3f80ef, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 71bbd1b3c85adb24385b9c9026225340, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2282,6 +2287,7 @@ GameObject:
   - component: {fileID: 1283850733}
   - component: {fileID: 1283850732}
   - component: {fileID: 1283850734}
+  - component: {fileID: 1283850735}
   m_Layer: 0
   m_Name: Task_Manager
   m_TagString: Untagged
@@ -2328,6 +2334,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 380aee0a6328c2e4fb49c34d7481de2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1283850735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283850731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c20f96f25164b0641934cb643a913327, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inkStateJSON: 
+  playerName: 
+  returnPoint: 
+  uiVersion: 1
+  trust: 5
+  delusion: 5
+  lastBackground: 
+  lastCharacter: 
+  lastExpression: 
+  lastSpeaker: 
+  lastAmbient: 
+  loadFromSave: 0
+  saveToFile: 0
+  resetSaveFile: 0
 --- !u!1 &1365858006
 GameObject:
   m_ObjectHideFlags: 0
@@ -2593,7 +2625,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -2607,7 +2639,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1447206589}
   m_OnClick:
     m_PersistentCalls:
@@ -3378,7 +3410,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 4288b3bcad4c1ed488f4bb250880b617, type: 2}
     - target: {fileID: 2434425529989510587, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
       propertyPath: isPlayerPrefsCleared
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2434425529989510587, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
       propertyPath: isPlyaerPrefsCleared

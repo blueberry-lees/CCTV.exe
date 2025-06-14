@@ -15,11 +15,7 @@ public class VisualManager : MonoBehaviour
 
     private string lastCharacter = "";
 
-    private void Start()
-    {
-        femalePortraitImage.gameObject.SetActive(false);
-        malePortraitImage.gameObject.SetActive(false);
-    }
+ 
 
     public void ChangeCharacterExpression(string character, string expression)
     {
@@ -76,9 +72,18 @@ public class VisualManager : MonoBehaviour
         Sprite bgSprite = Resources.Load<Sprite>($"Backgrounds/{backgroundName}");
         if (bgSprite != null)
         {
-            backgroundImage.sprite = bgSprite;
-            backgroundImage.gameObject.SetActive(false);
-            backgroundImage.gameObject.SetActive(true);
+         
+            if (backgroundImage.sprite != bgSprite)
+            {
+                backgroundImage.sprite = bgSprite;
+                backgroundImage.gameObject.SetActive(false);
+                backgroundImage.gameObject.SetActive(true);
+            }
+            else
+            {
+                return;
+            }
+                
         }
         else
         {

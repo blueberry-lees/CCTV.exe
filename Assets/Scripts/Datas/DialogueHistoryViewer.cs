@@ -12,26 +12,26 @@ public class DialogueHistoryViewer : MonoBehaviour
         historyText = GetComponent<TMP_Text>();
 
         // Load saved history from file
-        GameState.LoadDialogueHistory();
+        DialogueHistoryStatic.LoadDialogueHistory();
         ShowHistory();
     }
 
     private void OnEnable()
     {
-        GameState.LoadDialogueHistory(); // Re-load in case it changed elsewhere
+        DialogueHistoryStatic.LoadDialogueHistory(); // Re-load in case it changed elsewhere
         ShowHistory();
     }
 
     public void ShowHistory()
     {
         if (historyText != null)
-            historyText.text = GameState.GetDialogueHistoryAsText();
+            historyText.text = DialogueHistoryStatic.GetDialogueHistoryAsText();
     }
 
     public void ClearHistory()
     {
-        GameState.ClearDialogueHistory();
-        GameState.SaveDialogueHistory(); // Save the cleared state
+        DialogueHistoryStatic.ClearDialogueHistory();
+        DialogueHistoryStatic.SaveDialogueHistory(); // Save the cleared state
 
         if (historyText != null)
             historyText.text = "";

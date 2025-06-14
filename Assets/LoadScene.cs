@@ -30,7 +30,7 @@ public class LoadScene : MonoBehaviour
     {
         if (clear)
         {
-            GameState.ClearDialogueHistory();
+            DialogueHistoryStatic.ClearDialogueHistory();
         }
         else return;
     }

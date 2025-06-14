@@ -93,7 +93,7 @@ public class PlayerPrefCheck : MonoBehaviour
         {
             Debug.LogWarning("Clearing ALL PlayerPrefs...");
             PlayerPrefs.DeleteAll();
-            GameState.ClearDialogueHistory(); // optional, if you have this
+            DialogueHistoryStatic.ClearDialogueHistory(); // optional, if you have this
             PlayerPrefs.Save();
             isPlayerPrefsCleared = false;
         }

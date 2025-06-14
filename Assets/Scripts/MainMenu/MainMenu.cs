@@ -26,7 +26,7 @@ public class MainMenu : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
-        GameState.ClearDialogueHistory();
+        DialogueHistoryStatic.ClearDialogueHistory();
         SceneManager.LoadScene(nextScene);
     }
 
