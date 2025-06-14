@@ -24,24 +24,8 @@ CONST INITIAL_SWING = 5
 === function raise(ref x)
     ~ x = x + 10
 
-=== function elevate(ref x)
-    ~ raise(x)
-    ~ raise(x)
-    ~ raise(x)
-
 === function lower(ref x)
     ~ x = x + 1 
-
-=== function ditch(ref x) 
-    ~ lower(x) 
-    ~ lower(x) 
-    ~ lower(x)
-
-=== function demolish(ref x)
-    ~ x = x + 2
-
-=== function escalate(ref x)
-    ~ x = x + (2 * 100)
 
 === function upness(x)
     ~ return x / 10
@@ -58,9 +42,6 @@ CONST INITIAL_SWING = 5
 === function down(x)
     ~ return swing_ready(x) && (6 * upness(x) <= downness(x) * 4)
 
-=== function low(x)
-    ~ return swing_ready(x) && (9 * upness(x) <= downness(x) * 1)
-
 === function mid(x)
     ~ return (not up(x) && not down(x))
 -
@@ -73,13 +54,12 @@ CONST INITIAL_SWING = 5
 VAR speed = 0.05
 VAR delay = 0.1
 
-VAR progress = ""
 
 VAR UIVersion = 1
 
 VAR trust = INITIAL_SWING
 VAR delusion = INITIAL_SWING
-//VAR guilt = INITIAL_SWING
+
 
 //var for choices
 
@@ -88,17 +68,13 @@ VAR refuseToStab = false
 VAR stabbed_status = ""
 VAR confidence = 0
 
-//EXTERNAL OnRoundEnd(roundNumber)
-//EXTERNAL OnRoundStart(roundNumber)
-
-LIST ending = (none), A, B, C, D
-
 
 //
 // Content
 //
 === Round_1
 ~ UIVersion = 1
+#character: off
 #speaker: Narrator
 #background: AllBlack
 Which direction are you heading?
@@ -851,7 +827,7 @@ Your pulse jumps.
 
     *   [I’m losing grip…]
         Time bends here. Like the walls are too close. Your breath fogs. But it’s not cold.
-        ~ elevate(delusion)
+        ~ high(delusion)
         -> man_speaks
 
 

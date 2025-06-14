@@ -15,7 +15,7 @@ public class VisualManager : MonoBehaviour
 
     private string lastCharacter = "";
 
- 
+
 
     public void ChangeCharacterExpression(string character, string expression)
     {

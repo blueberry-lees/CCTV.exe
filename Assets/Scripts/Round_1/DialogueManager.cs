@@ -46,7 +46,7 @@ public class DialogueManager : MonoBehaviour
     private Coroutine typingCoroutine; //to deal with pause and resume to typetext
 
 
-    private string currentCharacter = "Narrator";
+    private string currentCharacter = "";
     private string currentSpeaker = "Narrator";
 
     
@@ -340,7 +340,7 @@ public class DialogueManager : MonoBehaviour
             switch (key)
             {
                 case "speaker":
-                    presentationState.lastCharacter = val;
+                    presentationState.lastSpeaker = val;
                     speakerText.text = val;
                     currentSpeaker = val;
                     break;
