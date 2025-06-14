@@ -1,0 +1,9 @@
+There are rules.
+
+Type 'EMILY' AFTER these texts to play the game.
+
+If you don't... well,
+    you wouldn't like the alternative.
+
+This file will remember.
+    Save this file when you're done. 
