@@ -1786,7 +1786,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2434425529989510587, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
       propertyPath: isPlayerPrefsCleared
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2434425529989510587, guid: e17209d7cfa8e464c85a9dd11c92b403, type: 3}
       propertyPath: isPlyaerPrefsCleared
@@ -2148,6 +2148,7 @@ GameObject:
   - component: {fileID: 1197493727}
   - component: {fileID: 1197493735}
   - component: {fileID: 1197493736}
+  - component: {fileID: 1197493737}
   m_Layer: 0
   m_Name: TaskManager
   m_TagString: Untagged
@@ -2203,6 +2204,18 @@ MonoBehaviour:
   readMe: {fileID: 1811439952}
   continueButton: {fileID: 781938628}
   responseText: {fileID: 1121882685}
+--- !u!114 &1197493737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197493725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 380aee0a6328c2e4fb49c34d7481de2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1211268583
 GameObject:
   m_ObjectHideFlags: 0
