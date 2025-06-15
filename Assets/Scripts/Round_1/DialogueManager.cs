@@ -106,7 +106,7 @@ public class DialogueManager : MonoBehaviour
 
         if (isTyping)
         {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.Return) || Input.GetMouseButton(0))
                 skipTyping = true;
             return;
         }
@@ -115,11 +115,11 @@ public class DialogueManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.UpArrow)) choiceUI.NavigateChoice(-1);
             else if (Input.GetKeyDown(KeyCode.DownArrow)) choiceUI.NavigateChoice(1);
-            else if (Input.GetKeyDown(KeyCode.Return)) choiceUI.ChooseSelectedChoice();
+            else if (Input.GetKey(KeyCode.Return)) choiceUI.ChooseSelectedChoice();
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.Return) || Input.GetMouseButton(0))
             ContinueStory();
     }
 
@@ -161,10 +161,20 @@ public class DialogueManager : MonoBehaviour
         inkStory.variablesState["trust"] = data.trust;
         inkStory.variablesState["delusion"] = data.delusion;
 
-        //if (inkStory.canContinue)
-        //{
-        //    ContinueStory();
-        //}
+        if (GameState.choicesMadeList != null && GameState.choicesMadeList.Count > 0)
+        {
+            var list = new Ink.Runtime.InkList("all_directions", inkStory);
+            foreach (var entry in GameState.choicesMadeList)
+            {
+                var item = new Ink.Runtime.InkListItem("all_directions." + entry);
+                list.Add(item, 1); // Arbitrary value
+            }
+
+            inkStory.variablesState["choices_made"] = list;
+
+            Debug.Log("Restored choices_made with: " + string.Join(", ", GameState.choicesMadeList));
+        }
+
 
         // Restore last displayed line
         if (!data.hasStartedDialogue || string.IsNullOrEmpty(data.lastLine))
@@ -424,6 +434,19 @@ public class DialogueManager : MonoBehaviour
         data.presentation = presentationState;
         data.lastLine = currentLine;
         // Save Ink variables
+
+        if (inkStory.variablesState["choices_made"] is Ink.Runtime.InkList listVal)
+        {
+            var savedList = new List<string>();
+            foreach (var item in listVal)
+            {
+                savedList.Add(item.Key.itemName); // e.g., "upDirection", "stay", etc.
+            }
+
+            data.choicesMadeList = savedList;
+            GameState.choicesMadeList = new List<string>(savedList);
+        }
+
         if (inkStory.variablesState.Contains("trust"))
             data.trust = (int)inkStory.variablesState["trust"];
 

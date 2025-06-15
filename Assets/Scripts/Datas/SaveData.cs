@@ -1,7 +1,11 @@
+using System.Collections.Generic;
+
 [System.Serializable]
 public class SaveData
 {
     public string inkStateJSON;
+
+    public List<string> choicesMadeList = new List<string>();
 
     public GamePresentationData presentation = new GamePresentationData();
 

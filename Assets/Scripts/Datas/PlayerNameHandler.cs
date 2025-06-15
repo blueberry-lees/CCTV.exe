@@ -25,10 +25,4 @@ public static class PlayerNameHandler
         return !string.IsNullOrEmpty(playerName);
     }
 
-    public static void ResetPlayerPrefs()
-    {
-        PlayerPrefs.DeleteAll();
-        PlayerPrefs.Save();
-        UnityEngine.Debug.LogWarning("PlayerPrefs have been reset.");
-    }
 }

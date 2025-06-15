@@ -2204,6 +2204,28 @@ MonoBehaviour:
   readMe: {fileID: 1811439952}
   continueButton: {fileID: 781938628}
   responseText: {fileID: 1121882685}
+  failureResponses:
+  - minOkCount: 0
+    maxOkCount: 0
+    attemptNumber: 1
+    message: Hmm...Did you forget how to save a file? Should I teach you how to do
+      that?
+  - minOkCount: 0
+    maxOkCount: 0
+    attemptNumber: 2
+    message: You still haven't done anything.Is what I said really that complicated?
+  - minOkCount: 0
+    maxOkCount: 0
+    attemptNumber: 3
+    message: Seriously? Not even a typo of it?Are you pretending to be dumb?
+  - minOkCount: 0
+    maxOkCount: 0
+    attemptNumber: 4
+    message: Are you scared or something?
+  - minOkCount: 0
+    maxOkCount: 0
+    attemptNumber: 5
+    message: "You\u2019re testing me. Wouldn\u2019t recommend that."
 --- !u!114 &1197493737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3367,6 +3389,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1857702358}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!222 &1811439957
 CanvasRenderer:

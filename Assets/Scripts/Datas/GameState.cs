@@ -10,11 +10,14 @@ public static class GameState
     public static string returnPoint = "";
     public static string playerName = "";
 
+
+
     public static GamePresentationData presentation = new GamePresentationData();
    
     public static int uiVersion = 1;
     public static int trust = 5; //prob dont need this since is saved through ink BUT I'm not sure if having muiltiple return point will affect that so lets check this later
     public static int delusion = 5;//prob dont need this since is saved through ink BUT I'm not sure if having muiltiple return point will affect that so lets check this later
+    public static List<string> choicesMadeList = new List<string>();
 
     public static bool hasStartedDialogue = false;
     public static string lastLine = "";
@@ -36,6 +39,7 @@ public static class GameState
             uiVersion = uiVersion,
             trust = trust,
             delusion = delusion,
+            choicesMadeList = choicesMadeList,
 
             // bool
             hasStartedDialogue = hasStartedDialogue,
@@ -62,6 +66,7 @@ public static class GameState
         uiVersion = data.uiVersion;
         trust = data.trust;
         delusion = data.delusion;
+        choicesMadeList = data.choicesMadeList ?? new List<string>();
 
         // bool
         hasStartedDialogue = data.hasStartedDialogue;
@@ -70,7 +75,7 @@ public static class GameState
 
     public static void ResetStoryState()
     {
-        inkStateJSON = "";
+        //inkStateJSON = "";
         presentation = new GamePresentationData();
         hasStartedDialogue = false;
         lastLine = "";
@@ -90,6 +95,8 @@ public static class GameState
         uiVersion = 1;
         trust = 5; //prob dont need this since is saved through ink BUT I'm not sure if having muiltiple return point will affect that so lets check this later
         delusion = 5;//prob dont need this since is saved through ink BUT I'm not sure if having muiltiple return point will affect that so lets check this later
+        GameState.choicesMadeList = new List<string>();
+
 
         hasStartedDialogue = false;
         lastLine = "";

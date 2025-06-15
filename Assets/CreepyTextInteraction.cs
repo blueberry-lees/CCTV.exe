@@ -19,6 +19,12 @@ public class CreepyTextInteraction : MonoBehaviour
     string fileName = "passcode.txt";
     string filePath;
 
+
+    public List<FailureResponse> failureResponses;
+
+    private int failedEditAttempts = 0;
+    private string lastPlayerInput = "";
+
     string creepyPrompt =
 @"There are rules.
 
@@ -59,8 +65,8 @@ This file will remember.
         PlayerPrefs.SetInt("fileConfirmed", fileConfirmed ? 1 : 0);
         PlayerPrefs.Save();
 
-        UnityEngine.Debug.Log("Has played before: " + PlayerPrefs.GetInt("hasPlayedBefore", 0));
-        UnityEngine.Debug.Log("File confirmed: " + PlayerPrefs.GetInt("fileConfirmed", 0));
+        //UnityEngine.Debug.Log("Has played before: " + PlayerPrefs.GetInt("hasPlayedBefore", 0));
+        //UnityEngine.Debug.Log("File confirmed: " + PlayerPrefs.GetInt("fileConfirmed", 0));
 
         if (!fileConfirmed)
         {
@@ -77,10 +83,10 @@ This file will remember.
             continueButton.SetActive(PlayerPrefs.GetInt("hasPlayedBefore", 0) != 0);
         }
 
-        if (!File.Exists(filePath))
-        {
-            check.gameObject.SetActive(false);
-        }
+        //if (!File.Exists(filePath))
+        //{
+        //    check.gameObject.SetActive(false);
+        //}
     }
 
 
@@ -110,8 +116,10 @@ This file will remember.
     {
         if (!File.Exists(filePath))
         {
-            responseText.text = "The file is missing.\nYOU DELETED IT DIDN'T YOU. HERE. DO IT AGAIN.";
+            responseText.text = "The file is missing.\nYOU DELETED IT DIDN'T YOU. HERE. DO IT AGAIN.\n\n<i>(After editing the file, press CHECK again)</i>";
             CreateAndOpenTextFile();
+            failedEditAttempts = 0; // reset if file was missing
+            return;
         }
 
         string fullContent = File.ReadAllText(filePath);
@@ -130,31 +138,54 @@ This file will remember.
             index += 2;
         }
 
-        if (okCount >= 2)
+        // If success
+        if (okCount >= 5)
         {
             PlayerPrefs.SetInt("fileConfirmed", 1);
             PlayerPrefs.Save();
 
-
-            responseText.text =
-                $"I saw it. You've typed them\n{okCount} times.\n\n" +
-                "Emily...\n" +
-                "Fine. We begin.";
-            
+            responseText.text = $"You've typed them\n{okCount} times.\n\nEmily...\n That's better. Let's begin.";
 
             check.SetActive(false);
             readMe.SetActive(false);
             letsBegin.SetActive(true);
+            failedEditAttempts = 0;
+            lastPlayerInput = ""; // reset tracking
+            return;
         }
-        else
+        else if (okCount > 0) //not enough input
         {
-            responseText.text =
-                $"You only wrote it {okCount} time...\n" +
-                "That's not enough.\nTry again.";
+            responseText.text = $"You only wrote it {okCount} time...\nThat's not enough.\nTry again.";
+            failedEditAttempts = 0; // they made progress
+            lastPlayerInput = playerInput;
+            return;
+        }
+        else // No EMILY found at all
+        {
+            if (playerInput == lastPlayerInput)
+                failedEditAttempts++;
+            else
+            {
+                failedEditAttempts = 1;
+                lastPlayerInput = playerInput;
+            }
+
+            FailureResponse response = failureResponses.Find(r =>
+            r.attemptNumber == failedEditAttempts &&
+            okCount >= r.minOkCount &&
+            okCount <= r.maxOkCount
+            );
+
+            if (response != null)
+            {
+                responseText.text = response.message;
+            }
+            else
+            {
+                responseText.text = $"Still wrong. EMILY count: {okCount}. Keep trying.";
+            }
         }
     }
-
-
 
     public void LetsBegin()
     {
@@ -175,4 +206,17 @@ This file will remember.
     {
         yield return new WaitForSeconds(s); 
     }
+}
+
+
+
+
+[System.Serializable]
+public class FailureResponse
+{
+    public int minOkCount;          // e.g., 0
+    public int maxOkCount;          // e.g., 1
+    public int attemptNumber;       // attempt # (e.g., 1st, 2nd, 3rd)
+    [TextArea(2, 5)]
+    public string message;
 }

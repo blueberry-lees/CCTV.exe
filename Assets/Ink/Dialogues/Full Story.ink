@@ -1,6 +1,6 @@
 // === ROUND 1 START ===
 
-->Round_1
+->ROUND_1
 // tags contain 
 //#speaker: Male, Female, Narrator
 //#SFX:
@@ -67,25 +67,36 @@ VAR refuseToStab = false
 
 VAR stabbed_status = ""
 VAR confidence = 0
+//VAR upDirection = false
+//VAR stayDirection = false
+//VAR downDirection = false
 
+LIST all_directions = upDirection, downDirection, stay
+LIST choices_made = EMPTY
 
 //
 // Content
 //
-=== Round_1
+=== ROUND_1
 ~ UIVersion = 1
 #character: off
 #speaker: Narrator
 #background: AllBlack
+
 Which direction are you heading?
 * [Up] Don’t want to run into your boss again. At least not today. 
--> Round_1  
+~ choices_made += all_directions.upDirection
+-> ROUND_1 
 
-* [Down] As if it’s not the only option.  
+* [Down] As if it’s not the only option.
+~ choices_made += all_directions.downDirection
 
 * [Stay] You’ve *just* finished work—why would you want to stay? 
--> Round_1  
+~ choices_made += all_directions.stay
+-> ROUND_1 
     -
+
+
 // elevator_intro  
 #background: ElevatorOpen  #SFX: Ding  #speaker: Narrator  #speed: 0.1  
 The elevator dings.
@@ -373,9 +384,42 @@ You're alone again.
 #background: AllBlack
 #ambient:OUOLoop
 <<<ENTERING UNFINISHED AREA, CONTINUE?
-*[YEY]
-*[NAY]
--
+*[YEY]-> choose_direction  
+*[NAY]->DONE
+
+
+===choose_direction
+#charcter:off
+#background: AllBlack
+#ambient:stop
+
+Which direction are you heading?
+~ temp up_chosen = choices_made ? all_directions.upDirection
+~ temp down_chosen = choices_made ? all_directions.downDirection
+~ temp stay_chosen = choices_made ? all_directions.stay
+
+* {up_chosen}[Up again] Haven't you made this choice before?
+    -> choose_direction
+
+* {!up_chosen}[Up] Don’t want to run into your boss again. At least not today.
+    ~ choices_made += all_directions.upDirection
+    -> choose_direction
+
+
+* {down_chosen}[Down] That's right, you should know this already. ->elevator_R2
+
+* {!stay_chosen}[Stay] You’ve *just* finished work—why would you want to stay? 
+~ choices_made += all_directions.stay
+-> choose_direction 
+
+* {stay_chosen}[Stay again] Still sticking around?
+-> choose_direction 
+    
+    
+    ===elevator_R2
+// elevator_intro  
+#background: ElevatorOpen  #SFX: Ding  #speaker: Narrator  #speed: 0.1  
+The elevator dings.
 #background: ElevatorOpen2
 You step into the elevator again. 
 
