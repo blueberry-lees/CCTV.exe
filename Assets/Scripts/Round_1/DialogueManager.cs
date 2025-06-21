@@ -83,6 +83,9 @@ public class DialogueManager : MonoBehaviour
 
     }
 
+    void OnTriggerEnter2D()
+    { 
+    }
     void Update()
     {
         if (blockNextInput)
@@ -106,7 +109,7 @@ public class DialogueManager : MonoBehaviour
 
         if (isTyping)
         {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.Return) || Input.GetMouseButton(0))
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
                 skipTyping = true;
             return;
         }
@@ -115,11 +118,11 @@ public class DialogueManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.UpArrow)) choiceUI.NavigateChoice(-1);
             else if (Input.GetKeyDown(KeyCode.DownArrow)) choiceUI.NavigateChoice(1);
-            else if (Input.GetKey(KeyCode.Return)) choiceUI.ChooseSelectedChoice();
+            else if (Input.GetKeyDown(KeyCode.Return)) choiceUI.ChooseSelectedChoice();
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.Return) || Input.GetMouseButton(0))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
             ContinueStory();
     }
 
