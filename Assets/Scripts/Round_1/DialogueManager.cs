@@ -71,6 +71,7 @@ public class DialogueManager : MonoBehaviour
     {
         choiceUI = GetComponent<DialogueChoice>();
         visualManager = GetComponent<VisualManager>();
+        GameState.SaveAll(); // Ensure GameState is saved at start
 
         // ResetPlayerPrefs();
     }
@@ -83,9 +84,7 @@ public class DialogueManager : MonoBehaviour
 
     }
 
-    void OnTriggerEnter2D()
-    { 
-    }
+   
     void Update()
     {
         if (blockNextInput)

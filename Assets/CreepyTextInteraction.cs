@@ -38,6 +38,8 @@ This file will remember.
 
     void Start()
     {
+        GameState.SaveAll(); // Ensure GameState is saved at start
+
         // Save in the build folder (same as .exe)
         filePath = Path.Combine(Path.GetDirectoryName(Application.dataPath), fileName);
         UnityEngine.Debug.Log("Creepy text file path: " + filePath);

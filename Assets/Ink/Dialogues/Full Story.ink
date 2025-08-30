@@ -74,30 +74,54 @@ VAR confidence = 0
 LIST all_directions = upDirection, downDirection, stay
 LIST choices_made = EMPTY
 
+
+
+
+
 //
 // Content
 //
 === ROUND_1
+
 ~ UIVersion = 1
 #character: off
 #speaker: Narrator
 #background: AllBlack
 
 Which direction are you heading?
-* [Up] Don’t want to run into your boss again. At least not today. 
-~ choices_made += all_directions.upDirection
--> ROUND_1 
+-> first_choices
 
-* [Down] As if it’s not the only option.
+=first_choices
+~ temp up_chosen = choices_made ? all_directions.upDirection
+~ temp down_chosen = choices_made ? all_directions.downDirection
+~ temp stay_chosen = choices_made ? all_directions.stay
+
+
+* [Up] On second thought, you rather not see the face of your boss today. 
+~ choices_made += all_directions.upDirection
+-> first_choices
+
++ {up_chosen && stay_chosen}[Down] It's the only option afterall. 
 ~ choices_made += all_directions.downDirection
 
-* [Stay] You’ve *just* finished work—why would you want to stay? 
++ {!up_chosen && stay_chosen}[Down] What about "UP" ? -> first_choices 
+
++ {up_chosen && !stay_chosen}[Down] What about "STAY" ? -> first_choices
+
+
++ {!up_chosen && !stay_chosen}[Down] Aren't you gonna try other buttons first? -> first_choices
+
+* [Stay] You’ve JUST finished work — why would you want to stay? 
 ~ choices_made += all_directions.stay
--> ROUND_1 
-    -
+-> first_choices
+
+-
+ 
+ 
+ ->elevator_intro 
 
 
-// elevator_intro  
+= elevator_intro  
 #background: ElevatorOpen  #SFX: Ding  #speaker: Narrator  #speed: 0.1  
 The elevator dings.
 

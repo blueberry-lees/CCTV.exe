@@ -20,6 +20,12 @@ public class PlayerPrefCheck : MonoBehaviour
     [Header("Reset ALL PlayerPrefs on Start")]
     public bool isPlayerPrefsCleared = false;
 
+    [Header("Reset ALL Game States on Start")]
+    public bool isGameStateDeleted = false;
+
+
+    
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -35,6 +41,7 @@ public class PlayerPrefCheck : MonoBehaviour
     void Start()
     {
         ResetPlayerPrefOnStart();
+        DeletGamestateOnStart();
         if (overwritePrefsOnStart) OverwritePrefsFromDev();
         UpdatePlayerPrefCheck();
     }
@@ -63,6 +70,18 @@ public class PlayerPrefCheck : MonoBehaviour
             DialogueHistoryStatic.ClearDialogueHistory(); // optional, if you have this
             PlayerPrefs.Save();
             isPlayerPrefsCleared = false;
+        }
+    }
+
+    public void DeletGamestateOnStart()
+    {
+        if (isGameStateDeleted)
+        {
+            Debug.LogWarning("Clearing ALL Game state datas...");
+            GameState.ResetAll();
+            DialogueHistoryStatic.ClearDialogueHistory(); // optional, if you have this
+
+            isGameStateDeleted = false;
         }
     }
 
